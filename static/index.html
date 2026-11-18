@@ -198,6 +198,12 @@ body{background:#050608}
 .hero:before{display:none!important}
 @media(prefers-reduced-motion:reduce){.hero-video{display:block!important}}
 .video-audio-controls{position:fixed;right:18px;bottom:18px;z-index:20;display:flex;align-items:center;gap:9px;padding:10px 12px;border:1px solid #ffffff38;border-radius:16px;background:#080c13dd;backdrop-filter:blur(16px);box-shadow:0 8px 30px #0009;color:#fff;font-size:12px}.video-audio-controls button{color:#fff;border:1px solid #ffffff40;background:#ffffff16;border-radius:9px;padding:7px 10px;white-space:nowrap;font-weight:700}.video-audio-controls button:hover{background:#35aaff55}.video-audio-controls input{width:100px;accent-color:#35aaff;cursor:pointer}.video-audio-controls span{min-width:34px;text-align:right;font-variant-numeric:tabular-nums}@media(max-width:520px){.video-audio-controls{right:8px;bottom:8px;gap:5px;padding:7px}.video-audio-controls input{width:65px}.video-audio-controls button{padding:6px}}
+/* Nombres Steam largos: respetar el ancho de cada tarjeta y evitar cortes desordenados. */
+.admin-profiles .admin-contact{align-items:flex-start}
+.admin-profiles .admin-info{flex:1;min-width:0;max-width:100%}
+.admin-profiles .admin-info h3{font-size:clamp(13px,1.2vw,17px);line-height:1.35;min-height:2.7em;max-width:100%;margin:8px 0 6px;overflow:hidden;overflow-wrap:anywhere;word-break:normal;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2}
+.admin-profiles .admin-avatar{flex:0 0 64px;width:64px;height:64px}
+@media(max-width:700px){.admin-profiles .admin-info h3{font-size:17px}}
 </style></head><body>
 <video class="hero-video" id="backgroundVideo" autoplay muted loop playsinline preload="metadata" aria-hidden="true"><source src="/media/nicesv-intro-con-sonido.mp4" type="video/mp4"></video><div class="video-audio-controls" role="group" aria-label="Volumen de la música del video"><button type="button" id="videoMute" aria-label="Activar sonido del video" title="Activar sonido">🔇 Activar sonido</button><button type="button" id="videoVolDown" aria-label="Bajar volumen" title="Bajar volumen">−</button><input type="range" id="videoVolume" min="0" max="100" value="35" step="5" aria-label="Volumen del video"><button type="button" id="videoVolUp" aria-label="Subir volumen" title="Subir volumen">+</button><span id="videoVolumeLabel" aria-live="polite">35%</span></div><div class="video-backdrop" aria-hidden="true"></div>
 <div class="contours" aria-hidden="true"><svg viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice"><g id="waves"></g></svg><svg viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice"><g id="waves2"></g></svg></div><div class="redglow"></div><div class="grain"></div>
@@ -233,7 +239,7 @@ async function updateSteamProfiles(force=false){
    const response=await fetch('/api/steam-profile?user='+key+(force?'&refresh=1':'')+'&t='+Date.now(),{cache:'no-store'});
    if(!response.ok)return;
    const profile=await response.json();
-   if(profile.name)document.getElementById('steamName-'+key).textContent=profile.name;
+   if(profile.name){const nameNode=document.getElementById('steamName-'+key);if(nameNode){nameNode.textContent=profile.name;nameNode.title=profile.name}}
    if(!profile.avatar)return;
    const image=document.getElementById('steamAvatar-'+key);
    if(!force&&image.dataset.avatar===profile.avatar&&image.naturalWidth>0&&Date.now()-Number(image.dataset.checkedAt||0)<90000)return;
