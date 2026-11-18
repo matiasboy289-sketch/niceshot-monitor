@@ -33,7 +33,58 @@ th{background:#ffffff06}tbody tr{transition:background .2s}tbody tr:hover{backgr
 @keyframes ambient{to{opacity:.45;transform:scale(1.18) translate(-3%,3%)}}@keyframes gridDrift{to{background-position:170px 170px}}@keyframes orbit{to{transform:rotate(360deg)}}@keyframes beam{to{transform:translateX(24vw) rotate(36deg)}}@keyframes dots{to{background-position:90px -70px}}@keyframes logoBeat{50%{opacity:.45;filter:blur(1px)}}@keyframes ghostSlide{to{transform:translateX(-6%)}}@keyframes slideIn{from{opacity:0;transform:translateY(24px);filter:blur(7px)}to{opacity:1;transform:none;filter:none}}@keyframes titleIn{from{opacity:0;transform:translateY(60px) skewY(3deg);filter:blur(16px)}to{opacity:1;transform:none;filter:none}}@keyframes lineGrow{from{width:0;opacity:0}to{width:120px;opacity:1}}@keyframes statShine{0%,30%,100%{transform:translateX(-120%)}50%{transform:translateX(120%)}}@keyframes float{50%{transform:translateY(-10px);text-shadow:0 0 45px #fff9}}
 @media(max-width:700px){.hero{padding-top:66px}.hero h1{font-size:clamp(48px,12vw,75px)}.stat{min-height:130px}.stat:after{display:none}.controls{padding:12px}.filter,.refresh{flex:1}.motion-orbit{right:-350px;top:-250px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
-</style></head><body><div class="motion-stage" aria-hidden="true"><div class="motion-grid"></div><div class="motion-orbit"></div><div class="motion-beam"></div><div class="motion-beam two"></div><div class="noise-dots"></div></div>
+
+/* BLUE COSMOS | NICE SV bans: nebulae, star layers, orbital rings, meteors */
+body{background:#020612}
+body:before{background:radial-gradient(ellipse 75% 48% at 52% 18%,#1452bb64,transparent 73%),radial-gradient(ellipse 48% 42% at 9% 67%,#0a58b04f,transparent 75%),radial-gradient(ellipse 45% 50% at 95% 77%,#1b339e53,transparent 76%),#020612;animation:cosmosPulse 16s ease-in-out infinite alternate}
+body:after{background:radial-gradient(ellipse at 45% 28%,#72baff12,transparent 60%);opacity:1}
+.motion-stage{z-index:-1}
+.motion-grid{opacity:.16;background-image:linear-gradient(#5ca7ff30 1px,transparent 1px),linear-gradient(90deg,#5ca7ff30 1px,transparent 1px);mask-image:linear-gradient(to bottom,transparent 5%,#000 65%,transparent 100%)}
+.motion-orbit{border-color:#58a5ff3a;box-shadow:0 0 0 100px #308bff07,0 0 0 200px #308bff05}
+.motion-orbit:before,.motion-orbit:after{border-color:#a4d5ff4c}
+.motion-beam{background:linear-gradient(transparent,#4f9bff42,transparent)}
+.noise-dots{opacity:.48;background-image:radial-gradient(#d2eaff9c .8px,transparent 1px);background-size:43px 43px}
+.cosmos-stars{position:absolute;inset:0;background-image:radial-gradient(1px 1px at 13% 17%,#fff 99%,transparent),radial-gradient(1.5px 1.5px at 42% 65%,#b6e0ff 99%,transparent),radial-gradient(2px 2px at 76% 28%,#fff 99%,transparent),radial-gradient(1px 1px at 91% 82%,#c4eaff 99%,transparent),radial-gradient(1.5px 1.5px at 62% 92%,#fff 99%,transparent),radial-gradient(1px 1px at 25% 77%,#fff 99%,transparent);background-size:233px 257px,307px 281px,389px 367px,431px 419px,271px 313px,349px 337px;opacity:.85;animation:cosmosStars 48s linear infinite}
+.cosmos-nebula{position:absolute;inset:-20%;background:radial-gradient(ellipse 42% 19% at 50% 30%,#1474ed38,transparent 75%),radial-gradient(ellipse 32% 18% at 17% 66%,#0e91e92c,transparent 80%),radial-gradient(ellipse 29% 17% at 85% 75%,#4656ff27,transparent 78%);filter:blur(24px);animation:nebulaFlow 21s ease-in-out infinite alternate}
+.cosmos-planet{position:absolute;right:6%;top:12%;width:clamp(120px,20vw,300px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 30% 26%,#a3dfff38 0%,#2678d84b 22%,#071d53e0 57%,#010615 80%);box-shadow:inset -24px -15px 45px #010817,0 0 45px #3d8cff3b,0 0 110px #1d61d61c;opacity:.7;animation:planetFloat 12s ease-in-out infinite alternate}
+.cosmos-planet:after{content:"";position:absolute;inset:-20%;border:1px solid #83c6ff40;border-radius:50%;transform:rotate(-28deg) scaleY(.45)}
+.cosmos-meteor{position:absolute;top:15%;left:12%;width:170px;height:2px;transform:rotate(-33deg);background:linear-gradient(90deg,transparent,#60baff,#fff);box-shadow:0 0 12px #58b8ff;opacity:0;animation:meteor 11s linear infinite}
+.cosmos-meteor.two{top:55%;left:65%;animation-delay:5.5s}
+.nav{background:#030c1de8;border-bottom-color:#529bff36}
+.logo{text-shadow:0 0 25px #4ba4ff66}.logo:before{color:#79caff}
+.links .current:after{background:#64b8ff;box-shadow:0 0 14px #3e9dff}
+.hero:before{color:#66b5ff0a}
+.eyebrow{border-color:#67b6ff65;background:#0d316350;color:#b9e1ff}
+.eyebrow:before{background:#64baff;box-shadow:0 0 16px #62baff}
+.hero h1{color:#f6fbff;text-shadow:0 0 26px #68b7ff77,0 0 85px #257bff5c}
+.hero h1:after{background:linear-gradient(90deg,#60baff,transparent)}
+.hero p{color:#b7cce4}
+.stat,.panel{background:linear-gradient(145deg,#0b1a34df,#050d1ddd);border-color:#70b4ff3a}
+.stat:hover{border-color:#85c8ff;box-shadow:0 20px 50px #000a,0 0 26px #358bff33}
+.stat strong{color:#e8f6ff;text-shadow:0 0 25px #449cff46}
+.stat:after{color:#79bdff99}
+.controls{background:#06142ad9;border-color:#70b4ff42}
+.search{background:#041025db;border-color:#5999de5e}.search:focus{border-color:#80c6ff;box-shadow:0 0 0 3px #328dff29}
+.filter,.refresh{background:#0c2240;color:#d4eaff;border-color:#539de75c}
+.filter.active,.refresh{background:#acdfff;color:#06142b;border-color:#acdfff}
+.panelhead{background:linear-gradient(90deg,#1c5fa32e,transparent);border-bottom-color:#6daeff38}
+.panelhead strong:before{color:#7bc3ff}
+th{background:#1a4d8730;color:#b9d8f6}
+td{border-top-color:#70b4ff1b;color:#e0eaf8}
+tbody tr:hover{background:#308fff17}
+.pill{border-color:#77b9ff7c}
+.notice{border-left-color:#62baff;color:#aec1d8}
+.footer{border-top-color:#4d9be53c}
+a:hover{color:#9bd7ff}
+@keyframes cosmosPulse{to{transform:scale(1.1) translate(-2%,2%);filter:brightness(1.22)}}
+@keyframes cosmosStars{to{background-position:120px 100px,-90px 110px,80px -70px,-75px 80px,90px 110px,-90px -80px}}
+@keyframes nebulaFlow{to{transform:translate(5%,-3%) rotate(5deg) scale(1.1);opacity:.7}}
+@keyframes planetFloat{to{transform:translateY(-25px) rotate(8deg)}}
+@keyframes meteor{0%,73%{opacity:0;transform:translate(0,0) rotate(-33deg)}75%{opacity:1}82%,100%{opacity:0;transform:translate(48vw,28vh) rotate(-33deg)}}
+@media(max-width:700px){.cosmos-planet{right:-40px;top:18%;opacity:.42}.cosmos-meteor{width:100px}}
+@media(prefers-reduced-motion:reduce){.cosmos-stars,.cosmos-nebula,.cosmos-planet,.cosmos-meteor,body:before{animation:none!important}}
+
+</style></head><body><div class="motion-stage" aria-hidden="true"><div class="cosmos-nebula"></div><div class="cosmos-stars"></div><div class="cosmos-planet"></div><div class="cosmos-meteor"></div><div class="cosmos-meteor two"></div><div class="motion-grid"></div><div class="motion-orbit"></div><div class="motion-beam"></div><div class="motion-beam two"></div><div class="noise-dots"></div></div>
 <nav class="nav"><div class="shell navin"><a class="logo" href="/">NICE SV</a><div class="links"><a href="/">Inicio</a><a href="/#servidores">Servidores</a><a href="/custom-maps.html">Mapas Custom</a><a class="current" href="/bans.html" aria-current="page">Baneos</a><a href="/#administracion">Administración</a></div></div></nav>
 <main class="shell"><header class="hero"><div class="eyebrow">NICE SV / MODERACIÓN</div><h1>LISTA DE BANEOS</h1><p>Consulta las sanciones registradas en nuestros servidores de Left 4 Dead 2. Incluye registros propios de NICE SV y listados externos identificados por su origen.</p></header>
 <section class="stats" aria-label="Estadísticas"><div class="stat"><small>TOTAL DE BANEOS</small><strong id="total">—</strong></div><div class="stat"><small>BANEOS ACTIVOS</small><strong id="active">—</strong></div><div class="stat"><small>EXPIRADOS</small><strong id="expired">—</strong></div></section>
