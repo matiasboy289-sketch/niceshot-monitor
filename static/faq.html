@@ -82,13 +82,13 @@ summary{outline-offset:-5px}summary::after{transition:transform .25s,color .25s}
 @media(prefers-reduced-motion:reduce){.space-scene *,.planet,.hero::after,.hero .eyebrow::before{animation:none!important}.reveal-ready .reveal-pending{opacity:1!important;transform:none!important;transition:none!important}}
 
 /* FAQ background soundtrack controls */
-.faq-audio{position:fixed;bottom:20px;right:20px;z-index:45;display:flex;align-items:center;gap:9px;padding:10px 12px;background:#090b19eF;border:1px solid #a4aaff66;border-radius:16px;box-shadow:0 12px 38px #0009,0 0 24px #7169f02a;backdrop-filter:blur(18px);max-width:calc(100vw - 24px)}
-.faq-audio button{border:1px solid #aaaaff55;background:#ffffff13;color:#fff;padding:10px 12px;border-radius:10px;font-weight:800;cursor:pointer;font-size:12px;white-space:nowrap}
+.faq-audio{position:fixed;bottom:16px;right:16px;z-index:45;display:flex;align-items:center;gap:6px;padding:7px 9px;background:#090b19eF;border:1px solid #a4aaff66;border-radius:13px;box-shadow:0 10px 28px #0009;backdrop-filter:blur(18px);max-width:calc(100vw - 24px)}
+.faq-audio button{border:1px solid #aaaaff55;background:#ffffff13;color:#fff;padding:7px 9px;border-radius:8px;font-weight:750;cursor:pointer;font-size:11px;white-space:nowrap}
 .faq-audio button:hover{background:#ffffff25;border-color:#c7c2ff}
-.faq-audio input{width:100px;accent-color:#aa9cff;cursor:pointer}
+.faq-audio input{width:72px;accent-color:#aa9cff;cursor:pointer}
 .faq-audio .audio-percent{min-width:32px;font-size:11px;color:#d4d1ed;text-align:right;font-variant-numeric:tabular-nums}
-.faq-audio .audio-label{font-size:11px;color:#d4d1ed;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-@media(max-width:540px){.faq-audio{bottom:12px;right:12px;left:12px;justify-content:center;padding:8px}.faq-audio input{width:65px}.faq-audio .audio-label{display:none}.faq-audio button{padding:9px 10px}}
+.faq-audio .audio-label{display:none}
+@media(max-width:540px){.faq-audio{bottom:10px;right:10px;left:auto;padding:6px;gap:5px}.faq-audio input{width:55px}.faq-audio button{padding:7px}.faq-audio .audio-percent{font-size:10px;min-width:28px}}
 </style></head>
 <body><audio id="faqMusic" src="/static/media/Reflection.mp3" preload="auto" loop playsinline></audio><div class="faq-audio" role="group" aria-label="Música de fondo de FAQ"><span class="audio-label">♫ Música ambiental</span><button id="faqAudioToggle" type="button" aria-label="Activar música">♫ Activar música</button><button id="faqAudioDown" type="button" aria-label="Bajar volumen">−</button><input id="faqAudioVolume" type="range" min="0" max="100" value="25" aria-label="Volumen de la música"><button id="faqAudioUp" type="button" aria-label="Subir volumen">+</button><span class="audio-percent" id="faqAudioPercent">25%</span></div><div class="space-scene" aria-hidden="true"><div class="space-cloud one"></div><div class="space-cloud two"></div><div class="space-stars far"></div><div class="space-stars"></div><div class="shooting-star"></div><div class="shooting-star second"></div></div><nav class="nav"><div class="shell navin"><a class="brand" href="/">NICE <span>SV</span></a><div class="links"><a href="/#servidores">Servidores</a><a href="/#comunidad">Comunidad</a><a href="/#ecosistema">Ecosistema</a><a href="/custom-maps.html">Mapas Custom</a><a href="/bans.html">Baneos</a><a href="/faq.html" aria-current="page">FAQ</a><a href="/#administracion">Administración</a><a href="https://steamcommunity.com/groups/niceshotl4d2" target="_blank" rel="noopener noreferrer">Grupo de Steam</a></div><a class="status" href="/#servidores">● VER SERVIDOR</a></div></nav>
 <header class="hero"><div class="planet" aria-hidden="true"></div><div class="shell heroin"><span class="eyebrow">NICE SV · CENTRO DE AYUDA</span><h1>Preguntas frecuentes<span style="color:#ffadb2">.</span></h1><p>Tutoriales y respuestas para jugar en nuestra comunidad de Left 4 Dead 2. Aprende a instalar campañas personalizadas, consulta los comandos y conoce dónde está alojado NICE SV.</p><div class="chips"><a href="#mapas">Mapas Custom</a><a href="#comandos">Comandos</a><a href="#alojamiento">Alojamiento</a></div></div></header>
@@ -151,7 +151,12 @@ summary{outline-offset:-5px}summary::after{transition:transform .25s,color .25s}
  up.addEventListener('click',()=>setVolume(Number(slider.value)+10));
  audio.addEventListener('play',sync);audio.addEventListener('pause',sync);
  audio.addEventListener('error',()=>{toggle.textContent='♫ Música no disponible';toggle.title='Sube Reflection.mp3 a static/media/ en GitHub'});
- document.addEventListener('pointerdown',function firstInteraction(e){if(e.target.closest('.faq-audio'))return;if(audio.paused&&!audio.error)start();document.removeEventListener('pointerdown',firstInteraction)},{once:true});
+ let userPaused=false;
+ const originalToggle=toggle.onclick;
+ document.addEventListener('pointerdown',function(e){if(e.target.closest('.faq-audio'))return;if(audio.paused&&!userPaused&&!audio.error)start()},{capture:true});
+ document.addEventListener('keydown',function(e){if(audio.paused&&!userPaused&&!audio.error&&e.key!=='Tab')start()});
+ window.addEventListener('pageshow',()=>{if(!userPaused&&audio.paused)start()});
+ toggle.addEventListener('click',()=>{userPaused=!audio.paused});
  start();
 })();
 </script></body></html>
