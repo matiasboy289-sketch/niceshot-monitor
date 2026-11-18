@@ -169,10 +169,60 @@ def steam_profile_for_key(key):
         response=steam_profile()
         return response.get_json()
 
+def supabase_bans_rows():
+    base = os.getenv('SUPABASE_URL', '').rstrip('/')
+    secret = os.getenv('SUPABASE_SECRET_KEY', '')
+    if not base.startswith('https://') or not secret:
+        raise RuntimeError('Supabase environment is not configured')
+    endpoint = base + '/rest/v1/nicesv_bans?select=*&order=created_at.desc&limit=500'
+    request = urllib.request.Request(endpoint, headers={
+        'apikey': secret,
+        'Authorization': 'Bearer ' + secret,
+        'Accept': 'application/json',
+        'User-Agent': 'NICESV-Monitor/1.1'
+    })
+    with urllib.request.urlopen(request, timeout=8) as response:
+        return __import__('json').load(response)
+
 @app.get('/api/bans')
 def bans():
-    # No SourceMod synchronization configured yet: never fabricate sanctions.
-    return jsonify(connected=False, bans=[])
+    from datetime import datetime, timezone
+    try:
+        records = supabase_bans_rows()
+        now = datetime.now(timezone.utc)
+        output = []
+        for record in records:
+            event = str(record.get('event_type') or '')
+            created = str(record.get('created_at') or '')
+            expiry = record.get('expires_at')
+            revoked = bool(record.get('revoked_at'))
+            expired = False
+            if expiry:
+                try:
+                    expired = datetime.fromisoformat(expiry.replace('Z', '+00:00')) <= now
+                except (TypeError, ValueError):
+                    pass
+            # A requested ban is not proof of enforcement.
+            confirmed = event in ('ban_confirmed', 'external_approved')
+            state = 'revoked' if revoked else 'expired' if expired else 'active' if confirmed else 'pending'
+            minutes = record.get('duration_minutes') or 0
+            duration = 'Permanente' if minutes == 0 else f'{minutes} min'
+            output.append({
+                'id': record.get('id'),
+                'steamid': record.get('steamid') or '',
+                'name': record.get('player_name') or 'Desconocido',
+                'admin': record.get('admin_name') or 'Sistema',
+                'reason': record.get('reason') or 'Sin motivo',
+                'source': record.get('source') or 'NICE SV',
+                'event_type': event,
+                'status': state,
+                'date': created[:19].replace('T', ' '),
+                'duration': duration
+            })
+        return jsonify(connected=True, bans=output)
+    except Exception:
+        app.logger.exception('Unable to retrieve NICE SV bans')
+        return jsonify(connected=False, bans=[], error='No se pudo consultar el registro'), 503
 
 @app.get('/api/status')
 def status():
