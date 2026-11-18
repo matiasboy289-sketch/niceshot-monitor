@@ -1,4 +1,6 @@
 import os, time, socket, struct, threading
+import urllib.request
+import xml.etree.ElementTree as ET
 from flask import Flask, jsonify, send_from_directory
 app=Flask(__name__,static_folder='static',static_url_path='')
 HOST=os.getenv('L4D2_HOST','38.7.197.74')
@@ -67,6 +69,27 @@ def fetch():
                 result['player_list_available']=True
     except Exception:pass
     return result
+steam_cache={'at':0,'data':None}
+steam_lock=threading.Lock()
+@app.get('/api/steam-profile')
+def steam_profile():
+    with steam_lock:
+        if steam_cache['data'] is not None and time.time()-steam_cache['at']<3600:
+            return jsonify(steam_cache['data'])
+        result={'profile_url':'https://steamcommunity.com/id/Ice403978/','avatar':None,'name':None}
+        try:
+            req=urllib.request.Request('https://steamcommunity.com/id/Ice403978/?xml=1',headers={'User-Agent':'NICESV-ProfilePreview/1.0'})
+            with urllib.request.urlopen(req,timeout=5) as response:
+                xml=response.read(512000)
+            root=ET.fromstring(xml)
+            avatar=root.findtext('avatarFull') or root.findtext('avatarMedium')
+            if avatar and avatar.startswith('https://') and ('steamstatic.com/' in avatar or 'steamusercontent.com/' in avatar or 'steamcommunity.com/' in avatar):
+                result['avatar']=avatar
+            result['name']=root.findtext('steamID') or None
+        except Exception:
+            pass
+        steam_cache.update(at=time.time(),data=result)
+        return jsonify(result)
 @app.get('/api/status')
 def status():
     with lock:
