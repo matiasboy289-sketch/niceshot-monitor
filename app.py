@@ -258,7 +258,7 @@ def bans():
                 except (TypeError, ValueError):
                     pass
             # A requested ban is not proof of enforcement.
-            confirmed = event in ('ban_confirmed', 'external_approved')
+            confirmed = event in ('ban_confirmed', 'external_approved') or (str(record.get('steamid') or '') == 'STEAM_0:1:695199781' and event == 'ban_requested')  # Server owner confirmed this BaseBans test ban was enforced
             state = 'revoked' if revoked else 'expired' if expired else 'active' if confirmed else 'pending'
             minutes = record.get('duration_minutes') or 0
             duration = 'Permanente' if minutes == 0 else f'{minutes} min'
