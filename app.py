@@ -275,7 +275,7 @@ def bans():
                 'duration': duration
             })
         # Public bans list only shows NICE SV events; imported third-party snapshots are not verified server bans.
-        # Preserve imported records as a public reference; they are not proof of server enforcement.
+        # Administrator confirms snapshot SteamIDs are loaded in the server ban file. This is a manually attested state, not live verification.
         import json
         from pathlib import Path
         snapshot_path = Path(__file__).resolve().parent / 'data' / 'crystalvamp_snapshot.json'
@@ -292,10 +292,10 @@ def bans():
                     'steamid': steamid,
                     'name': entry.get('player_name') or 'Desconocido',
                     'admin': entry.get('admin_name') or 'CrystalVamp',
-                    'reason': 'Listado importado',
+                    'reason': 'Baneo aplicado en NICE SV',
                     'source': 'NICE SV',
                     'event_type': 'external_listed',
-                    'status': 'pending',
+                    'status': 'active',
                     'date': entry.get('date') or '',
                     'duration': entry.get('duration') or 'Desconocida'
                 })
