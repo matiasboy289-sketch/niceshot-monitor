@@ -177,7 +177,7 @@ def supabase_bans_rows():
     endpoint = base + '/rest/v1/nicesv_bans?select=*&order=created_at.desc&limit=500'
     request = urllib.request.Request(endpoint, headers={
         'apikey': secret,
-        'Authorization': 'Bearer ' + secret,
+        # Modern sb_secret keys are API keys, not JWT bearer tokens.
         'Accept': 'application/json',
         'User-Agent': 'NICESV-Monitor/1.1'
     })
