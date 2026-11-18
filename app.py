@@ -92,7 +92,7 @@ def steam_profile():
         return jsonify(error='Perfil no permitido'),400
     with steam_lock:
         cached=steam_cache.get(key)
-        if cached and time.time()-cached['at'] < (600 if cached['data'].get('avatar') else 60):
+        if cached and time.time()-cached['at'] < (30 if request.args.get('refresh') == '1' else (120 if cached['data'].get('avatar') else 60)):
             return jsonify(cached['data'])
     steam_id=steam_profiles[key]
     url=(f'https://steamcommunity.com/profiles/{steam_id}/' if steam_id.isdigit() else f'https://steamcommunity.com/id/{steam_id}/')
@@ -125,6 +125,10 @@ def steam_profile():
         except Exception:
             pass
     with steam_lock:
+        previous_avatar = steam_cache.get(key, {}).get('data', {}).get('avatar')
+        if result['avatar'] and result['avatar'] != previous_avatar:
+            with avatar_image_lock:
+                avatar_image_cache.pop(key, None)
         if result['avatar'] or key not in steam_cache or not steam_cache[key]['data'].get('avatar'):
             steam_cache[key]={'at':time.time(),'data':result}
         else:
