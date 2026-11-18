@@ -274,30 +274,7 @@ def bans():
                 'date': created[:19].replace('T', ' '),
                 'duration': duration
             })
-        # External snapshot: listed by another community, NOT confirmed enforced on NICE SV.
-        import json
-        from pathlib import Path
-        snapshot_path = Path(__file__).resolve().parent / 'data' / 'crystalvamp_snapshot.json'
-        if snapshot_path.is_file():
-            with snapshot_path.open('r', encoding='utf-8') as file:
-                snapshot = json.load(file)
-            own_ids = {r['steamid'] for r in output if r.get('status') == 'active'}
-            for entry in snapshot.get('records', []):
-                steamid = str(entry.get('steamid') or '')
-                if not re.fullmatch(r'STEAM_[01]:[01]:[0-9]{1,16}', steamid) or steamid in own_ids:
-                    continue
-                output.append({
-                    'id': 'crystalvamp:' + steamid,
-                    'steamid': steamid,
-                    'name': entry.get('player_name') or 'Desconocido',
-                    'admin': entry.get('admin_name') or 'CrystalVamp',
-                    'reason': 'Listado externo',
-                    'source': 'NICE SV',
-                    'event_type': 'external_listed',
-                    'status': 'pending',
-                    'date': entry.get('date') or '',
-                    'duration': entry.get('duration') or 'Desconocida'
-                })
+        # Public bans list only shows NICE SV events; imported third-party snapshots are not verified server bans.
         return jsonify(connected=True, bans=output)
     except Exception:
         app.logger.exception('Unable to retrieve NICE SV bans')
