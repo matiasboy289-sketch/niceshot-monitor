@@ -97,33 +97,38 @@ def steam_profile():
     steam_id=steam_profiles[key]
     url=(f'https://steamcommunity.com/profiles/{steam_id}/' if steam_id.isdigit() else f'https://steamcommunity.com/id/{steam_id}/')
     result={'profile_url':url,'avatar':None,'name':None}
+    # Prefer the live public profile HTML: Steam's legacy XML can serve stale avatars.
+    # Cache-busting prevents an intermediate CDN from returning an older profile snapshot.
+    freshness=str(int(time.time()*1000))
+    headers={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0 Safari/537.36','Cache-Control':'no-cache, no-store','Pragma':'no-cache'}
     try:
-        req=urllib.request.Request(url+'?xml=1',headers={'User-Agent':'Mozilla/5.0 (compatible; NiceSV/1.0)'})
+        req=urllib.request.Request(url+'?nicesv_refresh='+freshness,headers=headers)
+        with urllib.request.urlopen(req,timeout=7) as response:
+            page=response.read(800000).decode('utf-8','replace')
+        match=re.search(r'<meta[^>]+property=["\\\']og:image["\\\'][^>]+content=["\\\']([^"\\\']+)',page,re.I)
+        if not match:
+            match=re.search(r'<meta[^>]+content=["\\\']([^"\\\']+)["\\\'][^>]+property=["\\\']og:image',page,re.I)
+        if match:
+            avatar=html.unescape(match.group(1))
+            if avatar.startswith('http://'):
+                avatar='https://'+avatar[7:]
+            if steam_avatar_allowed(avatar):
+                result['avatar']=avatar
+    except Exception:
+        pass
+    try:
+        req=urllib.request.Request(url+'?xml=1&nicesv_refresh='+freshness,headers=headers)
         with urllib.request.urlopen(req,timeout=7) as response:
             raw=response.read(512000)
         root=ET.fromstring(raw)
         avatar=html.unescape((root.findtext('avatarFull') or root.findtext('avatarMedium') or '').strip())
         if avatar.startswith('http://'):
             avatar='https://'+avatar[7:]
-        if avatar and steam_avatar_allowed(avatar):
+        if not result['avatar'] and avatar and steam_avatar_allowed(avatar):
             result['avatar']=avatar
         result['name']=root.findtext('steamID') or None
     except Exception:
         pass
-    if not result['avatar']:
-        try:
-            req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0 (compatible; NiceSV/1.0)'})
-            with urllib.request.urlopen(req,timeout=7) as response:
-                page=response.read(600000).decode('utf-8','replace')
-            match=re.search(r'<meta[^>]+property=["\\\']og:image["\\\'][^>]+content=["\\\']([^"\\\']+)',page,re.I)
-            if not match:
-                match=re.search(r'<meta[^>]+content=["\\\']([^"\\\']+)["\\\'][^>]+property=["\\\']og:image',page,re.I)
-            if match:
-                avatar=html.unescape(match.group(1))
-                if steam_avatar_allowed(avatar):
-                    result['avatar']=avatar
-        except Exception:
-            pass
     with steam_lock:
         previous_avatar = steam_cache.get(key, {}).get('data', {}).get('avatar')
         if result['avatar'] and result['avatar'] != previous_avatar:
