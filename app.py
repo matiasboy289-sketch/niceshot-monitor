@@ -97,27 +97,47 @@ def steam_profile():
     steam_id=steam_profiles[key]
     url=(f'https://steamcommunity.com/profiles/{steam_id}/' if steam_id.isdigit() else f'https://steamcommunity.com/id/{steam_id}/')
     result={'profile_url':url,'avatar':None,'name':None}
-    # Prefer the live public profile HTML: Steam's legacy XML can serve stale avatars.
-    # Cache-busting prevents an intermediate CDN from returning an older profile snapshot.
+    # Steam HTML is the primary source for current display names and avatars.
+    # XML remains a fallback because some Steam profiles omit social meta tags.
     freshness=str(int(time.time()*1000))
-    headers={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0 Safari/537.36','Cache-Control':'no-cache, no-store','Pragma':'no-cache'}
+    headers={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0 Safari/537.36','Cache-Control':'no-cache','Pragma':'no-cache'}
     try:
         req=urllib.request.Request(url+'?nicesv_refresh='+freshness,headers=headers)
         with urllib.request.urlopen(req,timeout=7) as response:
             page=response.read(800000).decode('utf-8','replace')
-        match=re.search(r'<meta[^>]+property=["\\\']og:image["\\\'][^>]+content=["\\\']([^"\\\']+)',page,re.I)
-        if not match:
-            match=re.search(r'<meta[^>]+content=["\\\']([^"\\\']+)["\\\'][^>]+property=["\\\']og:image',page,re.I)
-        if match:
-            avatar=html.unescape(match.group(1))
-            if avatar.startswith('http://'):
-                avatar='https://'+avatar[7:]
-            if steam_avatar_allowed(avatar):
-                result['avatar']=avatar
+        from html.parser import HTMLParser
+        class SteamMetaParser(HTMLParser):
+            def __init__(self):
+                super().__init__()
+                self.meta={}
+            def handle_starttag(self,tag,attrs):
+                if tag!='meta':
+                    return
+                values=dict(attrs)
+                prop=values.get('property') or values.get('name')
+                if prop and values.get('content'):
+                    self.meta[prop.lower()]=html.unescape(values['content'])
+        meta=SteamMetaParser()
+        meta.feed(page)
+        avatar=meta.meta.get('og:image','')
+        if avatar.startswith('http://'):
+            avatar='https://'+avatar[7:]
+        if avatar and steam_avatar_allowed(avatar):
+            result['avatar']=avatar
+        name=meta.meta.get('og:title') or meta.meta.get('twitter:title')
+        if name:
+            name=re.sub(r'\\s*::\\s*Steam Community\\s*$','',name,flags=re.I).strip()
+            if name and name.lower() not in ('steam community','steam'):
+                result['name']=name
+        if not result['name']:
+            match=re.search(r'<span[^>]*class=["\\\'][^"\\\']*actual_persona_name[^"\\\']*["\\\'][^>]*>(.*?)</span>',page,re.I|re.S)
+            if match:
+                result['name']=html.unescape(re.sub(r'<[^>]+>','',match.group(1))).strip()
     except Exception:
         pass
     try:
-        req=urllib.request.Request(url+'?xml=1&nicesv_refresh='+freshness,headers=headers)
+        # Steam's XML endpoint works most reliably with its canonical ?xml=1 URL.
+        req=urllib.request.Request(url+'?xml=1',headers=headers)
         with urllib.request.urlopen(req,timeout=7) as response:
             raw=response.read(512000)
         root=ET.fromstring(raw)
@@ -126,7 +146,8 @@ def steam_profile():
             avatar='https://'+avatar[7:]
         if not result['avatar'] and avatar and steam_avatar_allowed(avatar):
             result['avatar']=avatar
-        result['name']=root.findtext('steamID') or None
+        if not result['name']:
+            result['name']=(root.findtext('steamID') or '').strip() or None
     except Exception:
         pass
     with steam_lock:
