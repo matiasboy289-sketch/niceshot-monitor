@@ -69,16 +69,23 @@ def fetch():
                 result['player_list_available']=True
     except Exception:pass
     return result
-steam_cache={'at':0,'data':None}
+steam_profiles={'ice':'Ice403978','rain':'Ra1nnx'}
+steam_cache={}
 steam_lock=threading.Lock()
 @app.get('/api/steam-profile')
 def steam_profile():
+    from flask import request
+    profile_key=request.args.get('user','ice').lower()
+    if profile_key not in steam_profiles:
+        return jsonify(error='Perfil no permitido'),400
+    steam_id=steam_profiles[profile_key]
     with steam_lock:
-        if steam_cache['data'] is not None and time.time()-steam_cache['at']<3600:
-            return jsonify(steam_cache['data'])
-        result={'profile_url':'https://steamcommunity.com/id/Ice403978/','avatar':None,'name':None}
+        cached=steam_cache.get(profile_key)
+        if cached and time.time()-cached['at']<3600:
+            return jsonify(cached['data'])
+        result={'profile_url':f'https://steamcommunity.com/id/{steam_id}/','avatar':None,'name':None}
         try:
-            req=urllib.request.Request('https://steamcommunity.com/id/Ice403978/?xml=1',headers={'User-Agent':'NICESV-ProfilePreview/1.0'})
+            req=urllib.request.Request(f'https://steamcommunity.com/id/{steam_id}/?xml=1',headers={'User-Agent':'NICESV-ProfilePreview/1.0'})
             with urllib.request.urlopen(req,timeout=5) as response:
                 xml=response.read(512000)
             root=ET.fromstring(xml)
@@ -88,7 +95,7 @@ def steam_profile():
             result['name']=root.findtext('steamID') or None
         except Exception:
             pass
-        steam_cache.update(at=time.time(),data=result)
+        steam_cache[profile_key]={'at':time.time(),'data':result}
         return jsonify(result)
 @app.get('/api/status')
 def status():
