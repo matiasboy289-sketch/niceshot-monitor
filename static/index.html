@@ -233,6 +233,13 @@ for(const key of keys){
  image.addEventListener('error',()=>{image.hidden=true;fallback.hidden=false});
  if(image.complete&&image.naturalWidth>0){image.hidden=false;fallback.hidden=true}
 }
+for(const key of keys){
+ try{
+  const savedName=sessionStorage.getItem('nicesv-steam-name-'+key);
+  const node=document.getElementById('steamName-'+key);
+  if(savedName&&node){node.textContent=savedName;node.title=savedName}
+ }catch(e){}
+}
 async function updateSteamProfiles(){
  await Promise.all(keys.map(async key=>{
   try{
@@ -240,7 +247,7 @@ async function updateSteamProfiles(){
    if(!response.ok)return;
    const profile=await response.json();
    const nameNode=document.getElementById('steamName-'+key);
-   if(profile.name&&nameNode){nameNode.textContent=profile.name;nameNode.title=profile.name}
+   if(profile.name&&nameNode){nameNode.textContent=profile.name;nameNode.title=profile.name;try{sessionStorage.setItem('nicesv-steam-name-'+key,profile.name)}catch(e){}}
    if(!profile.avatar)return;
    const image=document.getElementById('steamAvatar-'+key);
    if(!image||(image.dataset.avatar===profile.avatar&&image.naturalWidth>0))return;
@@ -252,6 +259,7 @@ async function updateSteamProfiles(){
  }));
 }
 updateSteamProfiles();
+setTimeout(()=>{for(const key of keys){const node=document.getElementById('steamName-'+key);if(node&&node.textContent.trim()==='Cargando perfil…')node.textContent='Perfil de Steam'}},12000);
 
 setInterval(()=>{if(!document.hidden)updateSteamProfiles()},90000);
 })();
