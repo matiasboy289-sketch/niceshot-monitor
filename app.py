@@ -130,14 +130,15 @@ def steam_profile():
     except Exception:
         pass
     with steam_lock:
-        previous_avatar = steam_cache.get(key, {}).get('data', {}).get('avatar')
-        if result['avatar'] and result['avatar'] != previous_avatar:
+        previous=steam_cache.get(key,{}).get('data',{})
+        if not result['name']:
+            result['name']=previous.get('name')
+        if not result['avatar']:
+            result['avatar']=previous.get('avatar')
+        if result['avatar'] and result['avatar'] != previous.get('avatar'):
             with avatar_image_lock:
-                avatar_image_cache.pop(key, None)
-        if result['avatar'] or key not in steam_cache or not steam_cache[key]['data'].get('avatar'):
-            steam_cache[key]={'at':time.time(),'data':result}
-        else:
-            result=steam_cache[key]['data']
+                avatar_image_cache.pop(key,None)
+        steam_cache[key]={'at':time.time(),'data':result}
     return jsonify(result)
 
 avatar_image_cache={}
