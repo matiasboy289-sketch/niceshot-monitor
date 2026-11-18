@@ -130,7 +130,7 @@ body:after{background:linear-gradient(115deg,transparent 35%,#ffffff05 49%,#ffff
 .navstatus.online .light{background:#37ed92!important;box-shadow:0 0 12px #37ed92}
 .navstatus.offline .light{background:#ff4e61!important;box-shadow:0 0 12px #ff4e61}
 .navstatus.checking .light{background:#ddd!important}
-.steam-logo{width:108px;height:108px;object-fit:contain;filter:grayscale(1) brightness(2) drop-shadow(0 0 8px #ffffff55);animation:ecoHover 4s ease-in-out infinite,ecoBreathe 2.8s ease-in-out infinite}
+.steam-logo{width:108px;height:108px;object-fit:contain;filter:grayscale(1) brightness(0) invert(1) drop-shadow(0 0 8px #ffffff55);animation:ecoHover 4s ease-in-out infinite,ecoBreathe 2.8s ease-in-out infinite}
 .eco-card:hover .steam-logo{animation-duration:2.2s,1.8s}
 .admin-contact{display:flex;align-items:center;gap:32px;padding:35px;max-width:850px}
 .admin-avatar{width:118px;height:118px;flex-shrink:0;border:1px solid #ffffff66;border-radius:24px;display:grid;place-items:center;font-size:37px;font-weight:1000;letter-spacing:-3px;background:linear-gradient(135deg,#303030,#090909);text-shadow:0 0 25px #fff9;animation:ecoHover 5s ease-in-out infinite}
@@ -168,6 +168,7 @@ body:after{background:linear-gradient(115deg,transparent 35%,#ffffff05 49%,#ffff
 @keyframes ecoMarquee{from{transform:translateX(0)}to{transform:translateX(calc(-1 * var(--marquee-distance, 2168px)))}}
 @media(max-width:550px){.ecosystem>.eco-card,.ecosystem>.eco-card.eco-wide,.ecosystem>.eco-card.steam-card{flex-basis:230px!important;width:230px!important;min-width:230px!important;max-width:230px!important}.eco-marquee{mask-image:linear-gradient(to right,transparent,#000 3%,#000 97%,transparent)}}
 @media(prefers-reduced-motion:reduce){.ecosystem,.ecosystem.ecosystem{animation:none!important;width:auto!important;max-width:100%!important;overflow-x:auto!important}.eco-marquee{overflow-x:auto;mask-image:none;-webkit-mask-image:none}}
+.steam-card .steam-logo{filter:grayscale(1) brightness(0) invert(1) drop-shadow(0 0 10px #ffffff80)!important}
 </style></head><body>
 <div class="contours" aria-hidden="true"><svg viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice"><g id="waves"></g></svg><svg viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice"><g id="waves2"></g></svg></div><div class="redglow"></div><div class="grain"></div>
 <nav class="nav"><div class="shell nav-inner"><a class="logo" href="#">NICE <b>SV</b></a><div class="navlinks"><a href="#servidores">Servidores</a><a href="#comunidad">Comunidad</a><a href="#ecosistema">Ecosistema</a><a href="#administracion">Administración</a><a href="https://steamcommunity.com/groups/niceshotl4d2" target="_blank" rel="noopener noreferrer">Grupo de Steam</a><a href="https://github.com/matiasboy289-sketch/niceshot-monitor" target="_blank" rel="noopener">Proyecto</a></div><div class="navstatus checking" id="navstatus"><i class="light" id="light"></i><span id="topstatus">CONSULTANDO</span></div></div></nav>
