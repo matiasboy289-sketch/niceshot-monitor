@@ -98,13 +98,29 @@ body:after{background:linear-gradient(115deg,transparent 35%,#ffffff05 49%,#ffff
 @keyframes nodePulse{50%{background:#ffffffaa;box-shadow:0 0 20px #ffffff44}}
 .map-overlay small{color:#fff}
 .cover{background:radial-gradient(circle at 70% 20%,#ffffff25,transparent 45%),linear-gradient(135deg,#333,#080808 70%)}
-.cover img{filter:grayscale(1) contrast(1.1)}
+.cover img{filter:saturate(1.2) contrast(1.08) brightness(.9)}
 .section h2 span{color:#ccc}
 .status.live{color:#fff;border-color:#ffffff80;background:#ffffff12}
 .light{background:#fff!important}
 .steam-card{grid-column:span 2}
 @media(max-width:900px){.steam-card{grid-column:span 2}}
 @media(max-width:520px){.steam-card{grid-column:span 1}}
+
+/* Motion system for ecosystem illustrations; map images keep their original colors */
+@keyframes ecoHover{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-12px) rotate(2deg)}}
+@keyframes ecoOrbit{to{transform:rotate(360deg)}}
+@keyframes ecoBreathe{0%,100%{filter:drop-shadow(0 0 3px #fff3);opacity:.75}50%{filter:drop-shadow(0 0 18px #fffa);opacity:1}}
+@keyframes ecoSweep{0%,100%{transform:translateX(-7px)}50%{transform:translateX(9px)}}
+.eco-art>svg{animation:ecoHover 4.5s ease-in-out infinite,ecoBreathe 3s ease-in-out infinite;transform-origin:center}
+.eco-card:nth-child(2) .eco-art>svg{animation-duration:5.4s,3.7s}
+.eco-card:nth-child(3) .eco-art>svg{animation:ecoSweep 4.2s ease-in-out infinite,ecoBreathe 3.4s ease-in-out infinite}
+.eco-card:nth-child(4) .eco-art>svg{animation-delay:-1.3s,-.7s}
+.eco-card:nth-child(5) .eco-art>svg{animation-delay:-2s,-1s}
+.eco-art .steam-logo{color:#fff;animation:ecoHover 4s ease-in-out infinite,ecoBreathe 2.8s ease-in-out infinite}
+.eco-card:hover .eco-art>svg{animation-duration:2.2s,1.8s}
+.eco-art{overflow:hidden}
+.cover img{filter:saturate(1.25) contrast(1.1) brightness(.95)!important}
+@media(prefers-reduced-motion:reduce){.eco-art>svg,.eco-art .steam-logo{animation:none!important}}
 </style></head><body>
 <div class="contours" aria-hidden="true"><svg viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice"><g id="waves"></g></svg><svg viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice"><g id="waves2"></g></svg></div><div class="redglow"></div><div class="grain"></div>
 <nav class="nav"><div class="shell nav-inner"><a class="logo" href="#">NICE <b>SV</b></a><div class="navlinks"><a href="#servidores">Servidores</a><a href="#comunidad">Comunidad</a><a href="#ecosistema">Ecosistema</a><a href="https://steamcommunity.com/groups/niceshotl4d2" target="_blank" rel="noopener noreferrer">Grupo de Steam</a><a href="https://github.com/matiasboy289-sketch/niceshot-monitor" target="_blank" rel="noopener">Proyecto</a></div><div class="navstatus"><i class="light" id="light"></i><span id="topstatus">CONSULTANDO</span></div></div></nav>
@@ -117,7 +133,7 @@ body:after{background:linear-gradient(115deg,transparent 35%,#ffffff05 49%,#ffff
 <article class="eco-card"><div class="eco-art"><svg viewBox="0 0 140 90" width="120" height="90" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M35 62c18-32 52-32 70 0M30 70h80M45 50v-15M95 50v-15"/><circle cx="70" cy="27" r="8"/><path d="M61 27h18M70 18v18"/></svg></div><div class="eco-content"><span class="eco-tag">MAPAS</span><h3>Campañas oficiales</h3><p>Identificación automática de mapas oficiales cuando el servidor cambia de capítulo.</p></div></article>
 <article class="eco-card"><div class="eco-art"><svg viewBox="0 0 140 90" width="120" height="90" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="56" cy="32" r="14"/><path d="M27 74c0-22 58-22 58 0M90 22c22 0 22 28 0 28M92 55c14 0 23 8 23 19"/></svg></div><div class="eco-content"><span class="eco-tag">COMUNIDAD</span><h3>Jugadores conectados</h3><p>Consulta los nombres cuando la respuesta A2S_PLAYER está disponible.</p></div></article>
 <article class="eco-card"><div class="eco-art"><svg viewBox="0 0 140 90" width="120" height="90" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M70 10 105 25v25c0 20-20 31-35 37-15-6-35-17-35-37V25z"/><path d="m52 48 13 13 25-27"/></svg></div><div class="eco-content"><span class="eco-tag">ACCESO</span><h3>Conexión directa</h3><p>Abre Left 4 Dead 2 desde Steam para entrar al servidor.</p><a href="steam://connect/38.7.197.74:25579">Conectar ↗</a></div></article>
-<article class="eco-card steam-card"><div class="eco-art"><svg viewBox="0 0 140 90" width="120" height="90" fill="none" stroke="currentColor" stroke-width="2"><circle cx="68" cy="44" r="32"/><circle cx="80" cy="32" r="11"/><circle cx="80" cy="32" r="5"/><path d="m53 55 17-16M37 58l19 10 9-13-17-8"/></svg></div><div class="eco-content"><span class="eco-tag">STEAM OFICIAL</span><h3>Grupo de Steam</h3><p>Únete a la comunidad NICE SHOT para encontrar jugadores y compartir partidas.</p><a href="https://steamcommunity.com/groups/niceshotl4d2" target="_blank" rel="noopener noreferrer">Unirme al grupo ↗</a></div></article></div></section><section class="section shell" id="comunidad"><div class="section-tag">03 / COMUNIDAD</div><div class="section-head"><h2>Construido para <span>sobrevivientes.</span></h2><div class="section-desc">Un espacio para disfrutar Left 4 Dead 2 competitivo.</div></div><div class="feature-grid"><div class="feature"><div class="num">01 / LIVE</div><h3>Monitoreo en vivo</h3><p>Mapa y jugadores consultados a través de Steam A2S.</p></div><div class="feature"><div class="num">02 / CONNECT</div><h3>Acceso directo</h3><p>Conéctate desde Steam con un solo clic.</p></div><div class="feature"><div class="num">03 / COMMUNITY</div><h3>NICE SHOT</h3><p>Un punto de encuentro para nuestra comunidad L4D2.</p></div></div></section></main>
+<article class="eco-card steam-card"><div class="eco-art"><svg class="steam-logo" viewBox="0 0 120 120" width="108" height="108" role="img" aria-label="Steam" fill="none"><circle cx="60" cy="60" r="52" stroke="currentColor" stroke-width="2" opacity=".32"/><circle cx="78" cy="42" r="22" stroke="currentColor" stroke-width="6"/><circle cx="78" cy="42" r="11" fill="currentColor"/><path d="M17 69 40 79 55 64 65 72 47 95 21 85" stroke="currentColor" stroke-width="8" stroke-linejoin="round"/><circle cx="38" cy="82" r="11" stroke="currentColor" stroke-width="5"/></svg></div><div class="eco-content"><span class="eco-tag">STEAM OFICIAL</span><h3>Grupo de Steam</h3><p>Únete a la comunidad NICE SHOT para encontrar jugadores y compartir partidas.</p><a href="https://steamcommunity.com/groups/niceshotl4d2" target="_blank" rel="noopener noreferrer">Unirme al grupo ↗</a></div></article></div></section><section class="section shell" id="comunidad"><div class="section-tag">03 / COMUNIDAD</div><div class="section-head"><h2>Construido para <span>sobrevivientes.</span></h2><div class="section-desc">Un espacio para disfrutar Left 4 Dead 2 competitivo.</div></div><div class="feature-grid"><div class="feature"><div class="num">01 / LIVE</div><h3>Monitoreo en vivo</h3><p>Mapa y jugadores consultados a través de Steam A2S.</p></div><div class="feature"><div class="num">02 / CONNECT</div><h3>Acceso directo</h3><p>Conéctate desde Steam con un solo clic.</p></div><div class="feature"><div class="num">03 / COMMUNITY</div><h3>NICE SHOT</h3><p>Un punto de encuentro para nuestra comunidad L4D2.</p></div></div></section></main>
 <footer class="shell footer"><span>© 2026 NICE SV · LEFT 4 DEAD 2 COMMUNITY</span><span>DESARROLLADO PARA LA COMUNIDAD</span></footer>
 <script>
 (function(){const a=document.getElementById('waves'),b=document.getElementById('waves2');const ns='http://www.w3.org/2000/svg';for(let i=0;i<32;i++){let p=document.createElementNS(ns,'path');let y=-100+i*34;p.setAttribute('d','M -200 '+(y+120)+' C 80 '+(y-250)+' 260 '+(y+300)+' 510 '+(y+45)+' S 890 '+(y-140)+' 1120 '+(y+100)+' S 1450 '+(y-160)+' 1640 '+(y+35));a.appendChild(p);let q=p.cloneNode();q.setAttribute('transform','translate(130 120)');b.appendChild(q)}})();
