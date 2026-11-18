@@ -226,7 +226,7 @@ body{background:#050608}
 <script>
 (function(){
 const keys=['ice','rain','founder2','vip1','vip2','vip3','vip4','vip5'];
-const fallbackNames={ice:'Nice Shot?.',rain:'ldk. ☆',founder2:'Jizum',vip1:'_desvergonzadaintergalactica',vip2:'Chinita_che',vip3:'eeniemeenieminymo',vip4:'Steam 76561199137448967',vip5:'SameNumberSameHood'};
+const fallbackNames={ice:'Nice Shot?.',rain:'ldk. ☆',founder2:'Jizum',vip1:'_desvergonzadaintergalactica',vip2:'Chinita_che',vip3:'eeniemeenieminymo',vip4:'Perfil de Steam',vip5:'SameNumberSameHood'};
 function savedProfile(key){
  try{return JSON.parse(localStorage.getItem('nicesv-steam-profile-'+key)||'null')||{}}catch(e){return {}}
 }
@@ -234,7 +234,7 @@ function showName(key,name){
  const node=document.getElementById('steamName-'+key);
  if(!node||!name)return;
  const clean=String(name).replace(/^Steam Community\s*::\s*/i,'').replace(/\s*::\s*Steam Community$/i,'').trim();
- if(clean&&clean.toLowerCase()!=='steam community'){node.textContent=clean;node.title=clean}
+ if(clean&&clean.toLowerCase()!=='steam community'&&!/^steam\s+\d{12,}$/.test(clean.toLowerCase())){node.textContent=clean;node.title=clean}
 }
 function showAvatar(key,url){
  const image=document.getElementById('steamAvatar-'+key);
