@@ -72,7 +72,7 @@ def fetch():
                 result['player_list_available']=True
     except Exception:pass
     return result
-steam_profiles={'ice':'Ice403978','rain':'Ra1nnx'}
+steam_profiles={'ice':'Ice403978','rain':'Ra1nnx','founder2':'76561199036217593'}
 steam_cache={}
 steam_lock=threading.Lock()
 
@@ -95,7 +95,7 @@ def steam_profile():
         if cached and time.time()-cached['at'] < (600 if cached['data'].get('avatar') else 60):
             return jsonify(cached['data'])
     steam_id=steam_profiles[key]
-    url=f'https://steamcommunity.com/id/{steam_id}/'
+    url=(f'https://steamcommunity.com/profiles/{steam_id}/' if steam_id.isdigit() else f'https://steamcommunity.com/id/{steam_id}/')
     result={'profile_url':url,'avatar':None,'name':None}
     try:
         req=urllib.request.Request(url+'?xml=1',headers={'User-Agent':'Mozilla/5.0 (compatible; NiceSV/1.0)'})
