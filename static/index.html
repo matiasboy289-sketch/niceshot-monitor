@@ -226,9 +226,10 @@ async function updateSteamProfiles(force=false){
    if(profile.name)document.getElementById('steamName-'+key).textContent=profile.name;
    if(!profile.avatar)return;
    const image=document.getElementById('steamAvatar-'+key);
-   if(image.dataset.avatar===profile.avatar&&image.naturalWidth>0)return;
+   if(!force&&image.dataset.avatar===profile.avatar&&image.naturalWidth>0&&Date.now()-Number(image.dataset.checkedAt||0)<20000)return;
    image.dataset.avatar=profile.avatar;
-   image.src='/api/steam-avatar/'+key+'?v='+Math.floor(Date.now()/600000);
+   image.dataset.checkedAt=String(Date.now());
+   image.src='/api/steam-avatar/'+key+'?v='+Date.now();
   }catch(e){/* Mantener foto o iniciales de respaldo */}
  }));
 }
