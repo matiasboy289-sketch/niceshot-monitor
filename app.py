@@ -131,7 +131,7 @@ def steam_profile():
                 name=re.sub(r'^Steam Community\s*::\s*','',name,flags=re.I).strip()
                 result['name']=name
         if not result['name']:
-            match=re.search(r'<span[^>]*class=["\\\'][^"\\\']*actual_persona_name[^"\\\']*["\\\'][^>]*>(.*?)</span>',page,re.I|re.S)
+            match=re.search(r'<span[^>]*actual_persona_name[^>]*>(.*?)</span>',page,re.I|re.S)
             if match:
                 result['name']=html.unescape(re.sub(r'<[^>]+>','',match.group(1))).strip()
     except Exception:
