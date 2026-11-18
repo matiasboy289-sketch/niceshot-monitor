@@ -126,7 +126,7 @@ def steam_profile():
             result['avatar']=avatar
         name=meta.meta.get('og:title') or meta.meta.get('twitter:title')
         if name:
-            name=re.sub(r'\s*::\s*Steam Community\s*,'',name,flags=re.I).strip()
+            name=re.sub(r'\s*::\s*Steam Community\s*$','',name,flags=re.I).strip()
             if name and name.lower() not in ('steam community','steam'):
                 name=re.sub(r'^Steam Community\s*::\s*','',name,flags=re.I).strip()
                 result['name']=name
