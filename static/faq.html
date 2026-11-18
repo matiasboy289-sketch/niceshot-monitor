@@ -29,9 +29,60 @@ summary{transition:color .25s ease}summary:hover{color:#d9c7ff}
 @keyframes headingGlow{from{text-shadow:0 0 8px rgba(115,85,224,.13)}to{text-shadow:0 0 22px rgba(165,120,255,.48)}}
 @keyframes fadeRise{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
 @media(prefers-reduced-motion:reduce){body::before,body::after,.hero::before,.heroin h1,.category,.category h2,.subheading{animation:none!important}.command-card{transition:none}}
+
+/* Cinematic deep-space FAQ visual system */
+body{background:#03050d;position:relative}
+body::before{inset:-30%;background:radial-gradient(ellipse 30% 25% at 19% 28%,#6726b35c,transparent 82%),radial-gradient(ellipse 36% 29% at 77% 56%,#1459c35e,transparent 80%),radial-gradient(ellipse 24% 29% at 61% 15%,#d51c6950,transparent 80%),radial-gradient(ellipse 39% 27% at 36% 80%,#5222b355,transparent 80%);filter:blur(52px) saturate(1.3);animation:galaxyDrift 35s ease-in-out infinite alternate}
+body::after{opacity:.75;animation:starsTravel 105s linear infinite}
+.space-scene{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;isolation:isolate}
+.space-scene .space-cloud{position:absolute;width:70vw;height:75vh;border-radius:50%;filter:blur(80px);opacity:.26;mix-blend-mode:screen;animation:cloudFloat 32s ease-in-out infinite alternate}
+.space-cloud.one{top:-22%;right:-19%;background:radial-gradient(ellipse,#bb428f,transparent 65%)}
+.space-cloud.two{bottom:-29%;left:-18%;background:radial-gradient(ellipse,#2459d5,transparent 65%);animation-delay:-13s}
+.space-scene .space-stars{position:absolute;inset:0;background-image:radial-gradient(1px 1px at 25px 50px,#fff 98%,transparent),radial-gradient(1px 1px at 190px 80px,#a5caff 98%,transparent),radial-gradient(2px 2px at 88px 215px,#fff 98%,transparent);background-size:293px 263px,397px 331px,509px 421px;opacity:.53;animation:starParallax 120s linear infinite}
+.space-scene .space-stars.far{opacity:.27;transform:scale(1.3);animation-duration:170s}
+.space-scene .shooting-star{position:absolute;top:13%;left:110%;width:180px;height:1px;background:linear-gradient(90deg,transparent,#a6c9ff,#fff);transform:rotate(-27deg);filter:drop-shadow(0 0 5px #9bcaff);opacity:0;animation:meteorPass 15s linear infinite}
+.space-scene .shooting-star.second{top:42%;animation-delay:8s;animation-duration:21s}
+.hero{min-height:440px;display:flex;align-items:center;background:radial-gradient(ellipse at 76% 45%,#913b8950,transparent 40%),linear-gradient(110deg,#070719e8,#160d2bc7 54%,#0c1124dc);border-bottom:1px solid #a6b9ff38;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.35;background:repeating-linear-gradient(105deg,transparent 0 55px,#9c8cfc0a 56px 57px,transparent 58px 120px);animation:lightSweep 30s linear infinite}
+.heroin{z-index:2;width:100%;padding-top:95px;padding-bottom:95px}
+.heroin h1{font-weight:900;letter-spacing:-.055em;line-height:1.07;max-width:960px;text-wrap:balance;filter:drop-shadow(0 0 24px #b38dff45)}
+.heroin p{color:#d5d6e9;max-width:640px}
+.planet{position:absolute;right:8%;top:12%;width:240px;aspect-ratio:1;border-radius:50%;pointer-events:none;opacity:.75;background:radial-gradient(circle at 32% 25%,#b0b6ff 0%,#5e61b5 16%,#353368 37%,#10132c 65%,#050817 76%);box-shadow:inset -23px -18px 35px #030614,0 0 70px #6559cf45,0 0 140px #6c57d32b;animation:planetHover 16s ease-in-out infinite alternate}
+.planet::before{content:"";position:absolute;inset:46% -27%;border:13px solid #aaa7e45c;border-left-color:#c2bcff9e;border-bottom-color:#7978c355;border-radius:50%;transform:rotate(-25deg) scaleY(.32);box-shadow:0 0 15px #c5baff44}
+.planet::after{content:"";position:absolute;inset:0;border-radius:50%;background:repeating-linear-gradient(167deg,transparent 0 17px,#f7eaff0b 18px 24px,transparent 25px 40px)}
+.hero .eyebrow{display:inline-flex;align-items:center;gap:10px;letter-spacing:3px}
+.hero .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:#a5caff;box-shadow:0 0 14px #c0aaff;animation:beacon 2.8s ease-in-out infinite}
+.chips a{background:#ffffff0b;border:1px solid #b6b5ff65;backdrop-filter:blur(12px);transition:transform .25s,background .25s,box-shadow .25s}
+.chips a:hover{transform:translateY(-3px);background:#d8d2ff;color:#101123;box-shadow:0 0 28px #8b81ff70}
+.main{position:relative}.intro{font-size:15px;color:#c3c6d9}
+.category{border-top:1px solid #b4b6ff19;padding-top:28px}
+.category h2{font-weight:850;letter-spacing:-.04em}
+details{position:relative;border:1px solid #afb5ff30;border-radius:16px;background:linear-gradient(120deg,#141626ed,#0a0c17ed);box-shadow:0 8px 30px #0005;overflow:hidden}
+details::before,.command-card::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,#a6b9ff88,transparent);opacity:.35;transition:opacity .25s}
+details:hover::before,.command-card:hover::before,details[open]::before{opacity:1}
+details[open]{border-color:#9995ff70;box-shadow:0 12px 38px #0007,0 0 28px #7358e01c}
+details[open] .answer{animation:answerReveal .35s ease-out both}
+summary{outline-offset:-5px}summary::after{transition:transform .25s,color .25s}details[open] summary::after{color:#b8aaff}
+.command-card{position:relative;overflow:hidden;box-shadow:0 10px 30px #0004}
+.command-card:hover{transform:translateY(-4px);box-shadow:0 15px 40px #0008,0 0 28px #7767e527}
+.panel{box-shadow:0 12px 35px #0005}
+.button{transition:transform .25s,box-shadow .25s}.button:hover{transform:translateY(-3px);box-shadow:0 8px 28px #b3aaff55}
+.reveal-ready .category,.reveal-ready .intro,.reveal-ready .panel{animation:none;opacity:1;transform:none}
+.reveal-ready .category.reveal-pending,.reveal-ready .intro.reveal-pending,.reveal-ready .panel.reveal-pending{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.75,.2,1)}
+.reveal-ready .category.reveal-visible,.reveal-ready .intro.reveal-visible,.reveal-ready .panel.reveal-visible{opacity:1;transform:translateY(0)}
+@keyframes cloudFloat{from{transform:translate(-9%,4%) scale(1)}to{transform:translate(10%,-8%) scale(1.25)}}
+@keyframes starParallax{to{background-position:293px -263px,-397px 331px,509px -421px}}
+@keyframes meteorPass{0%,76%{opacity:0;transform:translate(0,0) rotate(-27deg)}78%{opacity:1}84%{opacity:0;transform:translate(-145vw,70vh) rotate(-27deg)}100%{opacity:0}}
+@keyframes planetHover{from{transform:translateY(-8px) rotate(-4deg)}to{transform:translateY(18px) rotate(5deg)}}
+@keyframes lightSweep{to{background-position:800px 0}}
+@keyframes beacon{50%{opacity:.45;box-shadow:0 0 25px #d2b8ff}}
+@keyframes answerReveal{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:900px){.planet{right:-6%;top:20%;width:190px;opacity:.42}.hero{min-height:390px}}
+@media(max-width:550px){.planet{width:145px;right:-35px;top:10%;opacity:.28}.hero{min-height:350px}.heroin{padding-top:62px;padding-bottom:65px}.space-scene .space-cloud{filter:blur(45px)}}
+@media(prefers-reduced-motion:reduce){.space-scene *,.planet,.hero::after,.hero .eyebrow::before{animation:none!important}.reveal-ready .reveal-pending{opacity:1!important;transform:none!important;transition:none!important}}
 </style></head>
-<body><nav class="nav"><div class="shell navin"><a class="brand" href="/">NICE <span>SV</span></a><div class="links"><a href="/#servidores">Servidores</a><a href="/#comunidad">Comunidad</a><a href="/#ecosistema">Ecosistema</a><a href="/custom-maps.html">Mapas Custom</a><a href="/bans.html">Baneos</a><a href="/faq.html" aria-current="page">FAQ</a><a href="/#administracion">Administración</a><a href="https://steamcommunity.com/groups/niceshotl4d2" target="_blank" rel="noopener noreferrer">Grupo de Steam</a></div><a class="status" href="/#servidores">● VER SERVIDOR</a></div></nav>
-<header class="hero"><div class="shell heroin"><span class="eyebrow">NICE SV · CENTRO DE AYUDA</span><h1>Preguntas frecuentes<span style="color:#ffadb2">.</span></h1><p>Tutoriales y respuestas para jugar en nuestra comunidad de Left 4 Dead 2. Aprende a instalar campañas personalizadas, consulta los comandos y conoce dónde está alojado NICE SV.</p><div class="chips"><a href="#mapas">Mapas Custom</a><a href="#comandos">Comandos</a><a href="#alojamiento">Alojamiento</a></div></div></header>
+<body><div class="space-scene" aria-hidden="true"><div class="space-cloud one"></div><div class="space-cloud two"></div><div class="space-stars far"></div><div class="space-stars"></div><div class="shooting-star"></div><div class="shooting-star second"></div></div><nav class="nav"><div class="shell navin"><a class="brand" href="/">NICE <span>SV</span></a><div class="links"><a href="/#servidores">Servidores</a><a href="/#comunidad">Comunidad</a><a href="/#ecosistema">Ecosistema</a><a href="/custom-maps.html">Mapas Custom</a><a href="/bans.html">Baneos</a><a href="/faq.html" aria-current="page">FAQ</a><a href="/#administracion">Administración</a><a href="https://steamcommunity.com/groups/niceshotl4d2" target="_blank" rel="noopener noreferrer">Grupo de Steam</a></div><a class="status" href="/#servidores">● VER SERVIDOR</a></div></nav>
+<header class="hero"><div class="planet" aria-hidden="true"></div><div class="shell heroin"><span class="eyebrow">NICE SV · CENTRO DE AYUDA</span><h1>Preguntas frecuentes<span style="color:#ffadb2">.</span></h1><p>Tutoriales y respuestas para jugar en nuestra comunidad de Left 4 Dead 2. Aprende a instalar campañas personalizadas, consulta los comandos y conoce dónde está alojado NICE SV.</p><div class="chips"><a href="#mapas">Mapas Custom</a><a href="#comandos">Comandos</a><a href="#alojamiento">Alojamiento</a></div></div></header>
 <main class="shell main"><p class="intro">Selecciona una pregunta para ver su respuesta. Esta guía se irá ampliando con los tutoriales oficiales de NICE SV.</p>
 <section class="category" id="mapas"><h2>Instalación de mapas custom</h2><p>Guía para descargar e instalar campañas personalizadas de Left 4 Dead 2.</p><div class="faq">
 <details open><summary>¿Cómo instalo un mapa custom?</summary><div class="answer"><ol><li>Visita nuestro <a href="/custom-maps.html">catálogo de mapas custom</a> y descarga la campaña que quieras jugar.</li><li>Si el archivo viene comprimido en <code>.7z</code> o <code>.zip</code>, extráelo con un descompresor.</li><li>Localiza el archivo del mapa con extensión <code>.vpk</code>.</li><li>En Steam, abre la carpeta de instalación de Left 4 Dead 2 desde <strong>Biblioteca → Left 4 Dead 2 → Propiedades → Archivos instalados → Examinar</strong>.</li><li>Copia el <code>.vpk</code> dentro de <code>left4dead2/addons/</code>.</li><li>Abre o reinicia el juego y comprueba que la campaña esté disponible.</li></ol><p class="note">No copies el archivo comprimido directamente a <code>addons</code>: debes colocar el archivo <code>.vpk</code>. Algunas descargas pueden contener varios archivos VPK; conserva todos los que incluya la campaña.</p></div></details>
@@ -64,4 +115,12 @@ summary{transition:color .25s ease}summary:hover{color:#d9c7ff}
 <details><summary>¿Cómo contacto con la administración?</summary><div class="answer">Puedes visitar los perfiles del equipo en la sección <a href="/#administracion">Administración</a> o comunicarte mediante el <a href="https://steamcommunity.com/groups/niceshotl4d2" target="_blank" rel="noopener noreferrer">Grupo de Steam</a>.</div></details>
 </div></section>
 <div class="panel"><strong>¿Te falta algún tutorial?</strong><p>Seguiremos agregando instrucciones sobre mapas, comandos, configuración y solución de errores frecuentes de Left 4 Dead 2.</p><a class="button" href="https://steamcommunity.com/groups/niceshotl4d2" target="_blank" rel="noopener noreferrer">Consultar en el Grupo de Steam ↗</a></div>
-</main><footer class="footer"><div class="shell">© NICE SV · Left 4 Dead 2 Community · <a href="/">Volver al inicio</a></div></footer></body></html>
+</main><footer class="footer"><div class="shell">© NICE SV · Left 4 Dead 2 Community · <a href="/">Volver al inicio</a></div></footer><script>
+(function(){
+ if(!('IntersectionObserver' in window)||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ const elements=[...document.querySelectorAll('.intro,.category,.panel')];
+ document.body.classList.add('reveal-ready');
+ const observer=new IntersectionObserver(entries=>{for(const entry of entries){if(entry.isIntersecting){entry.target.classList.remove('reveal-pending');entry.target.classList.add('reveal-visible');observer.unobserve(entry.target)}}},{threshold:.06,rootMargin:'0px 0px 45px 0px'});
+ elements.forEach(el=>{if(el.getBoundingClientRect().top>window.innerHeight-30){el.classList.add('reveal-pending');observer.observe(el)}else{el.classList.add('reveal-visible')}});
+})();
+</script></body></html>
