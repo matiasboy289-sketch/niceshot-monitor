@@ -184,6 +184,61 @@ def supabase_bans_rows():
     with urllib.request.urlopen(request, timeout=8) as response:
         return __import__('json').load(response)
 
+@app.post('/api/bans/ingest')
+def ingest_ban():
+    import json
+    import hmac
+    from flask import request
+    token = os.getenv('NICESV_INGEST_TOKEN', '')
+    received = request.headers.get('X-NiceSV-Token', '')
+    if not token:
+        return jsonify(error='Sin configurar'), 503
+    if not hmac.compare_digest(received, token):
+        return jsonify(error='No autorizado'), 401
+    if request.content_length is not None and request.content_length > 8192:
+        return jsonify(error='Solicitud demasiado grande'), 413
+    payload = request.get_json(silent=True)
+    if not isinstance(payload, dict):
+        return jsonify(error='JSON invalido'), 400
+    steamid = str(payload.get('steamid') or '').strip()
+    if not re.fullmatch(r'STEAM_[01]:[01]:[0-9]{1,16}', steamid):
+        return jsonify(error='SteamID invalido'), 400
+    event = str(payload.get('event_type') or 'ban_requested')
+    if event not in ('ban_requested', 'unban_requested', 'ban_confirmed'):
+        return jsonify(error='Evento invalido'), 400
+    try:
+        minutes = int(payload.get('duration_minutes') or 0)
+    except (ValueError, TypeError):
+        return jsonify(error='Duracion invalida'), 400
+    if not 0 <= minutes <= 5256000:
+        return jsonify(error='Duracion fuera de rango'), 400
+    row = {
+        'steamid': steamid,
+        'player_name': str(payload.get('player_name') or '')[:120],
+        'admin_name': str(payload.get('admin_name') or '')[:120],
+        'reason': str(payload.get('reason') or 'Sin motivo')[:500],
+        'source': str(payload.get('source') or 'NICE SV')[:80],
+        'event_type': event,
+        'duration_minutes': minutes,
+    }
+    base = os.getenv('SUPABASE_URL', '').rstrip('/')
+    secret = os.getenv('SUPABASE_SECRET_KEY', '')
+    if not base.startswith('https://') or not secret:
+        return jsonify(error='Base de datos sin configurar'), 503
+    req = urllib.request.Request(
+        base + '/rest/v1/nicesv_bans',
+        data=json.dumps(row).encode('utf-8'),
+        headers={'apikey': secret, 'Content-Type': 'application/json',
+                 'Prefer': 'return=minimal', 'User-Agent': 'NICESV-Monitor/1.1'},
+        method='POST'
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=8) as response:
+            return jsonify(ok=True), 201
+    except Exception:
+        app.logger.exception('NICE SV ban ingest failed')
+        return jsonify(error='No se pudo guardar el evento'), 503
+
 @app.get('/api/bans')
 def bans():
     from datetime import datetime, timezone
