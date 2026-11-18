@@ -1,6 +1,8 @@
 import os, time, socket, struct, threading
 import urllib.request
 import xml.etree.ElementTree as ET
+import re
+import html
 from flask import Flask, jsonify, send_from_directory
 app=Flask(__name__,static_folder='static',static_url_path='')
 HOST=os.getenv('L4D2_HOST','38.7.197.74')
@@ -72,31 +74,61 @@ def fetch():
 steam_profiles={'ice':'Ice403978','rain':'Ra1nnx'}
 steam_cache={}
 steam_lock=threading.Lock()
+
+def steam_avatar_allowed(url):
+    from urllib.parse import urlparse
+    host=(urlparse(url).hostname or '').lower()
+    return url.startswith('https://') and (
+        host=='steamstatic.com' or host.endswith('.steamstatic.com') or
+        host=='steamusercontent.com' or host.endswith('.steamusercontent.com') or
+        host=='steamcommunity.com' or host.endswith('.steamcommunity.com')
+    )
+
 @app.get('/api/steam-profile')
 def steam_profile():
     from flask import request
-    profile_key=request.args.get('user','ice').lower()
-    if profile_key not in steam_profiles:
+    key=request.args.get('user','ice').lower()
+    if key not in steam_profiles:
         return jsonify(error='Perfil no permitido'),400
-    steam_id=steam_profiles[profile_key]
     with steam_lock:
-        cached=steam_cache.get(profile_key)
-        if cached and time.time()-cached['at']<3600:
+        cached=steam_cache.get(key)
+        if cached and time.time()-cached['at'] < (600 if cached['data'].get('avatar') else 60):
             return jsonify(cached['data'])
-        result={'profile_url':f'https://steamcommunity.com/id/{steam_id}/','avatar':None,'name':None}
+    steam_id=steam_profiles[key]
+    url=f'https://steamcommunity.com/id/{steam_id}/'
+    result={'profile_url':url,'avatar':None,'name':None}
+    try:
+        req=urllib.request.Request(url+'?xml=1',headers={'User-Agent':'Mozilla/5.0 (compatible; NiceSV/1.0)'})
+        with urllib.request.urlopen(req,timeout=7) as response:
+            raw=response.read(512000)
+        root=ET.fromstring(raw)
+        avatar=root.findtext('avatarFull') or root.findtext('avatarMedium')
+        if avatar and steam_avatar_allowed(avatar):
+            result['avatar']=avatar
+        result['name']=root.findtext('steamID') or None
+    except Exception:
+        pass
+    if not result['avatar']:
         try:
-            req=urllib.request.Request(f'https://steamcommunity.com/id/{steam_id}/?xml=1',headers={'User-Agent':'NICESV-ProfilePreview/1.0'})
-            with urllib.request.urlopen(req,timeout=5) as response:
-                xml=response.read(512000)
-            root=ET.fromstring(xml)
-            avatar=root.findtext('avatarFull') or root.findtext('avatarMedium')
-            if avatar and avatar.startswith('https://') and ('steamstatic.com/' in avatar or 'steamusercontent.com/' in avatar or 'steamcommunity.com/' in avatar):
-                result['avatar']=avatar
-            result['name']=root.findtext('steamID') or None
+            req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0 (compatible; NiceSV/1.0)'})
+            with urllib.request.urlopen(req,timeout=7) as response:
+                page=response.read(600000).decode('utf-8','replace')
+            match=re.search(r'<meta[^>]+property=["\\\']og:image["\\\'][^>]+content=["\\\']([^"\\\']+)',page,re.I)
+            if not match:
+                match=re.search(r'<meta[^>]+content=["\\\']([^"\\\']+)["\\\'][^>]+property=["\\\']og:image',page,re.I)
+            if match:
+                avatar=html.unescape(match.group(1))
+                if steam_avatar_allowed(avatar):
+                    result['avatar']=avatar
         except Exception:
             pass
-        steam_cache[profile_key]={'at':time.time(),'data':result}
-        return jsonify(result)
+    with steam_lock:
+        if result['avatar'] or key not in steam_cache or not steam_cache[key]['data'].get('avatar'):
+            steam_cache[key]={'at':time.time(),'data':result}
+        else:
+            result=steam_cache[key]['data']
+    return jsonify(result)
+
 @app.get('/api/status')
 def status():
     with lock:
