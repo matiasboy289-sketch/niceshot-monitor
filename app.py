@@ -3,7 +3,8 @@ import urllib.request
 import xml.etree.ElementTree as ET
 import re
 import html
-from flask import Flask, jsonify, send_from_directory
+from urllib.parse import urlparse
+from flask import Flask, jsonify, send_from_directory, Response
 app=Flask(__name__,static_folder='static',static_url_path='')
 HOST=os.getenv('L4D2_HOST','38.7.197.74')
 PORT=int(os.getenv('L4D2_PORT','25579'))
@@ -76,7 +77,6 @@ steam_cache={}
 steam_lock=threading.Lock()
 
 def steam_avatar_allowed(url):
-    from urllib.parse import urlparse
     host=(urlparse(url).hostname or '').lower()
     return url.startswith('https://') and (
         host=='steamstatic.com' or host.endswith('.steamstatic.com') or
@@ -102,7 +102,9 @@ def steam_profile():
         with urllib.request.urlopen(req,timeout=7) as response:
             raw=response.read(512000)
         root=ET.fromstring(raw)
-        avatar=root.findtext('avatarFull') or root.findtext('avatarMedium')
+        avatar=html.unescape((root.findtext('avatarFull') or root.findtext('avatarMedium') or '').strip())
+        if avatar.startswith('http://'):
+            avatar='https://'+avatar[7:]
         if avatar and steam_avatar_allowed(avatar):
             result['avatar']=avatar
         result['name']=root.findtext('steamID') or None
@@ -128,6 +130,44 @@ def steam_profile():
         else:
             result=steam_cache[key]['data']
     return jsonify(result)
+
+avatar_image_cache={}
+avatar_image_lock=threading.Lock()
+@app.get('/api/steam-avatar/<key>')
+def steam_avatar(key):
+    if key not in steam_profiles:
+        return jsonify(error='Perfil no permitido'),404
+    with avatar_image_lock:
+        saved=avatar_image_cache.get(key)
+        if saved and time.time()-saved['at']<600:
+            return Response(saved['bytes'],mimetype=saved['mime'],headers={'Cache-Control':'public, max-age=300'})
+    profile_response=steam_profile_for_key(key)
+    avatar_url=profile_response.get('avatar')
+    if not avatar_url or not steam_avatar_allowed(avatar_url):
+        return jsonify(error='Steam no entregó un avatar público'),404
+    try:
+        req=urllib.request.Request(avatar_url,headers={'User-Agent':'Mozilla/5.0','Referer':'https://steamcommunity.com/'})
+        with urllib.request.urlopen(req,timeout=8) as response:
+            mime=response.headers.get('Content-Type','').split(';')[0].lower()
+            if mime not in ('image/jpeg','image/png','image/webp','image/gif'):
+                return jsonify(error='Formato de avatar no compatible'),502
+            data=response.read(1048577)
+        if len(data)>1048576:
+            return jsonify(error='Imagen demasiado grande'),502
+        with avatar_image_lock:
+            avatar_image_cache[key]={'at':time.time(),'bytes':data,'mime':mime}
+        return Response(data,mimetype=mime,headers={'Cache-Control':'public, max-age=300'})
+    except Exception:
+        with avatar_image_lock:
+            saved=avatar_image_cache.get(key)
+        if saved:
+            return Response(saved['bytes'],mimetype=saved['mime'],headers={'Cache-Control':'public, max-age=60'})
+        return jsonify(error='No se pudo descargar el avatar desde Steam'),502
+
+def steam_profile_for_key(key):
+    with app.test_request_context('/api/steam-profile?user='+key):
+        response=steam_profile()
+        return response.get_json()
 
 @app.get('/api/status')
 def status():
