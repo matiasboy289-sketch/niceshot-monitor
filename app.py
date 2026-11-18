@@ -92,7 +92,7 @@ def steam_profile():
         return jsonify(error='Perfil no permitido'),400
     with steam_lock:
         cached=steam_cache.get(key)
-        if cached and time.time()-cached['at'] < 90:
+        if cached and time.time()-cached['at'] < 300:
             return jsonify(cached['data'])
     steam_id=steam_profiles[key]
     url=(f'https://steamcommunity.com/profiles/{steam_id}/' if steam_id.isdigit() else f'https://steamcommunity.com/id/{steam_id}/')
@@ -127,7 +127,7 @@ def steam_profile():
         name=meta.meta.get('og:title') or meta.meta.get('twitter:title')
         if name:
             name=re.sub(r'\\s*::\\s*Steam Community\\s*$','',name,flags=re.I).strip()
-            if name and name.lower() not in ('steam community','steam'):
+            if name and name.lower() not in ('steam community','steam'):\n                name=re.sub(r'^Steam Community\\s*::\\s*','',name,flags=re.I).strip()
                 result['name']=name
         if not result['name']:
             match=re.search(r'<span[^>]*class=["\\\'][^"\\\']*actual_persona_name[^"\\\']*["\\\'][^>]*>(.*?)</span>',page,re.I|re.S)
