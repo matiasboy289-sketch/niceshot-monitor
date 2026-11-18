@@ -169,6 +169,11 @@ def steam_profile_for_key(key):
         response=steam_profile()
         return response.get_json()
 
+@app.get('/api/bans')
+def bans():
+    # No SourceMod synchronization configured yet: never fabricate sanctions.
+    return jsonify(connected=False, bans=[])
+
 @app.get('/api/status')
 def status():
     with lock:
