@@ -124,16 +124,24 @@ def steam_profile():
                 match=re.search(r'<span[^>]*actual_persona_name[^>]*>(.*?)</span>',page,re.I|re.S)
                 if match:
                     result['name']=html.unescape(re.sub(r'<[^>]+>','',match.group(1))).strip()
-            meta={}
-            for tag in re.findall(r'<meta\\b[^>]*>',page,re.I):
-                attrs=dict((k.lower(),html.unescape(v)) for k,v in re.findall(r'([\\w:-]+)\\s*=\\s*["\\\']([^"\\\']*)["\\\']',tag))
-                prop=(attrs.get('property') or attrs.get('name') or '').lower()
-                if prop:
-                    meta[prop]=attrs.get('content','')
+            from html.parser import HTMLParser
+            class MetaParser(HTMLParser):
+                def __init__(self):
+                    super().__init__()
+                    self.values={}
+                def handle_starttag(self,tag,attrs):
+                    if tag=='meta':
+                        a=dict(attrs)
+                        key=(a.get('property') or a.get('name') or '').lower()
+                        if key:
+                            self.values[key]=html.unescape(a.get('content') or '')
+            parser=MetaParser()
+            parser.feed(page)
+            meta=parser.values
             if not result['name']:
                 title=meta.get('og:title') or meta.get('twitter:title') or ''
-                title=re.sub(r'^Steam Community\\s*::\\s*','',title,flags=re.I)
-                title=re.sub(r'\\s*::\\s*Steam Community$','',title,flags=re.I).strip()
+                title=re.sub(r'^Steam Community\s*::\s*','',title,flags=re.I)
+                title=re.sub(r'\s*::\s*Steam Community$','',title,flags=re.I).strip()
                 if title and title.lower() not in ('steam community','steam'):
                     result['name']=title
             if not result['avatar']:
