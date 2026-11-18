@@ -141,22 +141,51 @@ summary{outline-offset:-5px}summary::after{transition:transform .25s,color .25s}
  const down=document.getElementById('faqAudioDown');
  const up=document.getElementById('faqAudioUp');
  if(!audio||!toggle)return;
- audio.volume=.25;
- function sync(){const playing=!audio.paused;toggle.textContent=playing?'♫ Pausar música':'♫ Activar música';toggle.setAttribute('aria-label',playing?'Pausar música':'Activar música')}
- function setVolume(n){const v=Math.max(0,Math.min(100,Number(n)||0));slider.value=v;audio.volume=v/100;audio.muted=false;percent.textContent=v+'%'}
- async function start(){try{await audio.play();sync();return true}catch(e){sync();return false}}
- toggle.addEventListener('click',async()=>{if(audio.paused){await start()}else{audio.pause();sync()}});
+ let userPaused=false, starting=false, failed=false;
+ audio.volume=0.35;
+ slider.value='35';percent.textContent='35%';
+ audio.preload='auto';
+ audio.load();
+ function sync(){
+  if(failed){toggle.textContent='⚠ Reintentar música';toggle.title='No se pudo cargar Reflection.mp3';return}
+  toggle.textContent=audio.paused?'♫ Activar música':'♫ Pausar música';
+  toggle.setAttribute('aria-label',audio.paused?'Activar música':'Pausar música');
+ }
+ async function playMusic(){
+  if(starting||!audio.paused)return;
+  starting=true;failed=false;
+  try{
+   audio.muted=false;
+   audio.volume=Number(slider.value)/100;
+   await audio.play();
+  }catch(err){
+   if(err.name!=='NotAllowedError'&&err.name!=='AbortError'){
+    failed=true;
+    console.error('FAQ music error',err,'src:',audio.currentSrc);
+   }
+  }finally{starting=false;sync()}
+ }
+ toggle.addEventListener('click',function(){
+  if(audio.paused){userPaused=false;failed=false;if(audio.error){audio.load()}playMusic()}
+  else{userPaused=true;audio.pause();sync()}
+ });
+ function setVolume(value){
+  const n=Math.max(0,Math.min(100,Number(value)||0));
+  slider.value=n;audio.volume=n/100;audio.muted=false;percent.textContent=n+'%';
+ }
  slider.addEventListener('input',()=>setVolume(slider.value));
  down.addEventListener('click',()=>setVolume(Number(slider.value)-10));
  up.addEventListener('click',()=>setVolume(Number(slider.value)+10));
- audio.addEventListener('play',sync);audio.addEventListener('pause',sync);
- audio.addEventListener('error',()=>{toggle.textContent='♫ Música no disponible';toggle.title='Sube Reflection.mp3 a static/media/ en GitHub'});
- let userPaused=false;
- const originalToggle=toggle.onclick;
- document.addEventListener('pointerdown',function(e){if(e.target.closest('.faq-audio'))return;if(audio.paused&&!userPaused&&!audio.error)start()},{capture:true});
- document.addEventListener('keydown',function(e){if(audio.paused&&!userPaused&&!audio.error&&e.key!=='Tab')start()});
- window.addEventListener('pageshow',()=>{if(!userPaused&&audio.paused)start()});
- toggle.addEventListener('click',()=>{userPaused=!audio.paused});
- start();
+ audio.addEventListener('play',sync);
+ audio.addEventListener('pause',sync);
+ audio.addEventListener('error',()=>{failed=true;sync();console.error('FAQ audio file failed to load:',audio.currentSrc,audio.error)});
+ document.addEventListener('pointerdown',function(e){
+  if(!e.target.closest('.faq-audio')&&!userPaused&&audio.paused)playMusic();
+ },{capture:true});
+ document.addEventListener('keydown',function(e){
+  if(e.key!=='Tab'&&!userPaused&&audio.paused)playMusic();
+ });
+ window.addEventListener('pageshow',()=>{if(!userPaused&&audio.paused)playMusic()});
+ sync();playMusic();
 })();
 </script></body></html>
