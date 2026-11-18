@@ -143,8 +143,8 @@ def steam_avatar(key):
         return jsonify(error='Perfil no permitido'),404
     with avatar_image_lock:
         saved=avatar_image_cache.get(key)
-        if saved and time.time()-saved['at']<600:
-            return Response(saved['bytes'],mimetype=saved['mime'],headers={'Cache-Control':'public, max-age=300'})
+        if saved and time.time()-saved['at']<20:
+            return Response(saved['bytes'],mimetype=saved['mime'],headers={'Cache-Control':'no-store, max-age=0'})
     profile_response=steam_profile_for_key(key)
     avatar_url=profile_response.get('avatar')
     if not avatar_url or not steam_avatar_allowed(avatar_url):
@@ -165,7 +165,7 @@ def steam_avatar(key):
         with avatar_image_lock:
             saved=avatar_image_cache.get(key)
         if saved:
-            return Response(saved['bytes'],mimetype=saved['mime'],headers={'Cache-Control':'public, max-age=60'})
+            return Response(saved['bytes'],mimetype=saved['mime'],headers={'Cache-Control':'no-store, max-age=0'})
         return jsonify(error='No se pudo descargar el avatar desde Steam'),502
 
 def steam_profile_for_key(key):
