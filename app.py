@@ -235,6 +235,11 @@ def status():
 @app.get('/')
 def home():
     return send_from_directory('static','index.html')
+@app.get('/bans')
+@app.get('/bans/')
+def bans_page():
+    return send_from_directory('static', 'bans.html')
+
 @app.get('/health')
 def health():
     return jsonify(ok=True)
