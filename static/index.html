@@ -233,12 +233,12 @@ function savedProfile(key){
 function showName(key,name){
  const node=document.getElementById('steamName-'+key);
  if(!node||!name)return;
- const clean=String(name).replace(/^Steam Community\\s*::\\s*/i,'').replace(/\\s*::\\s*Steam Community$/i,'').trim();
+ const clean=String(name).replace(/^Steam Community\s*::\s*/i,'').replace(/\s*::\s*Steam Community$/i,'').trim();
  if(clean&&clean.toLowerCase()!=='steam community'){node.textContent=clean;node.title=clean}
 }
 function showAvatar(key,url){
  const image=document.getElementById('steamAvatar-'+key);
- if(!image||!url||!/^https:\/\/[^\\s]+$/i.test(url))return;
+ if(!image||!url||!/^https:\/\/[^\s]+$/i.test(url))return;
  if(image.dataset.avatar===url&&image.naturalWidth>0)return;
  const next=new Image();
  next.onload=()=>{if(next.naturalWidth>0){image.dataset.avatar=url;image.src=url;image.hidden=false;const fallback=document.getElementById('steamAvatarFallback-'+key);if(fallback)fallback.hidden=true}};
