@@ -72,7 +72,7 @@ def fetch():
                 result['player_list_available']=True
     except Exception:pass
     return result
-steam_profiles={'ice':'Ice403978','rain':'Ra1nnx','founder2':'76561199036217593','vip1':'_desvergonzadaintergalactica','vip2':'Chinita_che'}
+steam_profiles={'ice':'Ice403978','rain':'Ra1nnx','founder2':'76561199036217593','vip1':'_desvergonzadaintergalactica','vip2':'Chinita_che','vip3':'eeniemeenieminymo'}
 steam_cache={}
 steam_lock=threading.Lock()
 
