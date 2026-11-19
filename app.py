@@ -47,30 +47,38 @@ def fetch():
     i+=2
     players,maxplayers,bots=struct.unpack_from('<BBB',info,i)
     result={'online':True,'name':name,'map':mapname,'game':game,'players':players,'max_players':maxplayers,'bots':bots,'address':f'{HOST}:{PORT}','player_list':[],'player_list_available':False}
-    try:
-        with socket.socket(socket.AF_INET,socket.SOCK_DGRAM) as s:
-            s.settimeout(2.5)
-            addr=(HOST,PORT)
-            s.sendto(b'\xff'*4+b'U\xff\xff\xff\xff',addr)
-            p=packet(s)
-            if p[:1]==b'A':
-                s.sendto(b'\xff'*4+b'U'+p[1:5],addr)
-                p=packet(s)
-            if p[:1]==b'D':
+    # A2S_PLAYER can be delayed or challenged independently of A2S_INFO.
+    # Retry with a fresh UDP socket and log failures rather than hiding them.
+    for attempt in range(2):
+        try:
+            with socket.socket(socket.AF_INET,socket.SOCK_DGRAM) as player_sock:
+                player_sock.settimeout(3.5)
+                addr=(HOST,PORT)
+                player_sock.sendto(b'\xff'*4+b'U\xff\xff\xff\xff',addr)
+                p=packet(player_sock)
+                if p[:1]==b'A':
+                    player_sock.sendto(b'\xff'*4+b'U'+p[1:5],addr)
+                    p=packet(player_sock)
+                if p[:1]!=b'D':
+                    raise ValueError('Unexpected A2S_PLAYER response type')
                 n=p[1]
                 j=2
                 people=[]
                 for _ in range(n):
-                    if j>=len(p):break
+                    if j>=len(p):
+                        raise ValueError('Truncated A2S_PLAYER response')
                     j+=1
                     person,j=cstr(p,j)
-                    if j+8>len(p):break
+                    if j+8>len(p):
+                        raise ValueError('Truncated A2S_PLAYER score')
                     score,duration=struct.unpack_from('<if',p,j)
                     j+=8
                     people.append({'name':person or 'Sin nombre','score':score,'seconds':round(duration)})
                 result['player_list']=people
                 result['player_list_available']=True
-    except Exception:pass
+                break
+        except (OSError, ValueError, TimeoutError, struct.error) as exc:
+            app.logger.warning('A2S_PLAYER attempt %s failed: %s', attempt+1, exc)
     return result
 steam_profiles={'ice':'Ice403978','rain':'Ra1nnx','founder2':'76561199036217593','vip1':'_desvergonzadaintergalactica','vip2':'Chinita_che','vip3':'eeniemeenieminymo','vip4':'76561199137448967','vip5':'SameNumberSameHood'}
 steam_cache={}
