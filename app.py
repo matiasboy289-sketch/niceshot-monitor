@@ -347,34 +347,57 @@ def bans():
 
 @app.get('/api/status')
 def status():
+    now = time.time()
     with lock:
-        now=time.time()
-        if now-cache['at']>15 or cache['data'] is None:
-            fresh=None
-            for attempt in range(2):
-                try:
-                    fresh=fetch()
-                    break
-                except (OSError, ValueError, TimeoutError, struct.error) as exc:
-                    app.logger.warning('A2S query attempt %s failed: %s', attempt+1, exc)
-                except Exception:
-                    app.logger.exception('Unexpected A2S monitor error')
-                    break
+        current = cache['data']
+        needs_refresh = current is None or now - cache['at'] > 15
+        if not needs_refresh:
+            return jsonify(current)
+        # Reserve this refresh without holding the lock during slow UDP queries.
+        # Other HTTP requests can keep using the last verified snapshot.
+        if cache.get('refreshing'):
+            return jsonify(current or {
+                'online': False, 'address': f'{HOST}:{PORT}',
+                'monitor_delayed': True,
+                'error': 'Consulta inicial A2S en curso; reintenta en unos segundos.'
+            })
+        cache['refreshing'] = True
+        cache['at'] = now
+
+    fresh = None
+    try:
+        for attempt in range(2):
+            try:
+                fresh = fetch()
+                break
+            except (OSError, ValueError, TimeoutError, struct.error) as exc:
+                app.logger.warning('A2S query attempt %s failed: %s', attempt + 1, exc)
+            except Exception:
+                app.logger.exception('Unexpected A2S monitor error')
+                break
+    finally:
+        with lock:
+            cache['refreshing'] = False
+            checked_at = time.time()
+            cache['at'] = checked_at
             if fresh is not None:
-                cache.update(at=time.time(), data=fresh, last_success=time.time(), failures=0)
+                cache.update(data=fresh, last_success=checked_at, failures=0)
             else:
-                cache['failures']+=1
-                cache['at']=time.time()
-                previous=cache['data']
-                # A single UDP timeout is not proof that the game server is down.
-                # Keep the last verified snapshot briefly instead of flickering offline.
-                if previous and previous.get('online') and time.time()-cache['last_success']<120:
-                    cache['data']={**previous, 'monitor_delayed':True,
-                                   'monitor_message':'Respuesta UDP temporalmente demorada'}
+                cache['failures'] += 1
+                previous = cache['data']
+                if previous and previous.get('online') and checked_at - cache['last_success'] < 120:
+                    cache['data'] = {
+                        **previous, 'monitor_delayed': True,
+                        'monitor_message': 'Respuesta UDP temporalmente demorada'
+                    }
                 else:
-                    cache['data']={'online':False,'address':f'{HOST}:{PORT}',
-                                   'error':'Sin respuesta A2S/UDP tras varios intentos; no confirma que el servidor esté apagado.'}
-        return jsonify(cache['data'])
+                    cache['data'] = {
+                        'online': False, 'address': f'{HOST}:{PORT}',
+                        'error': 'Sin respuesta A2S/UDP tras varios intentos; no confirma que el servidor esté apagado.'
+                    }
+            result = cache['data']
+    return jsonify(result)
+
 @app.get('/')
 def home():
     return send_from_directory('static','index.html')
