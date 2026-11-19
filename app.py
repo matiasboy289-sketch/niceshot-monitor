@@ -8,7 +8,7 @@ from flask import Flask, jsonify, send_from_directory, Response
 app=Flask(__name__,static_folder='static',static_url_path='')
 HOST=os.getenv('L4D2_HOST','38.7.197.74')
 PORT=int(os.getenv('L4D2_PORT','25579'))
-cache={'at':0,'data':None}
+cache={'at':0,'data':None,'last_success':0,'failures':0}
 lock=threading.Lock()
 def packet(sock):
     chunks=[]
@@ -340,10 +340,32 @@ def bans():
 @app.get('/api/status')
 def status():
     with lock:
-        if time.time()-cache['at']>15 or cache['data'] is None:
-            try:data=fetch()
-            except Exception:data={'online':False,'address':f'{HOST}:{PORT}','error':'No se pudo consultar el servidor (A2S/UDP). Verifica el puerto y firewall.'}
-            cache.update(at=time.time(),data=data)
+        now=time.time()
+        if now-cache['at']>15 or cache['data'] is None:
+            fresh=None
+            for attempt in range(2):
+                try:
+                    fresh=fetch()
+                    break
+                except (OSError, ValueError, TimeoutError, struct.error) as exc:
+                    app.logger.warning('A2S query attempt %s failed: %s', attempt+1, exc)
+                except Exception:
+                    app.logger.exception('Unexpected A2S monitor error')
+                    break
+            if fresh is not None:
+                cache.update(at=time.time(), data=fresh, last_success=time.time(), failures=0)
+            else:
+                cache['failures']+=1
+                cache['at']=time.time()
+                previous=cache['data']
+                # A single UDP timeout is not proof that the game server is down.
+                # Keep the last verified snapshot briefly instead of flickering offline.
+                if previous and previous.get('online') and time.time()-cache['last_success']<120:
+                    cache['data']={**previous, 'monitor_delayed':True,
+                                   'monitor_message':'Respuesta UDP temporalmente demorada'}
+                else:
+                    cache['data']={'online':False,'address':f'{HOST}:{PORT}',
+                                   'error':'Sin respuesta A2S/UDP tras varios intentos; no confirma que el servidor esté apagado.'}
         return jsonify(cache['data'])
 @app.get('/')
 def home():
