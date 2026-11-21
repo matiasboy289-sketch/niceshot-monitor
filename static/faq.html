@@ -141,7 +141,7 @@ summary:hover,details[open] summary::after{color:#ffc878}
 /* Cinematic FAQ headline panel — image asset: static/media/faq-tank.png */
 .faq-hero-card{min-height:unset;padding:52px 0 62px;background:radial-gradient(ellipse at 25% 20%,#9e521c55,transparent 60%),linear-gradient(125deg,#0b0908,#24140c)}
 .faq-hero-card .heroin{padding-top:0;padding-bottom:0;max-width:1120px}
-.faq-hero-card .faq-hero-frame{position:relative;isolation:isolate;overflow:hidden;border:1px solid #f2b96b7c;border-radius:24px;padding:64px clamp(24px,5vw,65px);min-height:390px;background:linear-gradient(90deg,#0c090af2 0%,#170f0edc 39%,#1c100c70 75%,#0a08074a 100%),url('/static/media/faq-tank.png') center 45%/cover no-repeat;box-shadow:0 25px 65px #000b,0 0 36px #c9802d24;animation:faqFrameEntrance .9s ease-out both}
+.faq-hero-card .faq-hero-frame{position:relative;isolation:isolate;overflow:hidden;border:1px solid #f2b96b7c;border-radius:24px;padding:64px clamp(24px,5vw,65px);min-height:390px;background:linear-gradient(90deg,#0c090af2 0%,#170f0edc 39%,#1c100c70 75%,#0a08074a 100%),url('/static/media/faq-tank.gif') center 45%/cover no-repeat;box-shadow:0 25px 65px #000b,0 0 36px #c9802d24;animation:faqFrameEntrance .9s ease-out both}
 .faq-hero-frame::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(110deg,transparent 15%,#f3b05b1a 46%,transparent 66%);background-size:220% 100%;animation:faqFrameSweep 11s linear infinite}
 .faq-hero-frame .eyebrow,.faq-hero-frame h1,.faq-hero-frame p,.faq-hero-frame .chips{position:relative;z-index:1}
 .faq-hero-frame h1{max-width:720px;font-size:clamp(40px,6vw,74px)}
@@ -151,6 +151,50 @@ summary:hover,details[open] summary::after{color:#ffc878}
 @keyframes faqFrameSweep{to{background-position:-220% 0}}
 @media(max-width:650px){.faq-hero-card{padding:25px 0 35px}.faq-hero-card .faq-hero-frame{padding:35px 22px;min-height:365px;background-position:60% center}.faq-hero-frame h1{font-size:clamp(35px,9vw,50px)}}
 @media(prefers-reduced-motion:reduce){.faq-hero-card .faq-hero-frame,.faq-hero-frame::after{animation:none!important}}
+
+/* FAQ monochrome and gold — public-facing visual system */
+:root{--faq-gold:#dcb56b;--faq-amber:#b78d45;--faq-copper:#9a773e;--faq-cream:#f7f4ed}
+html{background:#080808}
+body{background:#090909;color:#f5f5f3}
+body::before{background:radial-gradient(ellipse 36% 28% at 18% 22%,#c8a35b20,transparent 80%),radial-gradient(ellipse 36% 32% at 84% 64%,#bba0691a,transparent 80%),radial-gradient(ellipse 40% 32% at 55% 8%,#a58c5620,transparent 80%);filter:blur(54px)}
+body::after{opacity:.58;background-image:radial-gradient(1px 1px at 12px 19px,#fff6d9 99%,transparent),radial-gradient(1px 1px at 86px 111px,#bca06c 99%,transparent),radial-gradient(1px 1px at 151px 54px,#fff 99%,transparent)}
+.nav{background:#080809f7;border-bottom:1px solid #d9bc7c33}
+.links a{color:#bbb9b5}.links a:hover,.links a[aria-current=page]{color:#efd7a5}
+.hero,.faq-hero-card{background:linear-gradient(125deg,#080809,#171511 55%,#0b0b0d);border-bottom:1px solid #bda16a3b}
+.hero::before{background:conic-gradient(from 110deg at 50% 45%,transparent 0deg,#c1a66b12 80deg,transparent 150deg,#fff5d00c 220deg,transparent 300deg)}
+.hero::after{opacity:.28}
+.faq-hero-card .faq-hero-frame{background:linear-gradient(90deg,#070708f7 0%,#0c0c0ddf 36%,#10101078 72%,#09090940 100%),url('/static/media/faq-tank.gif') center 45%/cover no-repeat;border:1px solid #d9b7748c;box-shadow:0 22px 64px #000b,0 0 28px #d6b36d1c}
+.faq-hero-frame::after{background:linear-gradient(110deg,transparent 15%,#f2e0b015 48%,transparent 70%);background-size:220% 100%}
+.faq-hero-frame .eyebrow{color:#e3c98e}
+.faq-hero-frame h1{background:linear-gradient(105deg,#fff 5%,#f1eee6 32%,#d6b36e 59%,#fff 82%,#c9aa6a);background-size:230% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 3px 15px #000b)}
+.faq-hero-frame h1 span{color:#d6b36e!important;-webkit-text-fill-color:#d6b36e}
+.faq-hero-frame p{color:#e1ded7;text-shadow:0 2px 8px #000}
+.planet{opacity:.1}
+.chips a{background:#141414c9;color:#f5e9d1;border-color:#d2b47c77}
+.chips a:hover{background:#d6b36e;color:#101010;box-shadow:0 0 20px #d6b36e36}
+.intro,.category>p{color:#bcbab6}
+.category{border-top-color:#cdb17a33}
+.category h2,.subheading{color:#f7f5f0;animation:faqAmberGlow 6s ease-in-out infinite alternate}
+details,.command-card,.panel{background:linear-gradient(140deg,#1a1a1b,#0d0d0f);border-color:#bca16d4d;box-shadow:0 10px 28px #0008}
+details::before,.command-card::before{background:linear-gradient(90deg,transparent,#d9ba79a8,transparent)}
+details:hover,.command-card:hover,.panel:hover,details[open]{border-color:#d5b778aa;box-shadow:0 14px 30px #0009,0 0 20px #d2b1721a}
+summary{color:#f7f5f1}
+summary:hover,details[open] summary::after{color:#e3c489}
+.answer{color:#d0ceca;border-top-color:#d6ba8233}
+.answer a{color:#ead09d}.answer code,.example code{background:#2a2926;color:#f1d5a2}
+.note{background:#26221b;border-left-color:#d7b16e;color:#e2d9c8}
+.command-title code{background:#28241d;color:#e9cb92;border:1px solid #c5a66d66}
+.command-title span,.command-card p,.example,.panel p{color:#bbb9b5}
+.panel{background:linear-gradient(135deg,#1c1b19,#0d0d0e)}
+.button{background:linear-gradient(110deg,#f0e0bd,#caa15e);color:#16130e;box-shadow:0 6px 22px #b59a6530}
+.button:hover{box-shadow:0 10px 30px #c7a96a4a}
+.footer{border-top-color:#c2a77233;color:#aaa8a3}.footer a{color:#dfc38d}
+.faq-audio{background:#101012f2;border-color:#c9ab7280;box-shadow:0 12px 34px #000b}
+.faq-audio button{background:#232221;border-color:#bfa57175;color:#f1e6d1}
+.faq-audio button:hover{background:#3a3326;border-color:#e0c58c}
+.faq-audio input{accent-color:#d6b36e}
+.faq-audio .audio-percent{color:#dfc58f}
+@keyframes faqAmberGlow{from{text-shadow:0 0 8px #d7bd7b12}to{text-shadow:0 0 23px #d6b36e38}}
 </style></head>
 <body><audio id="faqMusic" src="/media/Reflection.mp3" preload="auto" loop playsinline></audio><div class="faq-audio" role="group" aria-label="Música de fondo de FAQ"><span class="audio-label">♫ Música ambiental</span><button id="faqAudioToggle" type="button" aria-label="Activar música">♫ Activar música</button><button id="faqAudioDown" type="button" aria-label="Bajar volumen">−</button><input id="faqAudioVolume" type="range" min="0" max="100" value="25" aria-label="Volumen de la música"><button id="faqAudioUp" type="button" aria-label="Subir volumen">+</button><span class="audio-percent" id="faqAudioPercent">25%</span></div><div class="space-scene" aria-hidden="true"><div class="space-cloud one"></div><div class="space-cloud two"></div><div class="space-stars far"></div><div class="space-stars"></div><div class="shooting-star"></div><div class="shooting-star second"></div></div><nav class="nav"><div class="shell navin"><a class="brand" href="/">NICE <span>SV</span></a><div class="links"><a href="/#servidores">Servidores</a><a href="/#comunidad">Comunidad</a><a href="/#ecosistema">Ecosistema</a><a href="/custom-maps.html">Mapas Custom</a><a href="/bans.html">Baneos</a><a href="/faq.html" aria-current="page">FAQ</a><a href="/#administracion">Administración</a><a href="https://steamcommunity.com/groups/niceshotl4d2" target="_blank" rel="noopener noreferrer">Grupo de Steam</a></div><a class="status" href="/#servidores">● VER SERVIDOR</a></div></nav>
 <header class="hero faq-hero-card"><div class="planet" aria-hidden="true"></div><div class="shell heroin"><div class="faq-hero-frame"><span class="eyebrow">NICE SV · CENTRO DE AYUDA</span><h1>Preguntas frecuentes<span style="color:#ffadb2">.</span></h1><p>Tutoriales y respuestas para jugar en nuestra comunidad de Left 4 Dead 2. Aprende a instalar campañas personalizadas, consulta los comandos y conoce dónde está alojado NICE SV.</p><div class="chips"><a href="#mapas">Mapas Custom</a><a href="#comandos">Comandos</a><a href="#alojamiento">Alojamiento</a></div></div></div></header>
