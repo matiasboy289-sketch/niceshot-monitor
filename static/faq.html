@@ -195,6 +195,39 @@ summary:hover,details[open] summary::after{color:#e3c489}
 .faq-audio input{accent-color:#d6b36e}
 .faq-audio .audio-percent{color:#dfc58f}
 @keyframes faqAmberGlow{from{text-shadow:0 0 8px #d7bd7b12}to{text-shadow:0 0 23px #d6b36e38}}
+
+/* FAQ final: animated Tank GIF, black-and-white starfield */
+html,body{background:#050505!important;color:#fff}
+body::before{background:radial-gradient(ellipse at 20% 25%,#ffffff1c,transparent 48%),radial-gradient(ellipse at 78% 68%,#ffffff13,transparent 50%);filter:blur(65px) grayscale(1);animation:galaxyDrift 18s ease-in-out infinite alternate}
+body::after{opacity:.9;background-image:radial-gradient(1px 1px at 12px 19px,#fff 99%,transparent),radial-gradient(1.5px 1.5px at 86px 111px,#ddd 99%,transparent),radial-gradient(1px 1px at 151px 54px,#fff 99%,transparent),radial-gradient(2px 2px at 224px 169px,#fff 99%,transparent);background-size:257px 193px,311px 227px,367px 271px,421px 319px;animation:starsTravel 32s linear infinite}
+.space-scene .space-cloud{background:radial-gradient(ellipse,#fff,transparent 70%)!important;opacity:.1;filter:blur(80px) grayscale(1);animation-duration:17s}
+.space-scene .space-stars{filter:grayscale(1);opacity:.9;animation-duration:39s}
+.space-scene .space-stars.far{opacity:.5;animation-duration:63s}
+.space-scene .shooting-star{background:linear-gradient(90deg,transparent,#ddd,#fff);filter:drop-shadow(0 0 8px white);animation-duration:9s}
+.space-scene .shooting-star.second{animation-duration:14s}
+.nav{background:#080808f5;border-color:#ffffff38}.links a:hover,.links a[aria-current=page]{color:#fff}
+.hero,.faq-hero-card{background:linear-gradient(120deg,#080808,#191919 60%,#050505);border-color:#ffffff40}
+.hero::before{filter:grayscale(1);animation-duration:30s}
+.faq-hero-card .faq-hero-frame{background:linear-gradient(90deg,#050505ee 0%,#080808d6 38%,#08080855 74%,#09090920 100%),url('/static/media/faq-tank.gif?v=2') center center/cover no-repeat!important;border:1px solid #ffffffa0;box-shadow:0 22px 65px #000c,0 0 32px #ffffff27;animation:faqFrameEntrance .9s ease-out both,faqMonoPulse 5s ease-in-out infinite alternate}
+.faq-hero-frame::after{background:linear-gradient(110deg,transparent 15%,#ffffff20 46%,transparent 66%);background-size:220% 100%;animation:faqFrameSweep 6s linear infinite}
+.faq-hero-frame h1{background:linear-gradient(100deg,#fff,#bbb,#fff,#dedede,#fff);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:titleShimmer 4.5s ease-in-out infinite}
+.faq-hero-frame h1 span{color:#fff!important;-webkit-text-fill-color:#fff!important}
+.faq-hero-frame .eyebrow{color:#fff;text-shadow:0 0 12px #fff7}
+.faq-hero-frame p{color:#eee}.planet{filter:grayscale(1);opacity:.1}
+.chips a{background:#151515c9;border-color:#ffffff80;color:#fff}.chips a:hover{background:#fff;color:#000;box-shadow:0 0 24px #ffffff55}
+.category{border-top-color:#ffffff2e}.category h2,.subheading{color:#fff;animation:faqMonoGlow 4s ease-in-out infinite alternate}
+details,.command-card,.panel{background:linear-gradient(140deg,#1b1b1b,#090909);border-color:#ffffff40;box-shadow:0 10px 28px #0009;transition:transform .3s,border-color .3s,box-shadow .3s}
+details::before,.command-card::before{background:linear-gradient(90deg,transparent,#fff,transparent)}
+details:hover,.command-card:hover,.panel:hover,details[open]{transform:translateY(-3px);border-color:#ffffffbd;box-shadow:0 14px 32px #000b,0 0 24px #ffffff24}
+summary,summary:hover,details[open] summary::after{color:#fff}
+.answer{color:#d5d5d5;border-top-color:#ffffff30}.answer a{color:#fff}.answer code,.example code{background:#292929;color:#fff}
+.note{background:#242424;border-left-color:#fff;color:#eee}
+.command-title code{background:#242424;color:#fff;border-color:#ffffff66}
+.button{background:#fff;color:#000}.footer{border-color:#ffffff35}.footer a{color:#fff}
+.faq-audio{background:#0c0c0cef;border-color:#ffffff80}.faq-audio button{background:#202020;color:#fff;border-color:#ffffff77}.faq-audio button:hover{background:#fff;color:#000}.faq-audio input{accent-color:#fff}.faq-audio .audio-percent{color:#fff}
+@keyframes faqMonoPulse{from{box-shadow:0 22px 65px #000c,0 0 15px #ffffff18}to{box-shadow:0 22px 65px #000c,0 0 40px #ffffff48}}
+@keyframes faqMonoGlow{from{text-shadow:0 0 6px #ffffff12}to{text-shadow:0 0 23px #ffffff60}}
+@media(prefers-reduced-motion:reduce){body::before,body::after,.space-scene *, .hero::before,.faq-hero-frame,.faq-hero-frame::after,.faq-hero-frame h1,.category h2,.subheading{animation:none!important}}
 </style></head>
 <body><audio id="faqMusic" src="/media/Reflection.mp3" preload="auto" loop playsinline></audio><div class="faq-audio" role="group" aria-label="Música de fondo de FAQ"><span class="audio-label">♫ Música ambiental</span><button id="faqAudioToggle" type="button" aria-label="Activar música">♫ Activar música</button><button id="faqAudioDown" type="button" aria-label="Bajar volumen">−</button><input id="faqAudioVolume" type="range" min="0" max="100" value="25" aria-label="Volumen de la música"><button id="faqAudioUp" type="button" aria-label="Subir volumen">+</button><span class="audio-percent" id="faqAudioPercent">25%</span></div><div class="space-scene" aria-hidden="true"><div class="space-cloud one"></div><div class="space-cloud two"></div><div class="space-stars far"></div><div class="space-stars"></div><div class="shooting-star"></div><div class="shooting-star second"></div></div><nav class="nav"><div class="shell navin"><a class="brand" href="/">NICE <span>SV</span></a><div class="links"><a href="/#servidores">Servidores</a><a href="/#comunidad">Comunidad</a><a href="/#ecosistema">Ecosistema</a><a href="/custom-maps.html">Mapas Custom</a><a href="/bans.html">Baneos</a><a href="/faq.html" aria-current="page">FAQ</a><a href="/#administracion">Administración</a><a href="https://steamcommunity.com/groups/niceshotl4d2" target="_blank" rel="noopener noreferrer">Grupo de Steam</a></div><a class="status" href="/#servidores">● VER SERVIDOR</a></div></nav>
 <header class="hero faq-hero-card"><div class="planet" aria-hidden="true"></div><div class="shell heroin"><div class="faq-hero-frame"><span class="eyebrow">NICE SV · CENTRO DE AYUDA</span><h1>Preguntas frecuentes<span style="color:#ffadb2">.</span></h1><p>Tutoriales y respuestas para jugar en nuestra comunidad de Left 4 Dead 2. Aprende a instalar campañas personalizadas, consulta los comandos y conoce dónde está alojado NICE SV.</p><div class="chips"><a href="#mapas">Mapas Custom</a><a href="#comandos">Comandos</a><a href="#alojamiento">Alojamiento</a></div></div></div></header>
