@@ -164,10 +164,66 @@ tbody tr:nth-child(even){background:#2316363d}tbody tr:hover{background:#76327d2
 @keyframes banTitleGlow{to{background-position:100% 50%;filter:drop-shadow(0 5px 26px #bd65e36c)}}
 @media(max-width:700px){.hero{margin:22px 0 25px;min-height:285px;border-radius:17px}.hero-content{padding:32px 22px}.hero h1{font-size:clamp(40px,10vw,65px)}.hero:before{background-image:linear-gradient(90deg,#090912f4,#100b19c8 72%,#120a196e),url('/static/media/bans-hero.gif')}.stats{gap:9px}}
 @media(prefers-reduced-motion:reduce){.hero:before,.hero:after,.hero h1{animation:none!important}.hero:hover{transform:none}}
+
+/* NICE SV / Neon sanctions portal — reference-inspired final presentation */
+:root{--neon-red:#ff274b;--neon-violet:#9d54ff;--neon-blue:#658cff}
+body{background:#050411}
+body:before{background:radial-gradient(ellipse 55% 40% at 5% 40%,#711ca452,transparent 85%),radial-gradient(ellipse 55% 38% at 97% 35%,#9a123c50,transparent 80%),radial-gradient(ellipse 65% 42% at 50% 85%,#1c17666b,transparent 80%),#050411}
+.motion-grid{opacity:.12}.cosmos-planet{opacity:.16}.cosmos-nebula{filter:blur(42px)}
+.nav{background:#050713ed;border-bottom:1px solid #342451;box-shadow:0 12px 36px #0008}
+.logo{font-weight:1000;letter-spacing:-.8px}.logo:before{content:"";display:inline-block;width:12px;height:12px;margin-right:10px;background:#e51f42;clip-path:polygon(50% 0,100% 100%,0 100%);filter:drop-shadow(0 0 9px #f13b65)}
+.links .current{color:#ffb2ca}.links .current:after{background:#ff2e58;box-shadow:0 0 18px #ff2e58}
+.hero{min-height:300px;margin:24px 0 25px;border-radius:20px;border:1px solid #a13c805e;background:#090915;box-shadow:0 16px 65px #000a,0 0 35px #7c1a6545}
+.hero:before{display:none}
+.ban-hero-media{position:absolute;inset:0;z-index:-2;overflow:hidden;background:radial-gradient(ellipse at 80% 45%,#1b274d,#090816 70%)}
+.ban-hero-media img{width:100%;height:100%;display:block;object-fit:cover;object-position:center 44%;filter:saturate(1.2) contrast(1.13);animation:banMediaZoom 22s ease-in-out infinite alternate}
+.ban-hero-media:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#080617fa 0%,#0c081de9 30%,#090a1b9c 54%,#090a1618 100%)}
+.hero:after{z-index:-1;opacity:.4}
+.hero-content{max-width:840px;padding:40px clamp(24px,5vw,60px)}
+.hero .eyebrow{border-color:#b85bce8f;color:#e9b8ff;background:#200d38b8}
+.hero h1{font-size:clamp(39px,6vw,77px);font-style:italic;font-weight:1000;letter-spacing:-.065em;color:#fff!important;background:none!important;-webkit-text-fill-color:initial;filter:none;text-shadow:0 3px 15px #05040b,0 0 24px #b0baff55;animation:banTitleRise 1s both}
+.hero h1 em{color:#ff294e;font-style:italic;text-shadow:0 0 18px #ff1c4c66,0 3px 10px #000}
+.hero h1:after{width:180px;background:linear-gradient(90deg,#ff2558,#9947ff,transparent)}
+.hero p{max-width:540px;color:#e3dff2;text-shadow:0 2px 10px #000}
+.stats{gap:13px;margin:0 0 19px}
+.stat{min-height:115px;display:grid;grid-template-columns:64px 1fr;grid-template-rows:auto 1fr;align-items:center;column-gap:14px;padding:16px 20px;border-radius:13px;background:linear-gradient(135deg,#1d1040f5,#090b21f5 75%);border:1px solid #7448da8a;box-shadow:inset 0 0 24px #48288c2c,0 8px 28px #0007}
+.stat:nth-child(2){border-color:#e527537d;background:linear-gradient(135deg,#2b0c28f5,#10091cf5 80%);box-shadow:inset 0 0 22px #c51b4d22,0 8px 28px #0007}
+.stat:nth-child(3){border-color:#7955e89a}
+.stat:after{display:none}.stat:before{z-index:0}
+.stat-icon{grid-row:1/3;display:grid;place-items:center;font-size:34px;color:#ad78ff;text-shadow:0 0 18px #994fff;filter:drop-shadow(0 0 9px #7136e6)}
+.stat:nth-child(2) .stat-icon{color:#ff3c62;text-shadow:0 0 18px #ff244b}
+.stat:nth-child(3) .stat-icon{color:#987cff}
+.stat small{font-size:10px;color:#d4c4ec;letter-spacing:1px;align-self:end}
+.stat strong{font-size:clamp(27px,3vw,40px);line-height:1.1;margin:4px 0 0;align-self:start;color:#fff!important;text-shadow:0 0 18px #bb9fff55}
+.controls{background:#0b0b23e8;border:1px solid #4f3b9d7a;border-radius:12px;padding:12px;box-shadow:0 0 24px #4520a52b}
+.search{background:#060a20;border:1px solid #493b9b;color:#f3f0ff;border-radius:8px}
+.filter,.refresh{border-radius:8px;background:#0c0c24;color:#dcd8f5;border-color:#463b8a}
+.filter.active{background:linear-gradient(130deg,#ab092b,#f12348);color:white;border-color:#ff4d6b;box-shadow:0 0 15px #ff284b70}
+.refresh{background:#161342;color:#c5baff;border-color:#6c57c3}
+.panel{border:1px solid #7544c67a;border-radius:14px;background:linear-gradient(135deg,#130b28f4,#07091cf7);box-shadow:0 18px 55px #000a,0 0 25px #782fbd2b}
+.panelhead{padding:19px 22px;background:linear-gradient(90deg,#34104990,#1b0a3280);border-bottom:1px solid #a148d755}
+.panelhead strong:before{content:"▤";color:#ff5aab}
+.panelhead span{color:#e8caff;border-color:#9650d2;background:#291342}
+table{min-width:920px}th{background:#110d29;color:#bdb0e1;padding:13px 14px;font-size:10px}td{padding:14px;border-top-color:#773db335}
+tbody tr:nth-child(even){background:#180e2c4d}tbody tr:hover{background:#47225760}
+.player-identity{display:flex;align-items:center;gap:10px;min-width:180px}
+.player-avatar{width:38px;height:38px;flex:0 0 38px;border:1px solid #7954b5;border-radius:9px;background:linear-gradient(145deg,#46256e,#150b27);display:grid;place-items:center;font-size:17px;font-weight:900;color:#f4c8ff;overflow:hidden;box-shadow:0 0 12px #7e3cd42b}
+.player-avatar img{width:100%;height:100%;object-fit:cover}
+.player-details{min-width:0}.player-name{font-size:13px;color:#fff}.player-steamid{font-size:10px;color:#a8a1cc}
+.steam-link{margin-left:48px;margin-top:5px;font-size:10px;color:#d8a9ff!important;border-color:#8c5dd3}
+.ban-status{font-size:10px;border-radius:7px}
+.ban-status.active{color:#ffb7c2;background:#821b334d;border-color:#f23a5d88}
+.ban-status.expired{color:#adf4d3;background:#0e4e3a60;border-color:#24b87a80}
+.origin-chip{background:#28153d;border-color:#8452bd;color:#ddc5ff}
+.duration-chip{color:#f1e8ff}
+.bans-audio{border-color:#9850c5;background:#100b23f4}
+@keyframes banMediaZoom{to{transform:scale(1.07) translateX(-1.5%)}}
+@media(max-width:700px){.hero{min-height:275px}.hero-content{padding:28px 22px}.hero h1{font-size:clamp(38px,9vw,62px)}.stats{gap:8px}.stat{grid-template-columns:1fr;grid-template-rows:auto auto auto;min-height:120px;padding:12px 9px;gap:4px;text-align:center}.stat-icon{grid-row:auto;font-size:24px}.stat small{font-size:8px;line-height:1.4}.stat strong{font-size:27px}.controls{gap:7px}.filter,.refresh{padding:10px 8px}}
+@media(prefers-reduced-motion:reduce){.ban-hero-media img{animation:none!important}}
 </style></head><body><audio id="bansMusic" src="/media/Bounty.mp3" preload="auto" loop playsinline></audio><div class="bans-audio" role="group" aria-label="Música de baneos"><button type="button" id="bansMusicToggle">♫ Activar música</button><button type="button" id="bansMusicDown" aria-label="Bajar volumen">−</button><input id="bansMusicVolume" type="range" min="0" max="100" value="35" aria-label="Volumen"><button type="button" id="bansMusicUp" aria-label="Subir volumen">+</button><span id="bansMusicPercent">35%</span></div><div class="motion-stage" aria-hidden="true"><div class="cosmos-nebula"></div><div class="cosmos-stars"></div><div class="cosmos-planet"></div><div class="cosmos-meteor"></div><div class="cosmos-meteor two"></div><div class="motion-grid"></div><div class="motion-orbit"></div><div class="motion-beam"></div><div class="motion-beam two"></div><div class="noise-dots"></div></div>
 <nav class="nav"><div class="shell navin"><a class="logo" href="/">NICE SV</a><div class="links"><a href="/">Inicio</a><a href="/#servidores">Servidores</a><a href="/custom-maps.html">Mapas Custom</a><a class="current" href="/bans.html" aria-current="page">Baneos</a><a href="/faq.html">FAQ</a><a href="/#administracion">Administración</a></div></div></nav>
-<main class="shell"><header class="hero"><div class="hero-content"><div class="eyebrow">NICE SV / MODERACIÓN</div><h1>LISTA DE BANEOS</h1><p>Consulta las sanciones registradas en nuestros servidores de Left 4 Dead 2. Revisa los baneos aplicados en NICE SV, sus motivos, administradores y duración.</p></div></header>
-<section class="stats" aria-label="Estadísticas"><div class="stat"><small>TOTAL DE BANEOS</small><strong id="total">—</strong></div><div class="stat"><small>BANEOS ACTIVOS</small><strong id="active">—</strong></div><div class="stat"><small>EXPIRADOS</small><strong id="expired">—</strong></div></section>
+<main class="shell"><header class="hero"><div class="ban-hero-media" aria-hidden="true"><img src="/static/media/bans-hero.gif" alt="" decoding="async" fetchpriority="high" onerror="if(!this.dataset.fallback){this.dataset.fallback=1;this.src='https://raw.githubusercontent.com/matiasboy289-sketch/niceshot-monitor/main/static/media/bans-hero.gif';}"></div><div class="hero-content"><div class="eyebrow">NICE SV / MODERACIÓN</div><h1>LISTA DE <em>BANEOS</em></h1><p>Consulta las sanciones registradas en nuestros servidores de Left 4 Dead 2. Revisa los baneos aplicados en NICE SV, sus motivos, administradores y duración.</p></div></header>
+<section class="stats" aria-label="Estadísticas"><div class="stat"><span class="stat-icon" aria-hidden="true">♟</span><small>TOTAL DE BANEOS</small><strong id="total">—</strong></div><div class="stat"><span class="stat-icon" aria-hidden="true">⚒</span><small>BANEOS ACTIVOS</small><strong id="active">—</strong></div><div class="stat"><span class="stat-icon" aria-hidden="true">◷</span><small>EXPIRADOS</small><strong id="expired">—</strong></div></section>
 <div class="controls"><input id="search" class="search" type="search" placeholder="Buscar jugador, SteamID o motivo..." aria-label="Buscar baneos"><button class="filter active" data-filter="all">Todos</button><button class="filter" data-filter="active">Activos</button><button class="filter" data-filter="expired">Expirados</button><button id="refresh" class="refresh">Actualizar ↻</button></div>
 <section class="panel"><div class="panelhead"><strong>REGISTRO DE SANCIONES</strong><span id="count">Sin conexión de datos</span></div><div class="tablewrap"><table><thead><tr><th>ESTADO DEL BANEO</th><th>FECHA</th><th>JUGADOR</th><th>ADMINISTRADOR</th><th>ORIGEN</th><th>MOTIVO</th><th>DURACIÓN</th></tr></thead><tbody id="rows"></tbody></table></div><div id="empty" class="empty" role="status"><strong>Esperando registros del servidor</strong>El sistema de baneos aún no está conectado. No se muestran datos ficticios.</div></section>
 <p class="notice" id="notice">El listado incluye baneos registrados automáticamente y SteamID bloqueados mediante el archivo de baneos del servidor, según confirmación de la administración de NICE SV.</p></main><footer class="shell footer"><span>© 2026 NICE SV · LEFT 4 DEAD 2 COMMUNITY</span><span class="footmark">MODERACIÓN TRANSPARENTE ◇</span></footer>
@@ -186,9 +242,9 @@ function render(){
   const player=cell('');
   const name=document.createElement('div');name.className='player-name';name.textContent=clean(b.name)||'Desconocido';
   const sid=document.createElement('div');sid.className='player-steamid';sid.textContent=clean(b.steamid);
-  player.append(name,sid);
+  const identity=document.createElement('div');identity.className='player-identity';const avatar=document.createElement('span');avatar.className='player-avatar';avatar.textContent=(clean(b.name).trim().charAt(0)||'?').toUpperCase();const details=document.createElement('div');details.className='player-details';details.append(name,sid);identity.append(avatar,details);player.append(identity);
   const steam=/^STEAM_[01]:([01]):([0-9]{1,16})$/.exec(clean(b.steamid));
-  if(steam){const steam64=(76561197960265728n+BigInt(steam[2])*2n+BigInt(steam[1])).toString();const a=document.createElement('a');a.href='https://steamcommunity.com/profiles/'+steam64;a.target='_blank';a.rel='noopener noreferrer';a.className='steam-link';a.textContent='Ver perfil en Steam ↗';player.append(a)}
+  if(steam){const steam64=(76561197960265728n+BigInt(steam[2])*2n+BigInt(steam[1])).toString();const a=document.createElement('a');a.href='https://steamcommunity.com/profiles/'+steam64;a.target='_blank';a.rel='noopener noreferrer';a.className='steam-link';a.textContent='Ver perfil en Steam ↗';player.append(a);avatar.title='Ver perfil de Steam';avatar.setAttribute('role','img');avatar.setAttribute('aria-label','Avatar del jugador');const image=document.createElement('img');image.loading='lazy';image.decoding='async';image.alt='';image.addEventListener('load',()=>{avatar.textContent='';avatar.append(image)});image.addEventListener('error',()=>{image.remove()});image.src='/api/ban-avatar?steamid='+encodeURIComponent(clean(b.steamid));}
   tr.append(player,cell(b.admin));
   const origin=cell('');const originChip=document.createElement('span');originChip.className='origin-chip';originChip.textContent=clean(b.source)||'NICE SV';origin.append(originChip);tr.append(origin);
   tr.append(cell(b.reason));
