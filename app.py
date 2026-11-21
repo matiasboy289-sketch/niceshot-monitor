@@ -210,6 +210,39 @@ def steam_profile_for_key(key):
         response=steam_profile()
         return response.get_json()
 
+# Public Steam avatars for the ban ledger; Steam2 IDs are validated before lookup.
+ban_avatar_cache={}
+ban_avatar_lock=threading.Lock()
+@app.get('/api/ban-avatar')
+def ban_avatar():
+    from flask import request, redirect
+    steamid=request.args.get('steamid','').strip()
+    match=re.fullmatch(r'STEAM_[01]:([01]):([0-9]{1,16})',steamid)
+    if not match:
+        return Response(status=404)
+    steam64=str(76561197960265728 + int(match.group(2))*2 + int(match.group(1)))
+    with ban_avatar_lock:
+        cached=ban_avatar_cache.get(steam64)
+        if cached and time.time()-cached['at']<1800:
+            return redirect(cached['url'],code=302) if cached['url'] else Response(status=404)
+    url=None
+    try:
+        req=urllib.request.Request('https://steamcommunity.com/profiles/'+steam64+'/?xml=1',headers={'User-Agent':'Mozilla/5.0 (compatible; NiceSV/1.0)'})
+        with urllib.request.urlopen(req,timeout=5) as response:
+            root=ET.fromstring(response.read(256000))
+        candidate=html.unescape((root.findtext('avatarFull') or '').strip())
+        if candidate.startswith('http://'):
+            candidate='https://'+candidate[7:]
+        if candidate and steam_avatar_allowed(candidate):
+            url=candidate
+    except Exception:
+        app.logger.debug('Steam ban avatar lookup unavailable for %s',steam64)
+    with ban_avatar_lock:
+        if len(ban_avatar_cache)>500:
+            ban_avatar_cache.clear()
+        ban_avatar_cache[steam64]={'at':time.time(),'url':url}
+    return redirect(url,code=302) if url else Response(status=404)
+
 def supabase_bans_rows():
     base = os.getenv('SUPABASE_URL', '').rstrip('/')
     secret = os.getenv('SUPABASE_SECRET_KEY', '')
