@@ -276,6 +276,62 @@ body>.nav,body>main,body>footer,body>.bans-audio{position:relative;z-index:2}
 body>.nav{position:sticky}
 body>.bans-audio{position:fixed;z-index:15}
 @media(max-width:650px){.bans-video-backdrop::after{background:#00000038}}
+
+/* NICE SV bans | cinematic crimson and graphite redesign */
+:root{--ban-red:#f43f54;--ban-red-light:#ff7781;--ban-ice:#dce9f4;--ban-border:#ffffff25}
+.nav{background:#090b10f2!important;border-bottom:1px solid #f43f5440!important;box-shadow:0 8px 35px #0008}
+.logo{color:#f7f9fd!important;text-shadow:0 0 18px #ffffff26}
+.logo::first-letter{color:#ff405a}
+.links .current{color:#ff6478!important;border-bottom:2px solid #f43f54;padding-bottom:7px}
+.links a:hover{color:#ff8392!important}
+.hero{border-color:#f64b6673!important;box-shadow:0 24px 65px #000c,0 0 34px #ef34422c!important}
+.hero-content{position:relative;z-index:2}
+.hero h1{filter:drop-shadow(0 5px 17px #000b)!important}
+.hero h1 em{color:#ff4058!important;text-shadow:0 0 26px #ff304b4f}
+.eyebrow{color:#ffb3be!important;letter-spacing:2.5px}
+.hero p{color:#f0eaf0!important}
+.stat{position:relative;overflow:hidden;background:linear-gradient(145deg,#171c28f2,#0a0e18f5)!important;border:1px solid #a5b4ca4a!important;border-radius:16px!important;box-shadow:0 12px 32px #0008,inset 0 1px #ffffff17!important;transition:transform .28s ease,box-shadow .28s ease,border-color .28s ease!important}
+.stat:nth-child(2){background:linear-gradient(140deg,#2b111df4,#0d0c15f5)!important;border-color:#f43f547a!important}
+.stat:nth-child(3){background:linear-gradient(140deg,#161f2df2,#090d17f5)!important;border-color:#86a7cc55!important}
+.stat:before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 25%,#ffffff0b 48%,transparent 70%);transform:translateX(-115%);transition:transform .7s ease;pointer-events:none}
+.stat:hover:before{transform:translateX(115%)}
+.stat:hover{transform:translateY(-5px)!important;border-color:#ff6e82!important;box-shadow:0 20px 46px #000b,0 0 23px #f43f542a!important}
+.stat small{color:#b9c4d3!important}
+.stat strong{color:#fff!important;text-shadow:0 3px 17px #0009}
+.stat-icon{color:#ff5b70!important;filter:drop-shadow(0 0 12px #f43f5478)!important}
+.controls{background:linear-gradient(125deg,#0d111cf2,#171019f2)!important;border:1px solid #f43f544a!important;border-radius:16px!important;padding:12px!important;box-shadow:0 14px 38px #0009!important}
+.search{background:#070c16ec!important;border:1px solid #8493ac59!important;color:#fff!important;transition:border-color .2s,box-shadow .2s}
+.search:focus{border-color:#ff6478!important;box-shadow:0 0 0 3px #ff405828!important}
+.filter,.refresh{background:#131923ee!important;color:#e6ebf4!important;border:1px solid #a8b7c64d!important;border-radius:9px!important;transition:transform .2s,background .2s,border-color .2s!important}
+.filter:hover,.refresh:hover{transform:translateY(-2px);border-color:#ff6175!important}
+.filter.active{background:linear-gradient(135deg,#f33b51,#a90e2d)!important;border-color:#ff7a8b!important;color:white!important;box-shadow:0 5px 17px #f43f5449!important}
+.panel{background:linear-gradient(150deg,#11131df5,#090d17f7)!important;border:1px solid #aabbd044!important;border-radius:18px!important;box-shadow:0 22px 65px #000b,0 0 26px #f43f5412!important}
+.panelhead{background:linear-gradient(90deg,#31131fef,#121b2aec)!important;border-bottom:1px solid #ff5c7057!important}
+.panelhead strong{color:#fff!important;letter-spacing:1.2px}
+.panelhead span{color:#ffb9c4!important}
+thead{background:#101622ed!important}
+th{color:#bfcddd!important;letter-spacing:1.1px}
+tbody tr{background:#0d111bf0!important;transition:background .22s,box-shadow .22s!important}
+tbody tr:nth-child(even){background:#121724f0!important}
+tbody tr:hover{background:#241723f4!important;box-shadow:inset 3px 0 #f43f54!important}
+td{border-color:#e7a4b01c!important}
+.player-name{color:#f8faff!important}
+.player-steamid{color:#9baec6!important}
+.player-identity a{color:#ffb1bf!important}
+.origin-chip{background:#1c2331!important;border-color:#9eafc16b!important;color:#d6e2f1!important}
+.ban-status.active{background:#6c112a83!important;border-color:#ff4b6a!important;color:#ffb5c2!important;box-shadow:0 0 14px #ed315225!important}
+.ban-status.expired{background:#0e443783!important;border-color:#2ac28b!important;color:#b8ffe2!important}
+.duration-chip{color:#dce7f5!important}
+.bans-audio{background:#0a101cf0!important;border-color:#f43f5477!important;box-shadow:0 8px 30px #0009!important}
+@media(max-width:700px){
+ tbody tr{background:linear-gradient(145deg,#1a202df4,#0c101bf6)!important;border:1px solid #8a9aaf62!important;box-shadow:0 10px 30px #0009!important}
+ tbody tr:nth-child(even){background:linear-gradient(145deg,#261622f4,#10121df6)!important}
+ tbody tr:hover{border-color:#ff6478!important}
+ tbody td:nth-child(3){border-bottom:1px solid #d7a4af40!important}
+ tbody td:nth-child(2):before,tbody td:nth-child(4):before,tbody td:nth-child(5):before,tbody td:nth-child(6):before,tbody td:nth-child(7):before{color:#aebdd1!important}
+ .controls{padding:9px!important}
+}
+@media(prefers-reduced-motion:reduce){.stat,.filter,.refresh{transition:none!important}.stat:hover{transform:none!important}}
 </style></head><body><div class="bans-video-backdrop" aria-hidden="true"><video autoplay muted loop playsinline webkit-playsinline preload="metadata"><source src="/media/nicesv-custom-background.mp4" type="video/mp4"></video></div><audio id="bansMusic" src="/media/Passionfruit.mp3" preload="auto" loop playsinline></audio><div class="bans-audio" role="group" aria-label="Música de baneos"><button type="button" id="bansMusicToggle">♫ Activar música</button><button type="button" id="bansMusicDown" aria-label="Bajar volumen">−</button><input id="bansMusicVolume" type="range" min="0" max="100" value="35" aria-label="Volumen"><button type="button" id="bansMusicUp" aria-label="Subir volumen">+</button><span id="bansMusicPercent">35%</span></div><div class="motion-stage" aria-hidden="true"><div class="cosmos-nebula"></div><div class="cosmos-stars"></div><div class="cosmos-planet"></div><div class="cosmos-meteor"></div><div class="cosmos-meteor two"></div><div class="motion-grid"></div><div class="motion-orbit"></div><div class="motion-beam"></div><div class="motion-beam two"></div><div class="noise-dots"></div></div>
 <nav class="nav"><div class="shell navin"><a class="logo" href="/">NICE SV</a><div class="links"><a href="/">Inicio</a><a href="/#servidores">Servidores</a><a href="/custom-maps.html">Mapas Custom</a><a class="current" href="/bans.html" aria-current="page">Baneos</a><a href="/faq.html">FAQ</a><a href="/#administracion">Administración</a></div></div></nav>
 <main class="shell"><header class="hero"><div class="ban-hero-media" aria-hidden="true"><img src="/media/bans-hero.gif" alt="" decoding="async" fetchpriority="high" onerror="if(!this.dataset.fallback){this.dataset.fallback=1;this.src='https://raw.githubusercontent.com/matiasboy289-sketch/niceshot-monitor/main/media/bans-hero.gif';}"></div><div class="hero-content"><div class="eyebrow">NICE SV / MODERACIÓN</div><h1>LISTA DE <em>BANEOS</em></h1><p>Consulta las sanciones registradas en nuestros servidores de Left 4 Dead 2. Revisa los baneos aplicados en NICE SV, sus motivos, administradores y duración.</p></div></header>
