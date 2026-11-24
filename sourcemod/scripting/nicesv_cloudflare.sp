@@ -36,7 +36,7 @@ public void OnPluginStart()
     AutoExecConfig(true, "nicesv_cloudflare");
     g_cEnable.AddChangeHook(OnCvarChange);
     g_cInterval.AddChangeHook(OnCvarChange);
-    g_hTimer = CreateTimer(20.0, TimerReport, _, TIMER_REPEAT | TIMER_FLAG_NO_MAPCHANGE);
+    g_hTimer = CreateTimer(g_cInterval.FloatValue, TimerReport, _, TIMER_REPEAT | TIMER_FLAG_NO_MAPCHANGE);
 }
 
 public void OnCvarChange(ConVar cvar, const char[] oldValue, const char[] newValue)
@@ -177,7 +177,7 @@ void SendReport()
     g_bPending = true;
 }
 
-public int OnHTTPComplete(Handle request, bool failure, bool requestSuccessful, EHTTPStatusCode statusCode, any data)
+public void OnHTTPComplete(Handle request, bool failure, bool requestSuccessful, EHTTPStatusCode statusCode, any data)
 {
     g_bPending = false;
     if (failure || !requestSuccessful || view_as<int>(statusCode) < 200 || view_as<int>(statusCode) >= 300)
@@ -185,5 +185,4 @@ public int OnHTTPComplete(Handle request, bool failure, bool requestSuccessful, 
         LogError("[NICE SV] Cloudflare report failed (status %d)", view_as<int>(statusCode));
     }
     delete request;
-    return 0;
 }
