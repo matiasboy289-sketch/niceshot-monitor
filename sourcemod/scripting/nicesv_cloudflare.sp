@@ -16,7 +16,7 @@ public Plugin myinfo =
     name = "NICE SV | Cloudflare Server Monitor",
     author = "NICE SV",
     description = "Reports L4D2 status to the NICE SV Cloudflare Worker",
-    version = "1.0.0",
+    version = "1.1.0",
     url = "https://github.com/matiasboy289-sketch/niceshot-monitor"
 };
 
@@ -25,7 +25,8 @@ ConVar g_cURL;
 ConVar g_cToken;
 ConVar g_cInterval;
 Handle g_hTimer = null;
-bool g_bPending = false;
+Handle g_hRequest = null;
+float g_fSent = 0.0;
 
 public void OnPluginStart()
 {
@@ -33,10 +34,28 @@ public void OnPluginStart()
     g_cURL = CreateConVar("nicesv_cf_url", "https://niceshot-api.matiasboy289.workers.dev/api/status/ingest", "Cloudflare Worker status ingest endpoint", FCVAR_PROTECTED);
     g_cToken = CreateConVar("nicesv_cf_token", "", "Shared secret; configure locally, never commit", FCVAR_PROTECTED);
     g_cInterval = CreateConVar("nicesv_cf_interval", "20.0", "Reporting interval (seconds)", FCVAR_NOTIFY, true, 10.0, true, 90.0);
+    RegAdminCmd("sm_nicesv_cf_test", CommandTest, ADMFLAG_ROOT);
     AutoExecConfig(true, "nicesv_cloudflare");
     g_cEnable.AddChangeHook(OnCvarChange);
     g_cInterval.AddChangeHook(OnCvarChange);
     g_hTimer = CreateTimer(g_cInterval.FloatValue, TimerReport, _, TIMER_REPEAT);
+}
+
+public void OnConfigsExecuted()
+{
+    SendReport();
+}
+
+public Action CommandTest(int client, int args)
+{
+    ReplyToCommand(client, "[NICE SV] Enabled: %d; pending: %d. See server logs for HTTP result.", g_cEnable.BoolValue, g_hRequest != null);
+    SendReport();
+    return Plugin_Handled;
+}
+
+public void OnPluginEnd()
+{
+    delete g_hRequest;
 }
 
 public void OnCvarChange(ConVar cvar, const char[] oldValue, const char[] newValue)
@@ -48,6 +67,12 @@ public void OnCvarChange(ConVar cvar, const char[] oldValue, const char[] newVal
     }
     float interval = g_cInterval.FloatValue;
     g_hTimer = CreateTimer(interval, TimerReport, _, TIMER_REPEAT);
+    if (g_cEnable.BoolValue) RequestFrame(FrameReport);
+}
+
+public void FrameReport(any data)
+{
+    SendReport();
 }
 
 public Action TimerReport(Handle timer)
@@ -96,7 +121,14 @@ void JsonEscape(const char[] input, char[] output, int maxlen)
 
 void SendReport()
 {
-    if (!g_cEnable.BoolValue || g_bPending) return;
+    if (!g_cEnable.BoolValue) return;
+    if (g_hRequest != null)
+    {
+        if (GetEngineTime() - g_fSent < 45.0) return;
+        LogError("[NICE SV] HTTP callback timeout; releasing request and retrying");
+        delete g_hRequest;
+        g_hRequest = null;
+    }
 
     char token[256], url[256];
     g_cToken.GetString(token, sizeof(token));
@@ -154,6 +186,7 @@ void SendReport()
         LogError("[NICE SV] Unable to create SteamWorks request");
         return;
     }
+    SteamWorks_SetHTTPRequestNetworkActivityTimeout(req, 15);
     if (!SteamWorks_SetHTTPRequestHeaderValue(req, "X-NiceSV-Token", token)
         || !SteamWorks_SetHTTPRequestRawPostBody(req, "application/json", body, strlen(body))
         || !SteamWorks_SetHTTPCallbacks(req, OnHTTPComplete)
@@ -163,15 +196,22 @@ void SendReport()
         delete req;
         return;
     }
-    g_bPending = true;
+    g_hRequest = req;
+    g_fSent = GetEngineTime();
+    LogMessage("[NICE SV] Cloudflare POST queued");
 }
 
 public void OnHTTPComplete(Handle request, bool failure, bool requestSuccessful, EHTTPStatusCode statusCode, any data)
 {
-    g_bPending = false;
+    if (request != g_hRequest) return;
+    g_hRequest = null;
     if (failure || !requestSuccessful || view_as<int>(statusCode) < 200 || view_as<int>(statusCode) >= 300)
     {
         LogError("[NICE SV] Cloudflare report failed (status %d)", view_as<int>(statusCode));
+    }
+    else
+    {
+        LogMessage("[NICE SV] Cloudflare report accepted (HTTP %d)", view_as<int>(statusCode));
     }
     delete request;
 }
