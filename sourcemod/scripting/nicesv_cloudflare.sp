@@ -9,7 +9,7 @@
 
 #include <sourcemod>
 #include <sdktools>
-#include <steamworks>
+#include <SteamWorks>
 
 public Plugin myinfo =
 {
@@ -36,7 +36,7 @@ public void OnPluginStart()
     AutoExecConfig(true, "nicesv_cloudflare");
     g_cEnable.AddChangeHook(OnCvarChange);
     g_cInterval.AddChangeHook(OnCvarChange);
-    g_hTimer = CreateTimer(g_cInterval.FloatValue, TimerReport, _, TIMER_REPEAT | TIMER_FLAG_NO_MAPCHANGE);
+    g_hTimer = CreateTimer(g_cInterval.FloatValue, TimerReport, _, TIMER_REPEAT);
 }
 
 public void OnCvarChange(ConVar cvar, const char[] oldValue, const char[] newValue)
@@ -47,24 +47,13 @@ public void OnCvarChange(ConVar cvar, const char[] oldValue, const char[] newVal
         g_hTimer = null;
     }
     float interval = g_cInterval.FloatValue;
-    g_hTimer = CreateTimer(interval, TimerReport, _, TIMER_REPEAT | TIMER_FLAG_NO_MAPCHANGE);
+    g_hTimer = CreateTimer(interval, TimerReport, _, TIMER_REPEAT);
 }
 
 public Action TimerReport(Handle timer)
 {
     SendReport();
     return Plugin_Continue;
-}
-
-public void OnMapStart()
-{
-    // Timer with NO_MAPCHANGE is recreated for each map.
-    if (g_hTimer != null)
-    {
-        delete g_hTimer;
-        g_hTimer = null;
-    }
-    g_hTimer = CreateTimer(g_cInterval.FloatValue, TimerReport, _, TIMER_REPEAT | TIMER_FLAG_NO_MAPCHANGE);
 }
 
 void JsonEscape(const char[] input, char[] output, int maxlen)
