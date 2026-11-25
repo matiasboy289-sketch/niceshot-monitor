@@ -77,6 +77,13 @@
     "description": "Clip #011 · Comunidad"
   },
   {
+    "type": "video",
+    "src": "/media/insta_a_mizuu.mp4",
+    "title": "Insta a Mizuu",
+    "author": "NICE SV",
+    "description": "Clip #012 · Comunidad"
+  },
+  {
     "type": "image",
     "src": "/media/550_80.jpg",
     "title": "Navidad en NICE SV",
@@ -96,5 +103,12 @@
     "title": "Caos entre infectados",
     "author": "NICE SV",
     "description": "Captura #003 · GIF animado"
+  },
+  {
+    "type": "image",
+    "src": "/media/Tag.png",
+    "title": "Tag de la comunidad",
+    "author": "NICE SV",
+    "description": "Captura #004 · Comunidad"
   }
 ]
