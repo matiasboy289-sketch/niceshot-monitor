@@ -302,15 +302,15 @@ body{background:#050608}
 #vips .btn.primary{background:linear-gradient(110deg,#ffe6ae,#e7b75e,#fff0c7)!important;color:#211609!important;animation:none!important}
 @media(prefers-reduced-motion:reduce){.hero h1 span,.section-head h2,.hero-btn,.section .btn.primary{animation:none!important}}
 </style><style>
-/* NICE SV — ember / obsidian identity */
-@keyframes nsEmber{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-.hero h1 span,.section-head h2,.section-head h2 span{background:linear-gradient(110deg,#fff5e6,#ffbf66,#ff754f,#ff4c83,#e5a4ff,#fff5e6)!important;background-size:320% 100%!important;background-clip:text!important;-webkit-background-clip:text!important;color:transparent!important;-webkit-text-fill-color:transparent!important;animation:nsEmber 11s ease-in-out infinite!important;text-shadow:none!important}
-.hero h1{filter:drop-shadow(0 0 26px #ff744d55)}
-.hero-btn,.section .btn.primary{background:linear-gradient(110deg,#ffe0a1,#ff9d60,#ff7899,#ffe0a1)!important;background-size:300% 100%!important;color:#24100c!important;border-color:#ffd1a280!important;animation:nsEmber 11s ease-in-out infinite!important}
-.section-tag{color:#ffb88a!important}.section-desc{color:#e2d8d2!important}
-.section .panel,.section .feature,.section .eco-card,.section .custom-preview-card,.section .faq-home-card{background:linear-gradient(145deg,#211a1df5,#100e14f5)!important;border-color:#dca17a45!important}
-.section .panel:hover,.section .feature:hover,.section .eco-card:hover,.section .custom-preview-card:hover,.section .faq-home-card:hover{border-color:#ff9c7399!important;box-shadow:0 12px 34px #0007,0 0 20px #ff87551c}
-.section .stat{border-color:#dca17a38!important}
+/* NICE SV — Titanium Prism identity */
+@keyframes nsPrism{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.hero h1 span,.section-head h2,.section-head h2 span{background:linear-gradient(110deg,#ffffff,#aebcc8,#ffffff,#78ffdf,#54bfc8,#a7a1ff,#dfcaff,#ffffff)!important;background-size:320% 100%!important;background-clip:text!important;-webkit-background-clip:text!important;color:transparent!important;-webkit-text-fill-color:transparent!important;animation:nsPrism 8s ease-in-out infinite!important;text-shadow:none!important}
+.hero h1{filter:drop-shadow(0 0 26px #75ffdd55)}
+.hero-btn,.section .btn.primary{background:linear-gradient(110deg,#e5f7ff,#75f5d9,#c0b7ff,#e5f7ff)!important;background-size:300% 100%!important;color:#10232b!important;border-color:#b3f5eb80!important;animation:nsPrism 8s ease-in-out infinite!important}
+.section-tag{color:#9ce8e2!important}.section-desc{color:#d3e1e7!important}
+.section .panel,.section .feature,.section .eco-card,.section .custom-preview-card,.section .faq-home-card{background:linear-gradient(145deg,#18252bf5,#0d1119f5)!important;border-color:#9be4e244!important}
+.section .panel:hover,.section .feature:hover,.section .eco-card:hover,.section .custom-preview-card:hover,.section .faq-home-card:hover{border-color:#8df4dc99!important;box-shadow:0 12px 34px #0007,0 0 20px #75ffdd25}
+.section .stat{border-color:#9be4e238!important}
 .section.shell{padding-top:52px;padding-bottom:58px}
 .section-head{align-items:flex-end;gap:24px}.section-desc{max-width:380px}
 #servidores .cards{align-items:start;gap:20px}
@@ -325,6 +325,17 @@ body{background:#050608}
 @media(max-width:1000px){.ecosystem,.ecosystem.ecosystem{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:700px){.ecosystem,.ecosystem.ecosystem{grid-template-columns:1fr}.section-head{align-items:flex-start}.section.shell{padding-top:36px;padding-bottom:40px}}
 @media(prefers-reduced-motion:reduce){.hero h1 span,.section-head h2,.section-head h2 span,.hero-btn,.section .btn.primary{animation:none!important}}
+
+:root{--red:#78ffdf}
+.logo b{color:#78ffdf}
+.hero .eyebrow{color:#c9f5ef!important;border-color:#9be4e255!important;background:#101e25c9!important}
+.redglow{background:radial-gradient(ellipse at 70% 8%,#197b7944,transparent 42%),radial-gradient(ellipse at 10% 70%,#53458a35,transparent 45%)}
+.section:not(#vips) .eco-content h3,.section:not(#vips) .feature h3,.section:not(#vips) .admin-info h3{color:#e5f7ff!important}
+.section:not(#vips) .eco-tag,.section:not(#vips) .feature .num{color:#9ce8e2!important}
+.section:not(#vips) .btn.primary:hover,.hero-btn:hover{box-shadow:0 0 24px #75ffdd44}
+#vips .section-tag{color:#ffe1a3!important}
+#vips .admin-contact{background:linear-gradient(145deg,#241e15f5,#14120ef5)!important}
+#vips .admin-contact:hover{border-color:#e7b75e!important;box-shadow:0 0 20px #e7b75e25}
 </style></head><body>
 <video class="hero-video" id="backgroundVideo" autoplay muted loop playsinline preload="metadata" aria-hidden="true"><source src="/media/nicesv-intro-con-sonido.mp4" type="video/mp4"></video><div class="video-audio-controls" role="group" aria-label="Volumen de la música del video"><button type="button" id="videoMute" aria-label="Activar sonido del video" title="Activar sonido">🔇 Activar sonido</button><button type="button" id="videoVolDown" aria-label="Bajar volumen" title="Bajar volumen">−</button><input type="range" id="videoVolume" min="0" max="100" value="35" step="5" aria-label="Volumen del video"><button type="button" id="videoVolUp" aria-label="Subir volumen" title="Subir volumen">+</button><span id="videoVolumeLabel" aria-live="polite">35%</span></div><div class="video-backdrop" aria-hidden="true"></div>
 <div class="contours" aria-hidden="true"><svg viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice"><g id="waves"></g></svg><svg viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice"><g id="waves2"></g></svg></div><div class="redglow"></div><div class="grain"></div>
