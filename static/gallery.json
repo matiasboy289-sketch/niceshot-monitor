@@ -5,5 +5,19 @@
     "title": "El ácidooo",
     "author": "NICE SV",
     "description": "Clip #001 · Comunidad"
+  },
+  {
+    "type": "video",
+    "src": "/media/Del%20Arbusto.mp4",
+    "title": "Del Arbusto",
+    "author": "NICE SV",
+    "description": "Clip #002 · Comunidad"
+  },
+  {
+    "type": "video",
+    "src": "/media/Bomba.mp4",
+    "title": "Bomba",
+    "author": "NICE SV",
+    "description": "Clip #003 · Comunidad"
   }
 ]
