@@ -278,6 +278,29 @@ body{background:#050608}
 
 /* NICE SV: navigation alignment and responsive spacing */
 .nav-inner{display:grid!important;grid-template-columns:80px minmax(0,1fr) 154px;align-items:center;gap:18px;min-height:72px;height:auto!important}.nav-inner .logo{white-space:nowrap;line-height:1.15;font-size:19px}.navlinks{display:flex!important;align-items:center;justify-content:center;flex-wrap:nowrap!important;gap:clamp(9px,1.15vw,18px)!important;min-width:0}.navlinks a{font-size:clamp(10px,.83vw,12px)!important;white-space:nowrap!important;line-height:1.3;text-align:center}.navlinks .nav-vip-link{color:#f5c758;white-space:nowrap}.navstatus{justify-self:end;display:inline-flex;align-items:center;justify-content:center;min-width:145px;white-space:nowrap;font-size:10px!important;padding:9px 11px!important;line-height:1.2}.navstatus .light{flex-shrink:0;margin-right:7px}.nav-inner .logo b{display:inline}@media(max-width:1120px){.nav-inner{grid-template-columns:72px minmax(0,1fr) 133px;gap:10px}.navlinks{gap:9px!important}.navlinks a{font-size:10px!important}.navstatus{min-width:128px;font-size:9px!important;padding:8px!important}}@media(max-width:930px){.nav-inner{display:flex!important;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-top:12px;padding-bottom:12px}.nav-inner .logo{flex:0 0 auto}.navstatus{margin-left:auto}.navlinks{order:3;flex:1 0 100%;justify-content:flex-start;overflow-x:auto;scrollbar-width:thin;padding:4px 0 8px;gap:18px!important}.navlinks a{font-size:11px!important;flex-shrink:0}.nav{height:auto!important;min-height:0!important}}@media(max-width:480px){.nav-inner{gap:8px}.navlinks{gap:15px!important}.navstatus{min-width:0;font-size:9px!important}.nav-inner .logo{font-size:18px}}
+</style><style>
+/* NICE SV — unified cinematic homepage */
+@keyframes nsHomeAurora{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.hero h1 span,.section-head h2{background:linear-gradient(110deg,#fff,#a8e0ff,#91b5ff,#c9b4ff,#82e8dc,#fff)!important;background-size:300% 100%!important;background-clip:text!important;-webkit-background-clip:text!important;color:transparent!important;-webkit-text-fill-color:transparent!important;text-shadow:none!important;animation:nsHomeAurora 14s ease-in-out infinite!important}
+.hero h1{filter:drop-shadow(0 0 24px #80baff35);padding:.08em .12em}
+.hero .eyebrow{color:#d8eaff!important;border-color:#9ac8ff55!important;background:#0c1423c9!important}
+.hero p,.section-desc{color:#d2deec!important}
+.section-tag{color:#8edfff!important}
+.section{scroll-margin-top:90px}
+.section .panel,.section .feature,.section .eco-card,.section .custom-preview-card,.section .faq-home-card{background:linear-gradient(145deg,#121d2bed,#090e18f5)!important;border:1px solid #91b6e344!important;border-radius:16px;box-shadow:0 12px 34px #0005;transition:border-color .25s,box-shadow .25s}
+.section .panel:hover,.section .feature:hover,.section .eco-card:hover,.section .custom-preview-card:hover,.section .faq-home-card:hover{border-color:#91d9ff99!important;box-shadow:0 12px 34px #0007,0 0 18px #76caff18}
+.section .stat{background:#ffffff08!important;border:1px solid #9bbbe133!important;border-radius:10px}
+.section .stat strong{font-variant-numeric:tabular-nums}
+.section .eco-content h3,.section .feature h3,.section .custom-preview-info h3,.section .faq-home-card h3,.section .admin-info h3{color:#e5f2ff!important}
+.section .eco-content p,.section .feature p,.section .custom-preview-info p,.section .faq-home-card p,.section .admin-info p{color:#c0cfe0!important}
+.hero-btn,.section .btn.primary{background:linear-gradient(110deg,#b9e7ff,#9fbbff,#c5aaff,#8de8df,#b9e7ff)!important;background-size:300% 100%!important;color:#101827!important;border:1px solid #c6e8ff99!important;font-weight:800;animation:nsHomeAurora 14s ease-in-out infinite!important}
+.hero-btn:hover,.section .btn.primary:hover{box-shadow:0 0 22px #8cd5ff55}
+.navlinks a:not(.nav-vip-link){color:#d0dceb}
+.navlinks a:not(.nav-vip-link):hover{color:#9ee7ff}
+#vips .admin-contact{border-color:#d9b66b66!important}
+#vips .admin-info h3{color:#ffe1a3!important}
+#vips .btn.primary{background:linear-gradient(110deg,#ffe6ae,#e7b75e,#fff0c7)!important;color:#211609!important;animation:none!important}
+@media(prefers-reduced-motion:reduce){.hero h1 span,.section-head h2,.hero-btn,.section .btn.primary{animation:none!important}}
 </style></head><body>
 <video class="hero-video" id="backgroundVideo" autoplay muted loop playsinline preload="metadata" aria-hidden="true"><source src="/media/nicesv-intro-con-sonido.mp4" type="video/mp4"></video><div class="video-audio-controls" role="group" aria-label="Volumen de la música del video"><button type="button" id="videoMute" aria-label="Activar sonido del video" title="Activar sonido">🔇 Activar sonido</button><button type="button" id="videoVolDown" aria-label="Bajar volumen" title="Bajar volumen">−</button><input type="range" id="videoVolume" min="0" max="100" value="35" step="5" aria-label="Volumen del video"><button type="button" id="videoVolUp" aria-label="Subir volumen" title="Subir volumen">+</button><span id="videoVolumeLabel" aria-live="polite">35%</span></div><div class="video-backdrop" aria-hidden="true"></div>
 <div class="contours" aria-hidden="true"><svg viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice"><g id="waves"></g></svg><svg viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice"><g id="waves2"></g></svg></div><div class="redglow"></div><div class="grain"></div>
