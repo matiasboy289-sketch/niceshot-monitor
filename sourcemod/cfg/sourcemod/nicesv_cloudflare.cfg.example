@@ -1,0 +1,7 @@
+// NICE SV | Cloudflare reporter
+// Set nicesv_cf_token LOCALLY to the same NICESV_INGEST_TOKEN secret in Cloudflare.
+// NEVER commit real tokens to GitHub.
+nicesv_cf_enable "0"
+nicesv_cf_url "https://niceshot-api.matiasboy289.workers.dev/api/status/ingest"
+nicesv_cf_token ""
+nicesv_cf_interval "20.0"

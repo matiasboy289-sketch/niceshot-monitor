@@ -332,8 +332,110 @@ td{border-color:#e7a4b01c!important}
  .controls{padding:9px!important}
 }
 @media(prefers-reduced-motion:reduce){.stat,.filter,.refresh{transition:none!important}.stat:hover{transform:none!important}}
+</style><style>
+@keyframes banSpectrum{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.hero h1,.hero h1 em{background:linear-gradient(110deg,#ffbc78,#ff758c,#d6a1ff,#80baff,#75eee4,#a8f08b,#ffe08a,#ffbc78)!important;background-size:350% 100%!important;background-clip:text!important;-webkit-background-clip:text!important;color:transparent!important;-webkit-text-fill-color:transparent;text-shadow:none!important;animation:banSpectrum 12s ease-in-out infinite!important}
+.player-avatar{width:46px!important;height:46px!important;flex-basis:46px!important;border-radius:10px!important;border-color:#a69acb!important}
+.player-avatar:hover{box-shadow:0 0 16px #a69acb99}
+.stat strong{font-variant-numeric:tabular-nums}
+@media(prefers-reduced-motion:reduce){.hero h1,.hero h1 em{animation:none!important}}
+</style><style>
+/* Aether Platinum — responsive public moderation cards */
+@keyframes aether{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.shell{max-width:1600px;width:100%;padding-inline:clamp(16px,3vw,48px)}
+body{background:#090c16;color:#f1f2ff;padding-bottom:55px}
+.bans-video-backdrop::after{background:linear-gradient(135deg,#090c1666,#171b3b77)}
+.nav{background:#0b1020f2!important;border-color:#849aff55!important}
+.logo:before{background:#a7b8ff;filter:drop-shadow(0 0 9px #849aff)}
+.links .current{color:#d0bbff!important;border-color:#a7b8ff}.links .current:after{background:#a7b8ff;box-shadow:0 0 12px #849aff}.links a:hover{color:#d0bbff!important}
+.hero{min-height:330px;border-radius:24px;border-color:#a3afff77!important;box-shadow:0 24px 65px #0009,0 0 34px #849aff22!important}
+.hero:hover{border-color:#c3aaff!important}.hero:after{background:linear-gradient(115deg,transparent 25%,#c3aaff22 48%,transparent 70%)}
+.ban-hero-media:after{background:linear-gradient(90deg,#101524fa,#1c2442df 38%,#151a3870 75%,#151a3820)}
+.hero .eyebrow{background:#222c50aa;border-color:#a3afff77;color:#d0d8ff!important}.hero .eyebrow:before{background:#c3aaff;box-shadow:0 0 16px #849aff}
+.hero h1,.hero h1 em{font-style:normal;background:linear-gradient(110deg,#fff,#c5caff,#849aff,#c3aaff,#e5efff,#fff)!important;background-size:300% 100%!important;background-clip:text!important;-webkit-background-clip:text!important;color:transparent!important;-webkit-text-fill-color:transparent!important;animation:aether 8s ease-in-out infinite!important;filter:none!important}
+.hero h1:after{background:linear-gradient(90deg,#849aff,#c3aaff,transparent)}
+.stats{grid-template-columns:1.2fr 1fr 1fr;gap:18px;margin-bottom:28px}
+.stat,.stat:nth-child(2),.stat:nth-child(3){display:grid;grid-template-columns:1fr;grid-template-rows:auto auto auto;gap:8px;text-align:left;min-height:185px;padding:24px!important;background:linear-gradient(145deg,#222c50f5,#121828f5)!important;border:1px solid #8e9dff66!important;border-radius:20px!important}
+.stat:nth-child(2){background:linear-gradient(145deg,#302749f5,#171526f5)!important;border-color:#c2aaff77!important}
+.stat:nth-child(3){background:linear-gradient(145deg,#16343cf5,#111c28f5)!important;border-color:#83dbdb66!important}
+.stat-icon{grid-row:auto;justify-self:start;width:48px;height:48px;border-radius:12px;background:#a7b8ff16;border:1px solid #a7b8ff44;color:#c4ceff!important;filter:none!important;text-shadow:none;font-size:25px}
+.stat small{font-size:11px;color:#c4cce5!important}.stat strong{font-size:44px;color:#e3e8ff!important;align-self:start}.stat:nth-child(2) strong,.stat:nth-child(2) .stat-icon{color:#d3b7ff!important}.stat:nth-child(3) strong,.stat:nth-child(3) .stat-icon{color:#9ce9e1!important}
+.stat:hover{border-color:#c3aaff!important;box-shadow:0 20px 40px #0009,0 0 24px #849aff33!important}
+.controls{background:#121a2af5!important;border-color:#8899dc66!important;padding:16px!important}.search{background:#090f20!important;border-color:#8899dc66!important}.search:focus{border-color:#a7b8ff!important;box-shadow:0 0 0 3px #849aff33!important}
+.filter,.refresh{background:#151d30!important;border-color:#8899dc66!important;color:#dce5ff!important}.filter.active{background:linear-gradient(110deg,#9dafff,#d0bbff)!important;color:#16192e!important;border-color:#c3aaff!important;box-shadow:none!important}.filter:hover,.refresh:hover{border-color:#c3aaff!important}
+.panel{background:#0d1322e8!important;border-color:#8899dc55!important;border-radius:22px!important}.panelhead{background:linear-gradient(90deg,#222c50,#171526)!important;border-color:#8899dc55!important}.panelhead strong:before{color:#c3aaff}.panelhead span{background:#252d4b;color:#d0d8ff!important;border-color:#8899dc77}
+.tablewrap{overflow:visible}table{display:block;width:100%;min-width:0}thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}tbody{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;padding:20px}
+tbody tr,tbody tr:nth-child(even){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;min-width:0;padding:20px;background:linear-gradient(135deg,#1b2237f5,#111624f5)!important;border:1px solid #9caaff55!important;border-radius:16px;box-shadow:0 8px 24px #0005!important;transition:transform .25s,border-color .25s,box-shadow .25s!important}
+tbody tr:hover{transform:translateY(-3px);border-color:#b6baff!important;box-shadow:0 10px 30px #849aff22!important}
+tbody td{display:block;min-width:0!important;max-width:none!important;padding:0;border:0!important;font-size:13px;overflow-wrap:anywhere;line-height:1.5}
+tbody td:nth-child(3){grid-column:1/-1;grid-row:1;padding-bottom:14px;border-bottom:1px solid #9caaff33!important}
+tbody td:nth-child(1){grid-column:1;grid-row:2}tbody td:nth-child(2){grid-column:2;grid-row:2}tbody td:nth-child(6){grid-column:1/-1;grid-row:3;padding:12px;background:#849aff0c;border-radius:8px}tbody td:nth-child(4){grid-column:1;grid-row:4}tbody td:nth-child(7){grid-column:2;grid-row:4}tbody td:nth-child(5){grid-column:1/-1;grid-row:5}
+tbody td:nth-child(2):before{content:"FECHA"}tbody td:nth-child(4):before{content:"ADMINISTRADOR"}tbody td:nth-child(5):before{content:"ORIGEN"}tbody td:nth-child(6):before{content:"MOTIVO"}tbody td:nth-child(7):before{content:"DURACIÓN"}
+tbody td:nth-child(2):before,tbody td:nth-child(4):before,tbody td:nth-child(5):before,tbody td:nth-child(6):before,tbody td:nth-child(7):before{display:block;color:#a6afd0!important;font-size:10px;font-weight:800;letter-spacing:1px;margin-bottom:5px}
+.player-identity{min-width:0;gap:12px}.player-avatar{width:56px!important;height:56px!important;flex-basis:56px!important;border-radius:13px!important;background:linear-gradient(135deg,#5969a3,#292c49);border-color:#b2baff77!important;color:#e5efff}.player-name{font-size:16px}.player-steamid{color:#b3bdd8!important;font-size:11px}.steam-link{margin-left:68px;color:#b9c8ff!important;border-color:#849aff66;font-size:11px}
+.ban-status.active{background:#c0aaff15!important;border-color:#c0aaff66!important;color:#d9c1ff!important;box-shadow:none!important}.ban-status.expired{background:#9ce9e115!important;border-color:#9ce9e166!important;color:#9ce9e1!important}.origin-chip{background:#222c50!important;border-color:#849aff55!important;color:#dce5ff!important}.notice{border-color:#849aff;color:#c4cce5}.footer{border-color:#849aff44}
+.bans-audio{background:#101524f5!important;border-color:#849aff77!important}.bans-audio button{background:#222c50;border-color:#849aff66}.bans-audio input{accent-color:#a7b8ff}
+@media(max-width:1100px){tbody{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.hero{min-height:245px}.stats{gap:8px;grid-template-columns:repeat(3,minmax(0,1fr))}.stat,.stat:nth-child(2),.stat:nth-child(3){padding:12px!important;min-height:135px;gap:5px}.stat-icon{width:30px;height:30px;font-size:18px}.stat small{font-size:9px}.stat strong{font-size:28px}tbody{grid-template-columns:1fr;padding:12px;gap:12px}tbody tr{padding:16px}.panelhead{padding:16px}.controls{padding:10px!important}}
+@media(prefers-reduced-motion:reduce){.hero h1,.hero h1 em{animation:none!important}tbody tr:hover{transform:none}}
+</style><style>
+/* Crimson Obsidian — animated accents, preserve Aether layout */
+@keyframes crimsonSpectrum{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+@keyframes crimsonHalo{0%,100%{opacity:.35}50%{opacity:.85}}
+.hero h1,.hero h1 em{background:linear-gradient(110deg,#fff0e8,#f43f54,#ff9866,#c69bff,#e5e9f2,#fff0e8)!important;background-size:350% 100%!important;background-clip:text!important;-webkit-background-clip:text!important;animation:crimsonSpectrum 7s ease-in-out infinite!important}
+.hero h1:after,.links .current:after{background:linear-gradient(90deg,#f43f54,#ff9866,#c69bff,#e5e9f2);background-size:300% 100%;animation:crimsonSpectrum 6s infinite}
+.hero{border-color:#f43f5477!important}.hero .eyebrow{color:#ffd0bd!important;border-color:#f43f5477}
+.ban-hero-media:after{background:linear-gradient(90deg,#09090dfa,#241019df 38%,#35203b70 75%,#151a3820)}
+.stat,.stat:nth-child(2),.stat:nth-child(3){background:linear-gradient(125deg,#29131c,#15151e,#302039,#29131c)!important;background-size:300% 300%!important;animation:crimsonSpectrum 12s ease-in-out infinite!important;border-color:#f43f5477!important}
+.stat:nth-child(2){animation-delay:-4s!important;border-color:#c69bff88!important}.stat:nth-child(3){animation-delay:-8s!important;border-color:#e5e9f288!important}
+.stat strong,.stat-icon{color:#f43f54!important}.stat:nth-child(2) strong,.stat:nth-child(2) .stat-icon{color:#e0baff!important}.stat:nth-child(3) strong,.stat:nth-child(3) .stat-icon{color:#e5e9f2!important}
+.stat:after{display:block;content:"";position:absolute;top:0;left:15%;right:15%;height:2px;background:linear-gradient(90deg,transparent,#f43f54,#c69bff,transparent);animation:crimsonHalo 4s infinite;pointer-events:none}
+.filter.active{background:linear-gradient(110deg,#f43f54,#ffbd90,#d5b0ff,#e5e9f2,#f43f54)!important;background-size:350% 100%!important;animation:crimsonSpectrum 7s infinite!important;color:#200b12!important}
+.panelhead{background:linear-gradient(110deg,#391823,#211b29,#352039,#391823)!important;background-size:300% 100%!important;animation:crimsonSpectrum 12s infinite}
+tbody tr,tbody tr:nth-child(even){position:relative;background:linear-gradient(145deg,#211820f5,#101015f5)!important;border-color:#ff986666!important;overflow:hidden}
+tbody tr:before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#f43f54,#ff9866,#c69bff,#e5e9f2,#f43f54);background-size:300% 100%;animation:crimsonSpectrum 8s infinite;pointer-events:none}
+tbody tr:nth-child(3n+2):before{animation-delay:-3s}tbody tr:nth-child(3n):before{animation-delay:-6s}
+tbody tr:hover{border-color:#f43f54!important;box-shadow:0 10px 30px #f43f5425!important}
+.steam-link{color:#ffb9a7!important}.player-avatar{border-color:#f43f5477!important}.ban-status.active{color:#ffb9c4!important;border-color:#c69bff88!important}.ban-status.expired{color:#e5e9f2!important;border-color:#e5e9f288!important}
+.nav,.controls,.panel,.bans-audio{border-color:#ff986677!important}.links .current,.links a:hover{color:#ffb9a7!important}.links .current{border-color:#f43f54}.logo:before{background:#f43f54;filter:drop-shadow(0 0 8px #f43f54)}.bans-audio input{accent-color:#f43f54}
+@media(prefers-reduced-motion:reduce){.hero h1,.hero h1 em,.hero h1:after,.links .current:after,.stat,.stat:after,.filter.active,.panelhead,tbody tr:before{animation:none!important}}
+
+body{background:#09090d}.bans-video-backdrop::after{background:linear-gradient(135deg,#09090d77,#210f1977)}
+.nav,.controls,.panel,.bans-audio{background:#101016f2!important;border-color:#f43f5455!important}
+.hero:hover,.stat:hover{border-color:#ff9866!important}
+.hero .eyebrow{background:#301522aa!important}.hero .eyebrow:before{background:#f43f54;box-shadow:0 0 16px #f43f54}
+.stat-icon{background:#f43f5415;border-color:#f43f5455}
+.stat:nth-child(3) strong,.stat:nth-child(3) .stat-icon{color:#9ce9c4!important}
+.search{background:#09090f!important;border-color:#a68b9b66!important}.search:focus{border-color:#ff9866!important;box-shadow:0 0 0 3px #f43f5433!important}
+.filter,.refresh{background:#201923!important;border-color:#a68b9b66!important;color:#f4e9ee!important}.filter:hover,.refresh:hover{border-color:#ff9866!important}
+.panelhead span,.origin-chip{background:#291b29!important;border-color:#c69bff55!important;color:#f0d9ef!important}
+.player-avatar{background:linear-gradient(135deg,#613046,#211923)!important}.player-steamid{color:#c3b6c5!important}
+.ban-status.active{background:#f43f5418!important;border-color:#f43f5488!important;color:#ffb9c4!important}.ban-status.expired{background:#9ce9c415!important;border-color:#9ce9c466!important;color:#9ce9c4!important}
+tbody td:nth-child(6){background:#f43f540b}tbody td:nth-child(3){border-color:#f43f5433!important}
+.bans-audio button{background:#291b29;border-color:#f43f5455}.notice,.footer{border-color:#f43f5455}
+</style><style id="crimson-final">
+/* Unified high contrast crimson theme */
+:root{--spectrum:linear-gradient(110deg,#ff6578,#ffb06f,#f4e9e5,#c69bff,#ff6578)}
+body .hero h1,body .hero h1 em,body .logo,body .panelhead strong,body .stat strong,body .stat small,body .player-name,body .links a.current,body .footmark{background:var(--spectrum)!important;background-size:350% 100%!important;background-clip:text!important;-webkit-background-clip:text!important;color:transparent!important;-webkit-text-fill-color:transparent!important;text-shadow:none!important;animation:crimsonSpectrum 7s ease-in-out infinite!important}
+body .stat,body .stat:nth-child(2),body .stat:nth-child(3){background:linear-gradient(125deg,#501522,#161015,#40233f,#3d2117,#501522)!important;background-size:350% 350%!important;animation:crimsonSpectrum 10s infinite!important;border-color:#ff657899!important}
+body .stat:nth-child(2){animation-delay:-3s!important}body .stat:nth-child(3){animation-delay:-6s!important}
+body .panel{background:#100b10f5!important;border-color:#ff657877!important}
+body .panelhead,body .controls,body .nav{background:linear-gradient(110deg,#301019,#151014,#35203b,#301019)!important;background-size:300% 100%!important;animation:crimsonSpectrum 14s infinite!important;border-color:#ff657877!important}
+body tbody tr,body tbody tr:nth-child(even){background:linear-gradient(130deg,#35131df7,#100c12f7 55%,#291b32f7)!important;border-color:#e06c8377!important}
+body tbody tr:nth-child(3n+2){background:linear-gradient(130deg,#392319f7,#100c12f7 55%,#301522f7)!important}
+body tbody tr:nth-child(3n){background:linear-gradient(130deg,#302039f7,#100c12f7 55%,#38151df7)!important}
+body tbody tr:before{height:3px;background:var(--spectrum);background-size:350% 100%;animation:crimsonSpectrum 6s infinite}
+body tbody td:nth-child(2):before,body tbody td:nth-child(4):before,body tbody td:nth-child(5):before,body tbody td:nth-child(6):before,body tbody td:nth-child(7):before{color:#ffb59b!important}
+body .filter,body .refresh,body .bans-audio button{background:linear-gradient(120deg,#34131e,#1c141e,#38243b,#34131e)!important;background-size:300% 100%!important;animation:crimsonSpectrum 10s infinite!important;border-color:#ff657877!important;color:#fff0e8!important}
+body .filter.active{background:var(--spectrum)!important;background-size:350% 100%!important;color:#200b12!important}
+body .player-avatar{border-color:#ff9866!important;box-shadow:0 0 14px #f43f5433}body .steam-link{color:#ffc1a0!important}body .player-steamid{color:#d6c1cc!important}
+body .hero .eyebrow{color:#ffc1a0!important}body .stat-icon{color:#ff9866!important}
+body .bans-video-backdrop::after{background:linear-gradient(135deg,#09090d88,#3c101d66,#21142877)}
+body .search{background:#100b10!important;border-color:#ff657866!important}
+body .ban-status.expired{color:#9ce9c4!important}
+@media(prefers-reduced-motion:reduce){body .hero h1,body .hero h1 em,body .logo,body .panelhead strong,body .stat strong,body .stat small,body .player-name,body .links a.current,body .footmark,body .stat,body .stat:nth-child(2),body .stat:nth-child(3),body .panelhead,body .controls,body .nav,body tbody tr:before,body .filter,body .refresh,body .bans-audio button{animation:none!important}}
 </style></head><body><div class="bans-video-backdrop" aria-hidden="true"><video autoplay muted loop playsinline webkit-playsinline preload="metadata"><source src="/media/nicesv-custom-background.mp4" type="video/mp4"></video></div><audio id="bansMusic" src="/media/Passionfruit.mp3" preload="auto" loop playsinline></audio><div class="bans-audio" role="group" aria-label="Música de baneos"><button type="button" id="bansMusicToggle">♫ Activar música</button><button type="button" id="bansMusicDown" aria-label="Bajar volumen">−</button><input id="bansMusicVolume" type="range" min="0" max="100" value="35" aria-label="Volumen"><button type="button" id="bansMusicUp" aria-label="Subir volumen">+</button><span id="bansMusicPercent">35%</span></div><div class="motion-stage" aria-hidden="true"><div class="cosmos-nebula"></div><div class="cosmos-stars"></div><div class="cosmos-planet"></div><div class="cosmos-meteor"></div><div class="cosmos-meteor two"></div><div class="motion-grid"></div><div class="motion-orbit"></div><div class="motion-beam"></div><div class="motion-beam two"></div><div class="noise-dots"></div></div>
-<nav class="nav"><div class="shell navin"><a class="logo" href="/">NICE SV</a><div class="links"><a href="/">Inicio</a><a href="/#servidores">Servidores</a><a href="/custom-maps.html">Mapas Custom</a><a class="current" href="/bans.html" aria-current="page">Baneos</a><a href="/faq.html">FAQ</a><a href="/#administracion">Administración</a></div></div></nav>
+<nav class="nav"><div class="shell navin"><a class="logo" href="/">NICE SV</a><div class="links"><a href="/">Inicio</a><a href="/#servidores">Servidores</a><a href="/custom-maps.html">Mapas Custom</a><a href="/galeria.html">Galería</a><a class="current" href="/bans.html" aria-current="page">Baneos</a><a href="/faq.html">FAQ</a><a href="/#administracion">Administración</a></div></div></nav>
 <main class="shell"><header class="hero"><div class="ban-hero-media" aria-hidden="true"><img src="/media/bans-hero.gif" alt="" decoding="async" fetchpriority="high" onerror="if(!this.dataset.fallback){this.dataset.fallback=1;this.src='https://raw.githubusercontent.com/matiasboy289-sketch/niceshot-monitor/main/media/bans-hero.gif';}"></div><div class="hero-content"><div class="eyebrow">NICE SV / MODERACIÓN</div><h1>LISTA DE <em>BANEOS</em></h1><p>Consulta las sanciones registradas en nuestros servidores de Left 4 Dead 2. Revisa los baneos aplicados en NICE SV, sus motivos, administradores y duración.</p></div></header>
 <section class="stats" aria-label="Estadísticas"><div class="stat"><span class="stat-icon" aria-hidden="true">♟</span><small>TOTAL DE BANEOS</small><strong id="total">—</strong></div><div class="stat"><span class="stat-icon" aria-hidden="true">⚒</span><small>BANEOS ACTIVOS</small><strong id="active">—</strong></div><div class="stat"><span class="stat-icon" aria-hidden="true">◷</span><small>EXPIRADOS</small><strong id="expired">—</strong></div></section>
 <div class="controls"><input id="search" class="search" type="search" placeholder="Buscar jugador, SteamID o motivo..." aria-label="Buscar baneos"><button class="filter active" data-filter="all">Todos</button><button class="filter" data-filter="active">Activos</button><button class="filter" data-filter="expired">Expirados</button><button id="refresh" class="refresh">Actualizar ↻</button></div>
@@ -342,6 +444,7 @@ td{border-color:#e7a4b01c!important}
 <script>
 let bans=[],connected=false,filter='all';const $=id=>document.getElementById(id);
 function clean(v){return String(v??'')}function cell(value){const el=document.createElement('td');el.textContent=clean(value);return el}
+function formatDuration(value){const raw=clean(value);const match=/^(\d+)\s*min(?:utos)?$/i.exec(raw.trim());if(!match)return raw;let n=Number(match[1]);if(!n)return 'Permanente';const parts=[];for(const [unit,label] of [[1440,'día'],[60,'hora'],[1,'minuto']]){const count=Math.floor(n/unit);if(count){parts.push(count+' '+label+(count===1?'':label==='día'?'s':'s'));n%=unit}}return parts.join(' ')}
 function render(){
  const query=$('search').value.trim().toLowerCase();
  const list=bans.filter(b=>(filter==='all'||b.status===filter)&&[b.name,b.steamid,b.reason].some(v=>clean(v).toLowerCase().includes(query)));
@@ -356,11 +459,11 @@ function render(){
   const sid=document.createElement('div');sid.className='player-steamid';sid.textContent=clean(b.steamid);
   const identity=document.createElement('div');identity.className='player-identity';const avatar=document.createElement('span');avatar.className='player-avatar';avatar.textContent=(clean(b.name).trim().charAt(0)||'?').toUpperCase();const details=document.createElement('div');details.className='player-details';details.append(name,sid);identity.append(avatar,details);player.append(identity);
   const steam=/^STEAM_[01]:([01]):([0-9]{1,16})$/.exec(clean(b.steamid));
-  if(steam){const steam64=(76561197960265728n+BigInt(steam[2])*2n+BigInt(steam[1])).toString();const a=document.createElement('a');a.href='https://steamcommunity.com/profiles/'+steam64;a.target='_blank';a.rel='noopener noreferrer';a.className='steam-link';a.textContent='Ver perfil en Steam ↗';player.append(a);avatar.title='Ver perfil de Steam';avatar.setAttribute('role','img');avatar.setAttribute('aria-label','Avatar del jugador');const image=document.createElement('img');image.loading='lazy';image.decoding='async';image.alt='';image.addEventListener('load',()=>{avatar.textContent='';avatar.append(image)});image.addEventListener('error',()=>{image.remove()});image.src='/api/ban-avatar?steamid='+encodeURIComponent(clean(b.steamid));}
+  if(steam){const steam64=(76561197960265728n+BigInt(steam[2])*2n+BigInt(steam[1])).toString();const a=document.createElement('a');a.href='https://steamcommunity.com/profiles/'+steam64;a.target='_blank';a.rel='noopener noreferrer';a.className='steam-link';a.textContent='Ver perfil en Steam ↗';player.append(a);avatar.title='Ver perfil de Steam';avatar.setAttribute('role','img');avatar.setAttribute('aria-label','Avatar del jugador');const image=document.createElement('img');image.loading='lazy';image.decoding='async';image.alt='';image.addEventListener('load',()=>{avatar.textContent='';avatar.append(image)});image.addEventListener('error',()=>{image.remove()});image.referrerPolicy='no-referrer';image.src='https://niceshot-api.matiasboy289.workers.dev/api/ban-avatar?steamid='+encodeURIComponent(clean(b.steamid));avatar.style.cursor='pointer';avatar.tabIndex=0;avatar.setAttribute('role','link');avatar.onclick=()=>window.open(a.href,'_blank','noopener,noreferrer');avatar.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();avatar.click()}};}
   tr.append(player,cell(b.admin));
   const origin=cell('');const originChip=document.createElement('span');originChip.className='origin-chip';originChip.textContent=clean(b.source)||'NICE SV';origin.append(originChip);tr.append(origin);
   tr.append(cell(b.reason));
-  const duration=cell('');const durationChip=document.createElement('span');durationChip.className='duration-chip';durationChip.textContent=clean(b.duration);duration.append(durationChip);tr.append(duration);
+  const duration=cell('');const durationChip=document.createElement('span');durationChip.className='duration-chip';durationChip.textContent=formatDuration(b.duration);duration.append(durationChip);tr.append(duration);
   $('rows').append(tr)
  }
  $('empty').hidden=list.length>0;
