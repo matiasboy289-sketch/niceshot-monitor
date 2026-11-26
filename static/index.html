@@ -415,7 +415,12 @@ document.addEventListener('visibilitychange',()=>{if(!document.hidden)updateStea
 })();
 (function(){const a=document.getElementById('waves'),b=document.getElementById('waves2');const ns='http://www.w3.org/2000/svg';for(let i=0;i<32;i++){let p=document.createElementNS(ns,'path');let y=-100+i*34;p.setAttribute('d','M -200 '+(y+120)+' C 80 '+(y-250)+' 260 '+(y+300)+' 510 '+(y+45)+' S 890 '+(y-140)+' 1120 '+(y+100)+' S 1450 '+(y-160)+' 1640 '+(y+35));a.appendChild(p);let q=p.cloneNode();q.setAttribute('transform','translate(130 120)');b.appendChild(q)}})();
 if('IntersectionObserver' in window){const io=new IntersectionObserver(entries=>{for(const e of entries){if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}}},{threshold:.08});document.querySelectorAll('.section-head,.feature,.panel').forEach(el=>{el.classList.add('reveal');io.observe(el)})}const track=document.getElementById('ecoTrack');if(track){const original=[...track.children];const gap=16;const setDistance=()=>{let width=original.reduce((sum,el)=>sum+el.getBoundingClientRect().width+gap,0);track.style.setProperty('--marquee-distance',width+'px')};setDistance();for(const el of original){const copy=el.cloneNode(true);copy.setAttribute('aria-hidden','true');copy.querySelectorAll('a,button,[tabindex]').forEach(a=>a.setAttribute('tabindex','-1'));track.appendChild(copy)}window.addEventListener('resize',setDistance)}const $=id=>document.getElementById(id);const officialMaps=new Set(["c1m1_hotel","c1m2_streets","c1m3_mall","c1m4_atrium","c2m1_highway","c2m2_fairgrounds","c2m3_coaster","c2m4_barns","c2m5_concert","c3m1_plankcountry","c3m2_swamp","c3m3_shantytown","c3m4_plantation","c4m1_milltown_a","c4m2_sugarmill_a","c4m3_sugarmill_b","c4m4_milltown_b","c4m5_milltown_escape","c5m1_waterfront","c5m2_park","c5m3_cemetery","c5m4_quarter","c5m5_bridge","c6m1_riverbank","c6m2_bedlam","c6m3_port","c7m1_docks","c7m2_barge","c7m3_port","c8m1_apartment","c8m2_subway","c8m3_sewers","c8m4_interior","c8m5_rooftop","c9m1_alleys","c9m2_lots","c10m1_caves","c10m2_drainage","c10m3_ranchhouse","c10m4_mainstreet","c10m5_houseboat","c11m1_greenhouse","c11m2_offices","c11m3_garage","c11m4_terminal","c11m5_runway","c12m1_hilltop","c12m2_traintunnel","c12m3_bridge","c12m4_barn","c12m5_cornfield","c13m1_alpinecreek","c13m2_southpinestream","c13m3_memorialbridge","c13m4_cutthroatcreek","c14m1_junkyard","c14m2_lighthouse"]);const customMapCovers=[
- {keys:['carriedoff','carried_off'],file:'carriedoff.webp'},
+ {"keys":["bigwat","big_wat","big-wat"],"url":"https://www.gamemaps.com/imgmgr/limit/img/addons/l4d2/thumb/big_wat.jpg?1442357411=&h=202&w=360"},
+ {"keys":["contra","contraz"],"url":"https://www.gamemaps.com/img/addons/l4d2/ss/contraz_v0_41_24828_1.jpg?1645940075="},
+ {"keys":["warcelona","l4d2_warcelona"],"url":"https://www.gamemaps.com/img/addons/l4d2/ss/warcelona_3131_1.jpg"},
+ {"keys":["coldfront","cold_front"],"url":"https://www.gamemaps.com/img/addons/l4d2/ss/cold_front_30655_0.jpg"},
+ {"keys":["deadbeforedawn","dead_before_dawn","dbd","l4d_dbd"],"url":"https://www.gamemaps.com/img/addons/l4d2/ss/dead_before_dawn_dc_2268_0.jpg"},
+ {keys:['carriedoff','carried_off','carriof'],file:'carriedoff.webp'},
  {keys:['ccrerouted','cc_rerouted'],file:'ccrerouted.webp'},
  {keys:['city17','city_17'],file:'city17l4d2.webp'},
  {keys:['darkcarnivalremix','dark_carnival_remix','dkr_'],file:'dark-carnival-remix.webp'},
@@ -433,7 +438,7 @@ if('IntersectionObserver' in window){const io=new IntersectionObserver(entries=>
  {keys:['openroad','open_road'],file:'openroad.webp'},
  {keys:['parishovergrowth','parish_overgrowth'],file:'parish-overgrowth.webp'},
  {keys:['suicideblitz','suicide_blitz'],file:'suicideblitz2.webp'},
- {keys:['bloodymoors','bloody_moors'],file:'thebloodymoors.webp'},
+ {keys:['thebloodymoors','bloodymoors','bloody_moors'],file:'thebloodymoors.webp'},
  {keys:['tripday','trip_day'],file:'tripday.webp'},
  {keys:['undeadzone','undead_zone'],file:'undead-zone.webp'},
  {keys:['urbanflight','urban_flight'],file:'urbanflight.webp'}
@@ -446,8 +451,8 @@ function setMapImage(map){
  let url='';
  if(officialMaps.has(id))url='https://l4d2play.cn/_source/images/campaign/'+id+'.jpg';
  else {
-  const custom=customMapCovers.find(entry=>entry.keys.some(key=>id.startsWith(key)));
-  if(custom)url='/maps/'+custom.file;
+  const custom=customMapCovers.find(entry=>entry.keys.some(key=>id.replace(/^l4d2?_/, '').replace(/[^a-z0-9]/g,'').startsWith(key.replace(/[^a-z0-9]/g,''))));
+  if(custom)url=custom.url||'/maps/'+custom.file;
  }
  if(!url)return;
  img.onload=()=>{if(lastMapImage===id)img.style.opacity='.92'};
