@@ -358,6 +358,27 @@ body{background:#050608}
 @media(max-width:600px){.hero.ns-cinematic{min-height:560px}.ns-cinematic h1{font-size:clamp(76px,22vw,120px)}.ns-cinematic .ns-caption{font-size:8px;letter-spacing:.06em}.ns-cinematic .eyebrow{font-size:9px;letter-spacing:.1em}}
 @media(prefers-reduced-motion:reduce){.ns-cinematic *{animation:none!important;transition:none!important}.ns-cinematic .ns-content{transform:none!important}.ns-cinematic .ns-dust{display:none}}
 </style>
+<style id="ns-unified-design">
+/* NICE SV — shared cinematic visual system; no functional changes */
+:root{--ns-edge:rgba(230,240,255,.19);--ns-surface:rgba(12,15,20,.88);--ns-light:#e7edf4}
+body{font-family:Inter,"Segoe UI",system-ui,sans-serif!important}
+nav.nav,header.nav,body>nav{background:rgba(8,10,14,.91)!important;border-bottom:1px solid var(--ns-edge)!important;backdrop-filter:blur(18px);box-shadow:0 10px 40px #0004}
+.nav a,.navlinks a,.links a,body>nav a{transition:color .2s,background .2s,text-shadow .2s}
+.nav a:hover,body>nav a:hover{color:#fff!important;text-shadow:0 0 14px #ffffff66}
+.section-head h2,.heading h2,main>header h1{letter-spacing:-.045em}
+.panel,.eco-card,.feature,.custom-preview-card,.faq-home-card,.plan,.vip-member,.benefit,.command-card,.faq-hero-card,.showcase{border:1px solid var(--ns-edge)!important;box-shadow:0 18px 48px #0005,inset 0 1px 0 #ffffff0d!important;border-radius:14px!important}
+.panel,.feature,.faq-home-card,.plan,.vip-member,.benefit,.command-card{background:linear-gradient(145deg,#20252de8,#0b0e14ed)!important}
+.stat{border:1px solid var(--ns-edge)!important;background:linear-gradient(135deg,#ffffff0b,#0003)!important;border-radius:10px!important}
+.section-tag,.sectiontag,.eyebrow{letter-spacing:.19em}
+.btn,.button,.hero-btn,.navcta{transition:filter .2s,box-shadow .2s,border-color .2s}
+.btn:hover,.button:hover,.navcta:hover{box-shadow:0 0 24px #dcecff26}
+:where(a,button,input,select,summary):focus-visible{outline:2px solid #e7edf4;outline-offset:4px}
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+.feature,.custom-preview-card,.faq-home-card,.plan,.vip-member,.benefit,.command-card{transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .3s,box-shadow .3s}
+.feature:hover,.custom-preview-card:hover,.faq-home-card:hover,.plan:hover,.vip-member:hover,.benefit:hover,.command-card:hover{transform:perspective(1000px) translateY(-5px) rotateX(2deg);border-color:#ffffff55!important;box-shadow:0 24px 55px #0008!important}
+}
+@media(prefers-reduced-motion:reduce){.feature,.custom-preview-card,.faq-home-card,.plan,.vip-member,.benefit,.command-card{transition:none!important}}
+</style>
 </head><body>
 <video class="hero-video" id="backgroundVideo" autoplay muted loop playsinline preload="metadata" aria-hidden="true"><source src="/media/nicesv-intro-con-sonido.mp4" type="video/mp4"></video><div class="video-audio-controls" role="group" aria-label="Volumen de la música del video"><button type="button" id="videoMute" aria-label="Activar sonido del video" title="Activar sonido">🔇 Activar sonido</button><button type="button" id="videoVolDown" aria-label="Bajar volumen" title="Bajar volumen">−</button><input type="range" id="videoVolume" min="0" max="100" value="35" step="5" aria-label="Volumen del video"><button type="button" id="videoVolUp" aria-label="Subir volumen" title="Subir volumen">+</button><span id="videoVolumeLabel" aria-live="polite">35%</span></div><div class="video-backdrop" aria-hidden="true"></div>
 <div class="contours" aria-hidden="true"><svg viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice"><g id="waves"></g></svg><svg viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice"><g id="waves2"></g></svg></div><div class="redglow"></div><div class="grain"></div>
