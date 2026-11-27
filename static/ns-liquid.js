@@ -10,10 +10,15 @@ const pm=new T.PMREMGenerator(renderer);scene.environment=pm.fromScene(env).text
 const group=new T.Group();scene.add(group);
 const chrome=new T.MeshPhysicalMaterial({color:0xcbd0d7,metalness:1,roughness:.17,clearcoat:1});
 const dark=new T.MeshStandardMaterial({color:0x292c32,metalness:.95,roughness:.26});
-function shape(points){const s=new T.Shape();points.forEach(([x,y],i)=>i?s.lineTo(x,y):s.moveTo(x,y));s.closePath();return s}
-function letter(points,x){const geo=new T.ExtrudeGeometry(shape(points),{depth:.36,bevelEnabled:true,bevelThickness:.09,bevelSize:.075,bevelSegments:4,steps:1});const m=new T.Mesh(geo,[chrome,dark]);m.position.set(x,-1.05,-.18);group.add(m)}
-letter([[0,0],[0,2.1],[.43,2.1],[1.3,.78],[1.3,2.1],[1.72,2.1],[1.72,0],[1.29,0],[.42,1.32],[.42,0]],-1.9);
-letter([[0,2.1],[1.65,2.1],[1.65,1.68],[.45,1.68],[.45,1.28],[1.65,1.28],[1.65,0],[0,0],[0,.42],[1.2,.42],[1.2,.86],[0,.86]],.16);
+const red=new T.MeshPhysicalMaterial({color:0x9d181b,roughness:.66,clearcoat:.15}),black=new T.MeshStandardMaterial({color:0x181818,roughness:.85}),white=new T.MeshStandardMaterial({color:0xe9e5d8,roughness:.7});
+function box(w,h,d,x,y,z,mat){const m=new T.Mesh(new T.BoxGeometry(w,h,d),mat);m.position.set(x,y,z);group.add(m);return m}
+const sh=new T.Shape(),w=1.48,h=1.12,r=.24;sh.moveTo(-w+r,-h);sh.lineTo(w-r,-h);sh.quadraticCurveTo(w,-h,w,-h+r);sh.lineTo(w,h-r);sh.quadraticCurveTo(w,h,w-r,h);sh.lineTo(-w+r,h);sh.quadraticCurveTo(-w,h,-w,h-r);sh.lineTo(-w,-h+r);sh.quadraticCurveTo(-w,-h,-w+r,-h);
+const bag=new T.Mesh(new T.ExtrudeGeometry(sh,{depth:.65,bevelEnabled:true,bevelSize:.15,bevelThickness:.15,bevelSegments:5}),red);bag.position.z=-.32;group.add(bag);
+for(const x of [-1.1,1.1])box(.18,2.25,.96,x,0,0,black);
+box(.82,.24,.2,0,1.48,0,black);for(const x of [-.32,.32])box(.2,.4,.2,x,1.3,0,black);
+box(.95,.28,.055,0,.18,.51,white);box(.28,.95,.055,0,.18,.51,white);
+const label=document.createElement('canvas');label.width=512;label.height=128;const ctx=label.getContext('2d');ctx.fillStyle='#d9d6cb';ctx.fillRect(0,0,512,128);ctx.fillStyle='#292929';ctx.font='bold 54px Arial';ctx.textAlign='center';ctx.fillText('FIRST AID',256,58);ctx.font='bold 24px Arial';ctx.fillText('EMERGENCY MEDICAL KIT',256,99);const tex=new T.CanvasTexture(label);tex.colorSpace=T.SRGBColorSpace;const patch=new T.Mesh(new T.PlaneGeometry(1.5,.375),new T.MeshStandardMaterial({map:tex,roughness:.8}));patch.position.set(0,-.66,.51);group.add(patch);
+for(let i=0;i<30;i++)box(.045,.045,.035,-1.25+i*.085,1.04,.48,black);
 const orbit=new T.Group();group.add(orbit);for(let i=0;i<2;i++){const m=new T.Mesh(new T.TorusGeometry(2.65+i*.18,.018,8,120,Math.PI*1.65),chrome);m.rotation.set(.65+i*.7,.5+i*.5,i*2);orbit.add(m)}
 const shards=[];for(let i=0;i<22;i++){const m=new T.Mesh(new T.IcosahedronGeometry(.055+(i%4)*.035,0),i%3?chrome:dark);group.add(m);shards.push(m)}
 let mx=0,my=0,visible=true,raf=0;addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5},{passive:true});
