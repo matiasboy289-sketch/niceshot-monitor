@@ -25,3 +25,11 @@ body.ns-liquid{font-family:'Space Grotesk',system-ui,sans-serif!important;backgr
 .ns-liquid :is(.panel,.feature,.eco-card,.plan,.vip-member,.benefit,.command-card,.custom-preview-card,.faq-home-card,.showcase,.stat,.gallery-sections article){position:relative;transform-style:preserve-3d;box-shadow:0 2px 0 #ffffff12,0 7px 0 #08090b,0 24px 50px #0008!important}
 .ns-liquid :is(.panel,.feature,.eco-card,.plan,.vip-member,.benefit,.command-card,.custom-preview-card,.faq-home-card,.showcase,.stat,.gallery-sections article)::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:radial-gradient(ellipse at var(--ns-x,50%) var(--ns-y,0%),#ffffff13,transparent 65%);opacity:.8}
 @media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){.ns-liquid :is(.feature,.eco-card,.plan,.vip-member,.benefit,.command-card,.custom-preview-card,.faq-home-card,.gallery-sections article){transition:transform .3s ease,box-shadow .3s ease;transform:perspective(1000px) rotateX(var(--ns-rx,0deg)) rotateY(var(--ns-ry,0deg))}.ns-liquid :is(.feature,.eco-card,.plan,.vip-member,.benefit,.command-card,.custom-preview-card,.faq-home-card,.gallery-sections article):hover{transform:perspective(1000px) translateY(-5px) rotateX(var(--ns-rx,0deg)) rotateY(var(--ns-ry,0deg))}}
+
+.ns-liquid .hero.ns-cinematic{isolation:isolate}
+.ns-liquid .hero.ns-cinematic::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 76% 48%,#a6272929,transparent 46%),linear-gradient(90deg,#08090c99,transparent 75%)}
+.ns-liquid .ns-caption{letter-spacing:.23em}
+.ns-liquid .section-head h2,.ns-liquid .heading h2{text-shadow:0 5px 22px #0009}
+.ns-liquid :is(.feature,.eco-card,.plan,.vip-member,.benefit,.command-card,.custom-preview-card,.faq-home-card){border-top-color:#ffffff55!important}
+.ns-liquid .hero-btn{background:#e8e7e2!important;color:#101112!important;box-shadow:0 8px 35px #0007}
+@media(min-width:1000px){.ns-liquid .section-head{padding-left:20px}.ns-liquid .section-desc{max-width:340px}}
