@@ -2,30 +2,23 @@ import * as T from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.modul
 const canvas=document.querySelector('#ns-liquid-world');
 if(canvas)try{
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const renderer=new T.WebGLRenderer({canvas,alpha:true,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.toneMapping=T.ACESFilmicToneMapping;renderer.toneMappingExposure=1.3;
+const renderer=new T.WebGLRenderer({canvas,alpha:true,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.toneMapping=T.ACESFilmicToneMapping;renderer.toneMappingExposure=1.35;
 const scene=new T.Scene(),camera=new T.PerspectiveCamera(35,1,.1,100);camera.position.z=12;
-const env=new T.Scene();env.background=new T.Color(0x232827);
-for(const [x,y,z,w,h,c] of [[-5,3,4,3,8,0xffffff],[5,2,2,2,8,0xcaffae],[0,5,-3,8,2,0xffffff],[0,-4,3,6,2,0x889988]]){const m=new T.Mesh(new T.PlaneGeometry(w,h),new T.MeshBasicMaterial({color:c,side:T.DoubleSide}));m.position.set(x,y,z);m.lookAt(0,0,0);env.add(m)}
+const env=new T.Scene();env.background=new T.Color(0x111215);
+for(const [x,y,z,w,h,c] of [[-5,3,4,3,8,0xffffff],[5,2,2,2,8,0xcbdcff],[0,5,-3,8,2,0xffffff],[0,-4,3,6,2,0x888888],[-4,0,-4,1,7,0xffffff]]){const m=new T.Mesh(new T.PlaneGeometry(w,h),new T.MeshBasicMaterial({color:c,side:T.DoubleSide}));m.position.set(x,y,z);m.lookAt(0,0,0);env.add(m)}
 const pm=new T.PMREMGenerator(renderer);scene.environment=pm.fromScene(env).texture;
-scene.add(new T.HemisphereLight(0xffffff,0x193300,2));
-const light=new T.PointLight(0xaaff33,35,12);light.position.set(2,1,3);scene.add(light);
-const bottle=new T.Group();scene.add(bottle);
-const metal=new T.MeshStandardMaterial({color:0x414944,metalness:.9,roughness:.25});
-const glass=new T.MeshPhysicalMaterial({color:0xb5d4b2,metalness:.05,roughness:.08,transparent:true,opacity:.23,side:T.DoubleSide,clearcoat:1,depthWrite:false});
-const bile=new T.MeshPhysicalMaterial({color:0x8cb914,emissive:0x477700,emissiveIntensity:.65,roughness:.22,metalness:.08,clearcoat:1});
-function lathe(points,mat){const m=new T.Mesh(new T.LatheGeometry(points.map(p=>new T.Vector2(...p)),64),mat);bottle.add(m);return m}
-lathe([[0,-1.6],[.68,-1.6],[.82,-1.47],[.85,-1.2],[.85,1.03],[.77,1.24],[.42,1.43],[.37,1.65],[.37,1.78]],glass).renderOrder=4;
-lathe([[0,-1.48],[.68,-1.48],[.74,-1.32],[.75,.76],[0,.76]],bile);
-function cyl(rt,rb,h,y,mat=metal){const m=new T.Mesh(new T.CylinderGeometry(rt,rb,h,64),mat);m.position.y=y;bottle.add(m);return m}
-cyl(.48,.48,.38,1.76);cyl(.51,.51,.08,1.96);cyl(.82,.82,.12,-1.48);
-for(let i=0;i<24;i++){const a=i*Math.PI/12;const m=new T.Mesh(new T.BoxGeometry(.055,.28,.07),metal);m.position.set(Math.cos(a)*.48,1.77,Math.sin(a)*.48);m.rotation.y=-a;bottle.add(m)}
-const ring=new T.Mesh(new T.TorusGeometry(.22,.045,12,40),metal);ring.position.set(.42,1.99,0);bottle.add(ring);
-const label=document.createElement('canvas');label.width=1024;label.height=512;const ctx=label.getContext('2d');ctx.fillStyle='#d9d6a9';ctx.fillRect(0,0,1024,512);ctx.fillStyle='#20271a';ctx.fillRect(0,0,1024,65);ctx.fillRect(0,450,1024,62);ctx.textAlign='center';ctx.font='bold 54px Arial';ctx.fillText('CEDA / BIOHAZARD',512,140);ctx.font='bold 135px Arial';ctx.fillText('BOOMER',512,290);ctx.font='bold 100px Arial';ctx.fillText('BILE',512,395);const tex=new T.CanvasTexture(label);tex.colorSpace=T.SRGBColorSpace;const band=new T.Mesh(new T.CylinderGeometry(.858,.858,.9,64,1,true),new T.MeshStandardMaterial({map:tex,roughness:.8,side:T.DoubleSide}));band.position.y=-.36;bottle.add(band);
-const bubbles=[];const bubbleMat=new T.MeshPhysicalMaterial({color:0xd8ff70,transparent:true,opacity:.6,roughness:.1,depthWrite:false});for(let i=0;i<35;i++){const a=i*2.399,r=.65*Math.sqrt((i%17)/17);const m=new T.Mesh(new T.SphereGeometry(.025+(i%5)*.012,12,8),bubbleMat);m.position.set(Math.cos(a)*r,0,Math.sin(a)*r);bottle.add(m);bubbles.push(m)}
-const surface=new T.Mesh(new T.CircleGeometry(.748,64),bile);surface.rotation.x=-Math.PI/2;surface.position.y=.77;bottle.add(surface);
+const group=new T.Group();scene.add(group);
+const chrome=new T.MeshPhysicalMaterial({color:0xcbd0d7,metalness:1,roughness:.17,clearcoat:1});
+const dark=new T.MeshStandardMaterial({color:0x292c32,metalness:.95,roughness:.26});
+function shape(points){const s=new T.Shape();points.forEach(([x,y],i)=>i?s.lineTo(x,y):s.moveTo(x,y));s.closePath();return s}
+function letter(points,x){const geo=new T.ExtrudeGeometry(shape(points),{depth:.36,bevelEnabled:true,bevelThickness:.09,bevelSize:.075,bevelSegments:4,steps:1});const m=new T.Mesh(geo,[chrome,dark]);m.position.set(x,-1.05,-.18);group.add(m)}
+letter([[0,0],[0,2.1],[.43,2.1],[1.3,.78],[1.3,2.1],[1.72,2.1],[1.72,0],[1.29,0],[.42,1.32],[.42,0]],-1.9);
+letter([[0,2.1],[1.65,2.1],[1.65,1.68],[.45,1.68],[.45,1.28],[1.65,1.28],[1.65,0],[0,0],[0,.42],[1.2,.42],[1.2,.86],[0,.86]],.16);
+const orbit=new T.Group();group.add(orbit);for(let i=0;i<2;i++){const m=new T.Mesh(new T.TorusGeometry(2.65+i*.18,.018,8,120,Math.PI*1.65),chrome);m.rotation.set(.65+i*.7,.5+i*.5,i*2);orbit.add(m)}
+const shards=[];for(let i=0;i<22;i++){const m=new T.Mesh(new T.IcosahedronGeometry(.055+(i%4)*.035,0),i%3?chrome:dark);group.add(m);shards.push(m)}
 let mx=0,my=0,visible=true,raf=0;addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5},{passive:true});
+function draw(t){const mobile=innerWidth<700;group.position.set(mobile?0:camera.aspect*1.45,Math.sin(t*.8)*.13,0);group.scale.setScalar(mobile?.67:Math.min(1.15,camera.aspect*.68));group.rotation.set(.13+my*.25,Math.sin(t*.65)*.42+mx*.65,-.12+Math.sin(t*.45)*.08);orbit.rotation.z=t*.13;shards.forEach((m,i)=>{const a=i*2.399+t*(.1+(i%3)*.03),r=2.45+(i%5)*.16;m.position.set(Math.cos(a)*r,Math.sin(a)*r,Math.sin(a*2+i)*.75);m.rotation.set(t*.4+i,t*.3+i,0)});renderer.render(scene,camera)}
 function resize(){const w=canvas.clientWidth||innerWidth,h=canvas.clientHeight||innerHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();if(reduced)draw(0)}
-function draw(t){const mobile=innerWidth<700;bottle.position.set(mobile?0:camera.aspect*1.55,Math.sin(t*.9)*.16,0);bottle.scale.setScalar(mobile?.83:1.12);bottle.rotation.set(.13+my*.35,t*.35+mx*.7,-.25+Math.sin(t*.5)*.1);bubbles.forEach((m,i)=>{m.position.y=-1.3+((t*(.22+i%4*.045)+i*.17)%2.02)});surface.rotation.x=-Math.PI/2+Math.sin(t*1.2)*.015;renderer.render(scene,camera)}
 function loop(ms){raf=0;if(!visible||document.hidden)return;draw(ms/1000);if(!reduced)raf=requestAnimationFrame(loop)}
 function wake(){if(!raf&&visible&&!document.hidden)raf=requestAnimationFrame(loop)}
 new IntersectionObserver(([e])=>{visible=e.isIntersecting;wake()}).observe(canvas);document.addEventListener('visibilitychange',wake);addEventListener('resize',resize);resize();wake();
